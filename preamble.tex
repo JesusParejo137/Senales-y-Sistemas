@@ -5,21 +5,29 @@
 \usepackage{enumitem}
 \usepackage{xcolor}
 \usepackage[most]{tcolorbox}
-\usepackage{hyperref}
+\usepackage{hyperref}   % mejor dejarlo al final
 
 % Configuración de márgenes
 \geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
 
-% Paleta de colores para la maquetación
+% Si tu clase es article, [chapter] da error: usa [section] o quítalo
+\newcounter{problemacontador}[chapter]
+
+% Paleta de colores
 \definecolor{usalBlue}{RGB}{0, 51, 102}
 \definecolor{usalRed}{RGB}{180, 40, 40}
 \definecolor{bgBlue}{RGB}{240, 245, 255}
 \definecolor{bgGreen}{RGB}{240, 250, 242}
 \definecolor{bgYellow}{RGB}{255, 253, 235}
 
-% Cajas personalizadas tcolorbox
+\definecolor{maincolor}{RGB}{0, 51, 102}
+\definecolor{accentcolor}{RGB}{0, 128, 128}
+\definecolor{boxbg}{RGB}{245, 247, 250}
+
+% Cajas personalizadas
 \tcbset{
     cajaResumen/.style={
+        enhanced jigsaw, breakable,
         colback=bgBlue,
         colframe=usalBlue,
         fonttitle=\bfseries,
@@ -29,6 +37,7 @@
         left=10pt, right=10pt, top=8pt, bottom=8pt
     },
     cajaFormulario/.style={
+        enhanced jigsaw, breakable,
         colback=bgYellow,
         colframe=usalRed,
         fonttitle=\bfseries,
@@ -37,4 +46,20 @@
         boxrule=1pt,
         left=10pt, right=10pt, top=8pt, bottom=8pt
     }
+}
+
+% Entorno problema
+\newtcolorbox[use counter=problemacontador]{problema}[1][]{
+  enhanced jigsaw,       % como enhanced, pero con esquinas rectas en los cortes
+  breakable,
+  colback=boxbg,
+  colframe=maincolor,
+  fonttitle=\bfseries,
+  coltitle=white,
+  arc=2mm,
+  boxrule=1pt,
+  before skip=10pt,
+  after skip=10pt,
+  title={Problema~\thetcbcounter\ifstrempty{#1}{}{: #1}},
+  lower separated=true
 }

@@ -280,3 +280,246 @@ G(\omega) = H(\omega) F(\omega), \quad H(\omega) = |H(\omega)| e^{j\theta(\omega
 \text{Atenuación (dB)} = 10 \log_{10}\left(\frac{P_{enviada}}{P_{recibida}}\right)
 \]
 \end{tcolorbox}
+
+\newpage
+
+\section{Problemas Series de Fourier}
+% ==========================================
+% PROBLEMA 1: Reconstrucción desde Espectros
+% ==========================================
+\begin{problema}[Reconstrucción de una señal a partir de sus espectros discretos]
+Dada una señal periódica $f(t)$ de período $T$, se conocen sus espectros discretos de amplitud y fase. La señal solo contiene componentes no nulas para la frecuencia fundamental $\omega_1 = 5\text{ rad/s}$ y el tercer armónico $\omega_3 = 15\text{ rad/s}$.
+
+Los datos de los coeficientes de Fourier son los siguientes:
+\begin{itemize}
+    \item Para $\omega_1 = 5\text{ rad/s}$: $\frac{|c_1|}{T} = 0.5$ y fase $\angle c_1 = -\frac{\pi}{4}\text{ rad}$.
+    \item Para $\omega_3 = 15\text{ rad/s}$: $\frac{|c_3|}{T} = 0.25$ y fase $\angle c_3 = \frac{\pi}{3}\text{ rad}$.
+\end{itemize}
+
+\begin{enumerate}
+    \item Obtenga la expresión de la señal $f(t)$ en el dominio del tiempo en su forma trigonométrica compacta.
+    \item Obtenga los coeficientes complejos $c_1, c_{-1}, c_3, c_{-3}$ y escriba la señal en su forma exponencial compleja, verificando que coincide con la forma trigonométrica.
+\end{enumerate}
+
+\tcblower
+
+\textbf{1. Forma trigonométrica compacta (Método 1):}
+
+La forma trigonométrica compacta del desarrollo en serie de Fourier para una señal periódica viene dada por:
+\[ f(t) = \frac{a_0}{T} + \frac{2}{T} \sum_{n=1}^{\infty} |c_n| \cos(\omega_n t + \theta_n) \]
+
+Dado que la señal no presenta componente continua ($a_0 = 0$) y únicamente existen los armónicos $n=1$ ($\omega_1 = 5\text{ rad/s}$) y $n=3$ ($\omega_3 = 15\text{ rad/s}$), sustituimos los valores correspondientes:
+\[ f(t) = \frac{2}{T} \left( |c_1| \cos(5t + \angle c_1) + |c_3| \cos(15t + \angle c_3) \right) \]
+
+Sustituyendo los datos $\frac{|c_1|}{T} = 0.5$, $\angle c_1 = -\frac{\pi}{4}$, $\frac{|c_3|}{T} = 0.25$ y $\angle c_3 = \frac{\pi}{3}$:
+\[ f(t) = 2 \cdot 0.5 \cos\left(5t - \frac{\pi}{4}\right) + 2 \cdot 0.25 \cos\left(15t + \frac{\pi}{3}\right) \]
+\[ f(t) = \cos\left(5t - \frac{\pi}{4}\right) + 0.5 \cos\left(15t + \frac{\pi}{3}\right) \]
+
+\textbf{2. Forma exponencial compleja (Método 2):}
+
+Los coeficientes complejos de Fourier se obtienen a partir de su módulo y su fase ($c_n = |c_n| e^{j \theta_n}$):
+\[ c_1 = 0.5 T e^{-j \frac{\pi}{4}}, \quad c_{-1} = 0.5 T e^{j \frac{\pi}{4}} \]
+\[ c_3 = 0.25 T e^{j \frac{\pi}{3}}, \quad c_{-3} = 0.25 T e^{-j \frac{\pi}{3}} \]
+
+Sustituyendo en la expresión exponencial de la serie de Fourier $f(t) = \frac{1}{T} \sum_{n=-\infty}^{\infty} c_n e^{j \omega_n t}$:
+\[ f(t) = 0.5 e^{-j \frac{\pi}{4}} e^{j 5 t} + 0.5 e^{j \frac{\pi}{4}} e^{-j 5 t} + 0.25 e^{j \frac{\pi}{3}} e^{j 15 t} + 0.25 e^{-j \frac{\pi}{3}} e^{-j 15 t} \]
+
+Agrupando los pares conjugados:
+\[ f(t) = 0.5 \left( e^{j \left(5t - \frac{\pi}{4}\right)} + e^{-j \left(5t - \frac{\pi}{4}\right)} \right) + 0.25 \left( e^{j \left(15t + \frac{\pi}{3}\right)} + e^{-j \left(15t + \frac{\pi}{3}\right)} \right) \]
+
+Aplicando la fórmula de Euler $\cos(x) = \frac{e^{jx} + e^{-jx}}{2}$:
+\[ f(t) = \cos\left(5t - \frac{\pi}{4}\right) + 0.5 \cos\left(15t + \frac{\pi}{3}\right) \]
+
+Se comprueba que ambos métodos conducen al mismo resultado en el dominio del tiempo.
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_P1.png}
+\end{center}
+
+\end{problema}
+
+\newpage
+% ==========================================
+% PROBLEMA 2: Propiedades de Serie de Fourier
+% ==========================================
+\begin{problema}[Serie de Fourier de un par de pulsos mediante propiedades]
+Se considera un tren de pulsos rectangulares simétrico respecto al origen $p(t)$, de amplitud $V$, anchura $\tau$ y período $T$. Sus coeficientes de Fourier en forma compleja son conocidos y valen:
+\[ c_n^{(p)} = V \tau \frac{\sin(\omega_n \tau / 2)}{\omega_n \tau / 2} \]
+
+A partir de $p(t)$, se construye una nueva señal periódica $f(t) = f_1(t) + f_2(t)$, definida por la superposición de:
+\begin{itemize}
+    \item $f_1(t) = p(t - \tau/2)$: pulso desplazado a la derecha una cantidad $t_0 = \tau/2$.
+    \item $f_2(t) = -p(t + \tau/2)$: pulso de amplitud invertida y desplazado a la izquierda una cantidad $t_0 = \tau/2$.
+\end{itemize}
+
+\begin{enumerate}
+    \item Aplique el teorema de desplazamiento en el tiempo y la propiedad de linealidad para obtener la expresión de los coeficientes $c_n$ de la serie compleja de Fourier de $f(t)$.
+    \item Simplifique los coeficientes utilizando las fórmulas de Euler e indique el tipo de simetría que presenta la señal $f(t)$ en el dominio temporal.
+\end{enumerate}
+
+\tcblower
+
+\textbf{Resolución:}
+
+\textbf{1. Aplicación de las propiedades de desplazamiento y linealidad:}
+
+Según el teorema de desplazamiento en el tiempo, si $p(t) \leftrightarrow c_n^{(p)}$, entonces:
+\[ f_1(t) = p\left(t - \frac{\tau}{2}\right) \leftrightarrow c_n^{(1)} = c_n^{(p)} e^{-j \omega_n \frac{\tau}{2}} \]
+\[ f_2(t) = -p\left(t + \frac{\tau}{2}\right) \leftrightarrow c_n^{(2)} = -c_n^{(p)} e^{+j \omega_n \frac{\tau}{2}} \]
+
+Por la propiedad de linealidad, los coeficientes de $f(t) = f_1(t) + f_2(t)$ son la suma de los coeficientes individuales:
+\[ c_n = c_n^{(1)} + c_n^{(2)} = c_n^{(p)} \left( e^{-j \omega_n \frac{\tau}{2}} - e^{+j \omega_n \frac{\tau}{2}} \right) \]
+
+\textbf{2. Simplificación y análisis de simetría:}
+
+Sustituyendo la expresión de $c_n^{(p)}$:
+\[ c_n = V \tau \frac{\sin(\omega_n \tau / 2)}{\omega_n \tau / 2} \left( e^{-j \omega_n \frac{\tau}{2}} - e^{+j \omega_n \frac{\tau}{2}} \right) \]
+
+Haciendo uso de la identidad de Euler para la función seno, $\sin(x) = \frac{e^{jx} - e^{-jx}}{2j} \implies e^{-jx} - e^{jx} = -2j \sin(x)$, asignando $x = \frac{\omega_n \tau}{2}$:
+\[ e^{-j \omega_n \frac{\tau}{2}} - e^{+j \omega_n \frac{\tau}{2}} = -2j \sin\left(\frac{\omega_n \tau}{2}\right) \]
+
+Sustituyendo este resultado en la expresión de $c_n$:
+\[ c_n = V \tau \frac{\sin(\omega_n \tau / 2)}{\omega_n \tau / 2} \left( -2j \sin\left(\frac{\omega_n \tau}{2}\right) \right) \]
+\[ c_n = -2j V \tau \frac{\sin^2(\omega_n \tau / 2)}{\omega_n \tau / 2} \]
+
+\textbf{Análisis de simetría:}
+Dado que todos los coeficientes $c_n$ son números imaginarios puros y cumplen que $c_{-n} = -c_n$, la señal temporal $f(t)$ es una función \textbf{impar} ($f(-t) = -f(t)$). En consecuencia, su desarrollo en serie trigonométrica de Fourier consta únicamente de términos en senos ($a_n = 0$).
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_P2.png}
+\end{center}
+
+\end{problema}
+
+\newpage
+
+\section{Problemas Transformada de Fourier}
+\setcounter{problemacontador}{1}
+% ==========================================
+% PROBLEMA 1: Transformada analítica y ancho de banda
+% ==========================================
+\begin{problema}[Transformada de Fourier de un pulso exponencial bilateral e interpretación frecuencial]
+Dada la señal no periódica en el dominio del tiempo descrita por una función exponencial bilateral par:
+\[ f(t) = e^{-a|t|}, \quad \text{con } a > 0 \]
+
+\begin{enumerate}
+    \item Obtenga la expresión analítica de su Transformada de Fourier $F(\omega)$ aplicando directamente la definición de la integral de Fourier.
+    \item Compruebe las propiedades de simetría del espectro en frecuencia $F(\omega)$ a partir de la naturaleza de la señal temporal $f(t)$.
+    \item Calcule la componente de continua $F(0)$ y verifique la propiedad del área bajo la curva temporal.
+    \item Determine el ancho de banda a $-3\text{ dB}$ en frecuencia angular ($\omega_{3\text{dB}}$), definido como la frecuencia en la cual el módulo del espectro decae a $\frac{1}{\sqrt{2}}$ de su valor máximo.
+\end{enumerate}
+
+\tcblower
+
+\textbf{1. Obtención de la Transformada de Fourier $F(\omega)$:}
+
+Dado que $|t| = -t$ para $t < 0$ y $|t| = t$ para $t \ge 0$, dividimos la integral de Fourier en dos intervalos:
+\[ F(\omega) = \int_{-\infty}^{\infty} e^{-a|t|} e^{-j\omega t} \, dt = \int_{-\infty}^{0} e^{at} e^{-j\omega t} \, dt + \int_{0}^{\infty} e^{-at} e^{-j\omega t} \, dt \]
+
+Agrupando los exponentes:
+\[ F(\omega) = \int_{-\infty}^{0} e^{(a - j\omega)t} \, dt + \int_{0}^{\infty} e^{-(a + j\omega)t} \, dt \]
+
+Resolviendo ambas integrales inmediatas:
+\[ F(\omega) = \left[ \frac{e^{(a - j\omega)t}}{a - j\omega} \right]_{-\infty}^{0} + \left[ \frac{e^{-(a + j\omega)t}}{-(a + j\omega)} \right]_{0}^{\infty} \]
+
+Evaluando en los límites de integración (sabiendo que $e^{(a - j\omega)(-\infty)} = 0$ y $e^{-(a + j\omega)(\infty)} = 0$ al ser $a > 0$):
+\[ F(\omega) = \frac{1}{a - j\omega} - \left( 0 - \frac{1}{a + j\omega} \right) = \frac{1}{a - j\omega} + \frac{1}{a + j\omega} \]
+
+Sumando ambas fracciones mediante el denominador común $(a - j\omega)(a + j\omega) = a^2 + \omega^2$:
+\[ F(\omega) = \frac{(a + j\omega) + (a - j\omega)}{a^2 + \omega^2} = \frac{2a}{a^2 + \omega^2} \]
+
+\textbf{2. Análisis de simetría:}
+
+Dado que $f(t) = e^{-a|-t|} = e^{-a|t|} = f(-t)$, la señal temporal es una función \textbf{real y par}.
+Consecuentemente, su Transformada de Fourier $F(\omega) = \frac{2a}{a^2 + \omega^2}$ es una función \textbf{real pura y par} en el dominio de la frecuencia, cumpliendo que $F(-\omega) = F(\omega)$ e $\text{Im}\{F(\omega)\} = 0$.
+
+\textbf{3. Componente de continua y propiedad del área:}
+
+La componente de continua se obtiene evaluando $F(\omega)$ en $\omega = 0$:
+\[ F(0) = \frac{2a}{a^2 + 0^2} = \frac{2}{a} \]
+
+Por las propiedades de la Transformada de Fourier, $F(0)$ equivale al área bajo la curva de $f(t)$:
+\[ \text{Área} = \int_{-\infty}^{\infty} e^{-a|t|} \, dt = 2 \int_{0}^{\infty} e^{-at} \, dt = 2 \left[ \frac{e^{-at}}{-a} \right]_{0}^{\infty} = 2 \left( 0 - \left( -\frac{1}{a} \right) \right) = \frac{2}{a} \]
+Se verifica la concordancia exacta entre ambos resultados.
+
+\textbf{4. Cálculo del ancho de banda a $-3\text{ dB}$ ($\omega_{3\text{dB}}$):}
+
+El valor máximo del espectro de amplitud se alcanza en el origen: $F_{\text{máx}} = F(0) = \frac{2}{a}$. La condición a $-3\text{ dB}$ establece que:
+\[ F(\omega_{3\text{dB}}) = \frac{1}{\sqrt{2}} F(0) \implies \frac{2a}{a^2 + \omega_{3\text{dB}}^2} = \frac{1}{\sqrt{2}} \left( \frac{2}{a} \right) \]
+
+Simplificando los factores comunes:
+\[ \frac{a}{a^2 + \omega_{3\text{dB}}^2} = \frac{1}{\sqrt{2} a} \implies a^2 + \omega_{3\text{dB}}^2 = \sqrt{2} a^2 \]
+\[ \omega_{3\text{dB}}^2 = (\sqrt{2} - 1) a^2 \implies \omega_{3\text{dB}} = a \sqrt{\sqrt{2} - 1} \approx 0{,}6436 \, a \text{ rad/s} \]
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_Transformada_P1.png}
+\end{center}
+
+\end{problema}
+
+\newpage
+
+% ==========================================
+% PROBLEMA 2: Descomposición por desplazamiento y muestreo
+% ==========================================
+\begin{problema}[Transformada de Fourier por desplazamiento y coeficientes de la Serie de Fourier]
+Se considera la señal no periódica $f(t)$ formada por dos pulsos triangulares opuestos de amplitud $V$ y anchura de base $2\tau$. El primer pulso es positivo y está centrado en $t = -\tau$, mientras que el segundo pulso es negativo y está centrado en $t = +\tau$.
+
+Se conoce que la Transformada de Fourier de un único pulso triangular centrado en el origen de altura $V$ y anchura de base $2\tau$ es:
+\[ F_{\text{tri}}(\omega) = V \tau \left( \frac{\sin(\omega \tau / 2)}{\omega \tau / 2} \right)^2 \]
+
+\begin{enumerate}
+    \item Exprese $f(t)$ en función del pulso triangular básico $f_{\text{tri}}(t)$ y determine su Transformada de Fourier $F(\omega)$ utilizando las propiedades de linealidad y desplazamiento temporal.
+    \item Analice el resultado obtenido y justifique por qué $F(\omega)$ es imaginaria pura e impar.
+    \item Asumiendo que esta configuración de pulsos se repite periódicamente con período $T = 4\tau$, determine la expresión analítica de los coeficientes $c_n$ de la Serie de Fourier compleja y halle los valores de $c_0, c_1, c_2, c_3$ y $c_4$.
+\end{enumerate}
+
+\tcblower
+
+\textbf{1. Obtención de $F(\omega)$ por propiedades:}
+
+La señal $f(t)$ se puede descomponer como la suma de un pulso triangular positivo adelantado un tiempo $\tau$ y un pulso triangular negativo retrasado un tiempo $\tau$:
+\[ f(t) = f_{\text{tri}}(t + \tau) - f_{\text{tri}}(t - \tau) \]
+
+Aplicando la propiedad de desplazamiento temporal $\mathcal{F}\{g(t \pm t_0)\} = G(\omega) e^{\pm j\omega t_0}$ y la linealidad de la Transformada de Fourier:
+\[ F(\omega) = F_{\text{tri}}(\omega) e^{j\omega \tau} - F_{\text{tri}}(\omega) e^{-j\omega \tau} = F_{\text{tri}}(\omega) \left( e^{j\omega \tau} - e^{-j\omega \tau} \right) \]
+
+Aplicando la relación de Euler para la función seno, $e^{j\omega \tau} - e^{-j\omega \tau} = 2j \sin(\omega \tau)$:
+\[ F(\omega) = 2j \sin(\omega \tau) F_{\text{tri}}(\omega) \]
+
+Sustituyendo la expresión del pulso triangular centrado $F_{\text{tri}}(\omega)$:
+\[ F(\omega) = 2j V \tau \sin(\omega \tau) \left( \frac{\sin(\omega \tau / 2)}{\omega \tau / 2} \right)^2 \]
+
+\textbf{2. Análisis de simetría:}
+
+Dado que $f(-t) = f_{\text{tri}}(-t + \tau) - f_{\text{tri}}(-t - \tau) = f_{\text{tri}}(t + \tau) - f_{\text{tri}}(t - \tau) = -f(t)$, la señal es una función \textbf{real e impar} en el dominio del tiempo.
+Como propiedad fundamental, la Transformada de Fourier de toda función real e impar es una función \textbf{imaginaria pura e impar} en el dominio de la frecuencia:
+\[ F(-\omega) = 2j V \tau \sin(-\omega \tau) \left( \frac{\sin(-\omega \tau / 2)}{-\omega \tau / 2} \right)^2 = -F(\omega) \]
+
+\textbf{3. Extensión periódica y cálculo de los coeficientes $c_n$:}
+
+Para un período $T = 4\tau$, la frecuencia fundamental del desarrollo en serie es:
+\[ \omega_1 = \frac{2\pi}{T} = \frac{2\pi}{4\tau} = \frac{\pi}{2\tau} \implies \omega_n = n \omega_1 = \frac{n\pi}{2\tau} \]
+
+Los coeficientes de la serie compleja de Fourier se obtienen muestreando el espectro continuo:
+\[ c_n = \frac{1}{T} F(\omega_n) = \frac{1}{4\tau} \left[ 2j V \tau \sin\left(\frac{n\pi}{2}\right) \left( \frac{\sin(n\pi / 4)}{n\pi / 4} \right)^2 \right] \]
+\[ c_n = \frac{j V}{2} \sin\left(\frac{n\pi}{2}\right) \left( \frac{\sin(n\pi / 4)}{n\pi / 4} \right)^2 \]
+
+Evaluando para los primeros armónicos ($n = 0, 1, 2, 3, 4$):
+\begin{itemize}
+    \item \textbf{Para $n = 0$}: $c_0 = \frac{1}{T} F(0) = 0$ (ya que $\sin(0) = 0$). El nivel de continua es nulo porque las áreas del pulso positivo y negativo se cancelan.
+    \item \textbf{Para $n = 1$}: $\omega_1 = \frac{\pi}{2\tau}$.
+    \[ c_1 = \frac{j V}{2} \sin\left(\frac{\pi}{2}\right) \left( \frac{\sin(\pi / 4)}{\pi / 4} \right)^2 = \frac{j V}{2} (1) \left( \frac{\sqrt{2}/2}{\pi / 4} \right)^2 = \frac{j V}{2} \left( \frac{2\sqrt{2}}{\pi} \right)^2 = j V \frac{4}{\pi^2} \]
+    \item \textbf{Para $n = 2$}: $\omega_2 = \frac{\pi}{\tau}$.
+    \[ c_2 = \frac{j V}{2} \sin(\pi) \left( \frac{\sin(\pi / 2)}{\pi / 2} \right)^2 = 0 \quad (\text{al ser } \sin(\pi) = 0) \]
+    \item \textbf{Para $n = 3$}: $\omega_3 = \frac{3\pi}{2\tau}$.
+    \[ c_3 = \frac{j V}{2} \sin\left(\frac{3\pi}{2}\right) \left( \frac{\sin(3\pi / 4)}{3\pi / 4} \right)^2 = \frac{j V}{2} (-1) \left( \frac{\sqrt{2}/2}{3\pi / 4} \right)^2 = -\frac{j V}{2} \left( \frac{2\sqrt{2}}{3\pi} \right)^2 = -j V \frac{4}{9\pi^2} \]
+    \item \textbf{Para $n = 4$}: $\omega_4 = \frac{2\pi}{\tau}$.
+    \[ c_4 = \frac{j V}{2} \sin(2\pi) \left( \frac{\sin(\pi)}{\pi} \right)^2 = 0 \quad (\text{al ser } \sin(2\pi) = 0) \]
+\end{itemize}
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_Transformada_P2.png}
+\end{center}
+
+\end{problema}
