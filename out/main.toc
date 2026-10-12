@@ -1,0 +1,24 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{Señales y Sistemas}{1}{chapter*.1}%
+\contentsline {chapter}{\numberline {1}Tema 2: Señales y Sistemas}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Clasificación de las Señales}{3}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Caso Parámetrico: Señal Senoidal Pura}{3}{subsection.1.1.1}%
+\contentsline {section}{\numberline {1.2}Dominio del Tiempo y de la Frecuencia}{4}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Repaso de Números Complejos y Fórmulas de Euler}{4}{subsection.1.2.1}%
+\contentsline {section}{\numberline {1.3}Serie de Fourier para Señales Periódicas}{4}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Forma Trigonométrica}{4}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Forma Exponencial Compleja}{5}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Espectros Discretos y Teorema de Parseval}{5}{subsection.1.3.3}%
+\contentsline {section}{\numberline {1.4}Tren de Pulsos Rectangulares Periódico}{5}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Integral y Transformada de Fourier (Señales No Periódicas)}{5}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Pulso Rectangular Aislado}{6}{subsection.1.5.1}%
+\contentsline {section}{\numberline {1.6}Ancho de Banda de una Señal}{6}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Sistemas Lineales Estacionarios (LTI) y Respuesta en Frecuencia}{6}{section.1.7}%
+\contentsline {subsection}{\numberline {1.7.1}Definición de Distorsión y Tipos de Sistemas}{6}{subsection.1.7.1}%
+\contentsline {subsection}{\numberline {1.7.2}Función de Transferencia}{6}{subsection.1.7.2}%
+\contentsline {subsection}{\numberline {1.7.3}Teorema de la Respuesta Lineal}{6}{subsection.1.7.3}%
+\contentsline {subsection}{\numberline {1.7.4}Ancho de Banda del Sistema}{7}{subsection.1.7.4}%
+\contentsline {subsection}{\numberline {1.7.5}Estudio Cualitativo de la Respuesta en Frecuencia}{7}{subsection.1.7.5}%
+\contentsline {section}{\numberline {1.8}Perturbaciones en la Transmisión de Señales}{7}{section.1.8}%
+\contentsline {subsection}{\numberline {1.8.1}Condiciones para un Medio de Transmisión Ideal}{7}{subsection.1.8.1}%
+\contentsline {section}{\numberline {1.9}Formulario Completo del Tema 2}{8}{section.1.9}%

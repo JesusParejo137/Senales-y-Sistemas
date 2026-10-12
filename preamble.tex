@@ -1,0 +1,40 @@
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+
+% Configuración de márgenes
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+
+% Paleta de colores para la maquetación
+\definecolor{usalBlue}{RGB}{0, 51, 102}
+\definecolor{usalRed}{RGB}{180, 40, 40}
+\definecolor{bgBlue}{RGB}{240, 245, 255}
+\definecolor{bgGreen}{RGB}{240, 250, 242}
+\definecolor{bgYellow}{RGB}{255, 253, 235}
+
+% Cajas personalizadas tcolorbox
+\tcbset{
+    cajaResumen/.style={
+        colback=bgBlue,
+        colframe=usalBlue,
+        fonttitle=\bfseries,
+        coltitle=white,
+        arc=2mm,
+        boxrule=1pt,
+        left=10pt, right=10pt, top=8pt, bottom=8pt
+    },
+    cajaFormulario/.style={
+        colback=bgYellow,
+        colframe=usalRed,
+        fonttitle=\bfseries,
+        coltitle=white,
+        arc=2mm,
+        boxrule=1pt,
+        left=10pt, right=10pt, top=8pt, bottom=8pt
+    }
+}

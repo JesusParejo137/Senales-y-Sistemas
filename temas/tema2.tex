@@ -1,0 +1,282 @@
+\chapter{Tema 2: Señales y Sistemas}
+
+\section{Clasificación de las Señales}
+
+\begin{tcolorbox}[cajaResumen, title={Conceptos Fundamentales: Clasificación}]
+Una señal es una función matemática dependiente del tiempo $f(t)$ que describe la variación de una variable física que transporta información codificada.
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Según el medio físico de transmisión}:
+    \begin{itemize}
+        \item \textit{Eléctricas}: Voltajes o intensidades transmitidos por cables conductores.
+        \item \textit{Electromagnéticas}: Ondas en el espacio libre o guías de onda (radio, satélite).
+        \item \textit{Ópticas}: Pulsos luminosos guiados por fibra óptica.
+    \end{itemize}
+    \item \textbf{Según los valores de la función}:
+    \begin{itemize}
+        \item \textit{Digitales}: Toman un número finito de valores discretos (ej. niveles binarios $0$ y $V$ voltios).
+        \item \textit{Analógicas}: Toman un número infinito de valores continuos (ej. señal telefónica).
+    \end{itemize}
+    \item \textbf{Según los valores del tiempo}:
+    \begin{itemize}
+        \item \textit{Continuas}: Definidas para todo instante de tiempo $t$.
+        \item \textit{Discretas}: Definidas solo en instantes predeterminados de tiempo.
+    \end{itemize}
+    \item \textbf{Según su periodicidad}:
+    \begin{itemize}
+        \item \textit{Periódicas}: Cumplen $f(t) = f(t + T)$, donde $T$ es el período fundamental en segundos.
+        \item \textit{No periódicas}: La forma de onda no se repite a lo largo del tiempo.
+    \end{itemize}
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Caso Parámetrico: Señal Senoidal Pura}
+Una señal senoidal pura es la señal periódica fundamental y viene dada por:
+\begin{equation}
+    f(t) = A \sin(\omega t + \phi) = A \sin(2\pi f t + \phi)
+\end{equation}
+donde $A$ es la amplitud de pico, $T$ es el período, $f = 1/T$ es la frecuencia en Hz, $\omega = 2\pi/T = 2\pi f$ es la frecuencia angular en rad/s, y $\phi$ es el desfase en radianes.
+
+La \textbf{longitud de onda} ($\lambda$) es la distancia espacial que recorre una onda simple en un período $T$ a la velocidad de propagación $c$:
+\begin{equation}
+    v_{prop} = \frac{\lambda}{T} \implies \lambda = \frac{c}{f} = c \cdot T
+\end{equation}
+En el vacío, la velocidad de las ondas electromagnéticas es $c = 3 \cdot 10^8$ m/s.
+
+\section{Dominio del Tiempo y de la Frecuencia}
+
+\begin{tcolorbox}[cajaResumen, title={Representación Temporal vs. Frecuencial}]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Dominio del tiempo ($t$)}: Muestra la evolución dinámica de la señal según transcurre el tiempo.
+    \item \textbf{Dominio de la frecuencia ($\omega$ o $f$)}: Muestra la amplitud y la fase de las componentes senoidales puras (armónicos) que forman la señal. Un armónico puro $f(t) = V \cos(\omega_0 t)$ genera una sola línea en el dominio de la frecuencia.
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Repaso de Números Complejos y Fórmulas de Euler}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Unidad imaginaria}: $j = \sqrt{-1}$.
+    \item \textbf{Formas binómica y polar}: $z = a + j b = |z| e^{j \phi}$, con $|z| = \sqrt{a^2 + b^2}$ y $\phi = \arctan(b/a)$.
+    \item \textbf{Fórmulas de Euler}:
+    \begin{equation}
+        \cos(x) = \frac{e^{jx} + e^{-jx}}{2}, \quad \sin(x) = \frac{e^{jx} - e^{-jx}}{2j}
+    \end{equation}
+    \item \textbf{Fase según la posición de un número complejo}:
+    \begin{itemize}
+        \item Real positivo: $\phi = 0$
+        \item Real negativo: $\phi = \pi$
+        \item Imaginario puro positivo: $\phi = \frac{\pi}{2}$
+        \item Imaginario puro negativo: $\phi = -\frac{\pi}{2}$
+    \end{itemize}
+\end{itemize}
+
+\section{Serie de Fourier para Señales Periódicas}
+
+Toda función $f(t)$ continua y periódica con período $T$ se descompone en una suma infinita de funciones senoidales puras denominadas armónicos.
+
+\subsection{Forma Trigonométrica}
+\begin{equation}
+    f(t) = \frac{a_0}{T} + \frac{2}{T} \sum_{n=1}^{\infty} \left( a_n \cos(\omega_n t) + b_n \sin(\omega_n t) \right)
+\end{equation}
+con $\omega_n = n \omega_1 = \frac{2\pi}{T} n$ y coeficientes:
+\begin{equation}
+    a_n = \int_{-T/2}^{T/2} f(t) \cos(\omega_n t) \, dt, \quad b_n = \int_{-T/2}^{T/2} f(t) \sin(\omega_n t) \, dt
+\end{equation}
+
+Forma compacta en cosenos desfasados:
+\begin{equation}
+    f(t) = \frac{a_0}{T} + \frac{2}{T} \sum_{n=1}^{\infty} |c_n| \cos(\omega_n t + \theta_n)
+\end{equation}
+donde $c_n = a_n - j b_n = |c_n| e^{j \theta_n}$, $|c_n| = \sqrt{a_n^2 + b_n^2}$ y $\theta_n = \arctan\left(-\frac{b_n}{a_n}\right)$.
+
+\subsection{Forma Exponencial Compleja}
+\begin{equation}
+    f(t) = \frac{1}{T} \sum_{n=-\infty}^{\infty} c_n e^{j \omega_n t}, \quad c_n = \int_{-T/2}^{T/2} f(t) e^{-j \omega_n t} \, dt
+\end{equation}
+
+\subsection{Espectros Discretos y Teorema de Parseval}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Espectro de Amplitud}: Gráfica del módulo $|c_n|$ frente a la frecuencia $\omega$.
+    \item \textbf{Espectro de Fase}: Gráfica del argumento $\angle c_n = \theta_n$ frente a la frecuencia $\omega$.
+    \item \textbf{Teorema de Parseval}: La potencia media disipada por la señal en una resistencia de $1\,\Omega$ equivale a la suma de las potencias de cada armónico individual:
+    \begin{equation}
+        \bar{P} = \frac{1}{T} \int_{-T/2}^{T/2} |f(t)|^2 \, dt = \sum_{n=-\infty}^{\infty} \left| \frac{c_n}{T} \right|^2
+    \end{equation}
+\end{itemize}
+
+\section{Tren de Pulsos Rectangulares Periódico}
+
+Para un tren de pulsos rectangulares de amplitud $V$, anchura $\tau$ y período $T$ centrado en $t=0$:
+\begin{equation}
+    c_0 = a_0 = V\tau, \quad c_n = V\tau \frac{\sin(\omega_n \tau / 2)}{\omega_n \tau / 2} = V\tau \, \text{sinc}\left(\frac{\omega_n \tau}{2}\right), \quad \theta_n = 0
+\end{equation}
+
+\begin{tcolorbox}[cajaResumen, title={Propiedades del Tren de Pulsos}]
+\begin{itemize}[leftmargin=*]
+    \item Su espectro es discreto con infinitos armónicos a frecuencias múltiplos de $\omega_1 = 2\pi/T$.
+    \item La mayor parte de la energía se concentra en las bajas frecuencias bajo la envolvente sinc.
+    \item Si el período $T$ disminuye, aumenta la separación entre armónicos ($2\pi/T$).
+    \item Si la anchura del pulso $\tau$ disminuye, el contenido en frecuencia se extiende sobre un rango mayor.
+\end{itemize}
+\end{tcolorbox}
+
+\section{Integral y Transformada de Fourier (Señales No Periódicas)}
+
+Cuando el período tiende a infinito ($T \to \infty$), la separación entre armónicos tiende a cero ($\Delta\omega \to 0$) y el espectro discreto se transforma en un espectro continuo.
+
+\begin{equation}
+    F(\omega) = \mathcal{F}\{f(t)\} = \int_{-\infty}^{\infty} f(t) e^{-j\omega t} \, dt
+\end{equation}
+\begin{equation}
+    f(t) = \mathcal{F}^{-1}\{F(\omega)\} = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega) e^{j\omega t} \, d\omega
+\end{equation}
+
+\subsection{Pulso Rectangular Aislado}
+Para un pulso rectangular de amplitud $V$ y duración $\tau$ centrado en $t=0$:
+\begin{equation}
+    F(\omega) = V \tau \frac{\sin(\omega \tau / 2)}{\omega \tau / 2}
+\end{equation}
+
+\section{Ancho de Banda de una Señal}
+
+El ancho de banda es la medida de la dispersión frecuencial donde se concentra la mayor parte de la potencia de la señal.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Criterio 1 (Primer corte por cero)}: Frecuencia dada por el primer cero del espectro. Para un pulso de anchura $\tau$:
+    \begin{equation}
+        \omega_{AB} = \frac{2\pi}{\tau} \text{ rad/s} \quad \iff \quad f_{AB} = \frac{1}{\tau} \text{ Hz}
+    \end{equation}
+    \item \textbf{Criterio 2 (Banda limitada)}: Frecuencia máxima a partir de la cual el espectro es estrictamente nulo.
+    \item \textbf{Criterio 3 (Frecuencias desplazadas)}: Diferencia entre la frecuencia máxima y mínima ($\Delta f = f_{max} - f_{min}$).
+\end{itemize}
+
+\section{Sistemas Lineales Estacionarios (LTI) y Respuesta en Frecuencia}
+
+\subsection{Definición de Distorsión y Tipos de Sistemas}
+La distorsión es la alteración en la forma de onda de una señal al atravesar un sistema.
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Sistemas Lineales}: No generan nuevas componentes de frecuencia; solo modifican la amplitud y la fase de las componentes de entrada.
+    \item \textbf{Sistemas No Lineales}: Introducen nuevas componentes frecuenciales en la salida.
+\end{itemize}
+
+\subsection{Función de Transferencia}
+Un sistema LTI se caracteriza unívocamente por su función de transferencia $H(\omega)$, que relaciona la transformada de Fourier de la salida $G(\omega)$ con la de la entrada $F(\omega)$:
+\begin{equation}
+    H(\omega) = \frac{G(\omega)}{F(\omega)} \implies G(\omega) = H(\omega) F(\omega)
+\end{equation}
+Ejemplo para una red eléctrica RC serie (salida en el condensador):
+\begin{equation}
+    H(\omega) = \frac{1}{1 + j\omega RC}
+\end{equation}
+
+\subsection{Teorema de la Respuesta Lineal}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Entrada senoidal trigonométrica}: Si $f(t) = A \cos(\omega_1 t)$, la salida es:
+    \begin{equation}
+        g(t) = A |H(\omega_1)| \cos(\omega_1 t + \theta(\omega_1))
+    \end{equation}
+    \item \textbf{Entrada exponencial compleja}: Si $f(t) = A e^{j \omega_0 t}$, la salida es:
+    \begin{equation}
+        g(t) = H(\omega_0) A e^{j \omega_0 t} = |H(\omega_0)| A e^{j(\omega_0 t + \theta(\omega_0))}
+    \end{equation}
+\end{itemize}
+
+\subsection{Ancho de Banda del Sistema}
+El ancho de banda $B_s$ es la frecuencia superior que el sistema deja pasar:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Criterio de -3 dB}: Frecuencia $B_s$ donde el módulo decae a $|H(2\pi B_s)| = 0.707 = 1/\sqrt{2}$ de su valor máximo (reducción a la mitad de la potencia).
+    \item \textbf{Criterio de primer paso por cero}: Frecuencia en la cual el módulo $|H(\omega)|$ se anula por primera vez.
+\end{itemize}
+
+\subsection{Estudio Cualitativo de la Respuesta en Frecuencia}
+Dada una señal de ancho de banda $B$ que entra a un sistema de ancho de banda $B_s$:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Caso $B > B_s$}: La salida está fuertemente distorsionada. La forma final la impone el sistema y su ancho de banda efectivo pasa a ser $B_s$.
+    \item \textbf{Caso $B \sim B_s$}: Distorsión moderada; la salida conserva cierta semejanza con la entrada.
+    \item \textbf{Caso $B < B_s$}: Transmisión sin distorsión; la salida es una réplica fiel de la entrada.
+\end{itemize}
+
+\section{Perturbaciones en la Transmisión de Señales}
+
+\begin{tcolorbox}[cajaResumen, title={Tipos de Perturbaciones}]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Atenuación}: Pérdida inevitable de potencia por la distancia. Reduce la amplitud pero no altera la forma de onda. Se mide en dB:
+    \begin{equation}
+        N = 10 \log_{10}\left(\frac{P_{enviada}}{P_{recibida}}\right) \text{ dB}
+    \end{equation}
+    \item \textbf{Distorsión de Atenuación}: Producida cuando el medio atenúa de forma desigual a las diferentes frecuencias. Se corrige mediante ecualizadores de atenuación.
+    \item \textbf{Distorsión de Retardo (o Fase)}: Ocurre cuando las componentes de distinta frecuencia se propagan a velocidades diferentes, llegando al receptor en instantes distintos. Se corrige mediante ecualizadores de retardo.
+    \item \textbf{Ruido}: Procesos aleatorios aditivos.
+    \begin{itemize}
+        \item \textit{Térmico o Blanco}: Inevitable, origen agitación térmica. Potencia uniforme en todo el espectro.
+        \item \textit{Diafonía (Crosstalk)}: Acoplamiento electromagnético indeseado entre líneas o cables próximos.
+        \item \textit{Impulsivo}: Picos de corta duración y elevada amplitud (conmutaciones, tormentas). Muy destructivo en transmisión de datos digitales.
+    \end{itemize}
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Condiciones para un Medio de Transmisión Ideal}
+Para lograr una transmisión totalmente libre de distorsión, la función de transferencia del medio debe cumplir:
+\begin{equation}
+    |H(\omega)| = K \text{ (constante)}, \quad \theta(\omega) = -\omega t_d \text{ (fase lineal con pendiente negativa)}
+\end{equation}
+Si $K = 1$, el medio es ideal puro (la señal ni se atenúa ni se distorsiona, solo experimenta un retardo $t_d$).
+
+\section{Formulario Completo del Tema 2}
+
+\begin{tcolorbox}[cajaFormulario, title={Formulario General: Señales y Series de Fourier}]
+\textbf{1. Parámetros de Señales Senoidales y Ondas}:
+\[
+f = \frac{1}{T}, \quad \omega = 2\pi f = \frac{2\pi}{T}, \quad \lambda = \frac{c}{f} = c \cdot T
+\]
+
+\textbf{2. Serie Compleja de Fourier (Señales Periódicas)}:
+\[
+f(t) = \frac{1}{T} \sum_{n=-\infty}^{\infty} c_n e^{j n \omega_1 t}, \quad c_n = \int_{-T/2}^{T/2} f(t) e^{-j n \omega_1 t} \, dt
+\]
+
+\textbf{3. Relación entre Coeficientes Trigonométricos y Complejos}:
+\[
+c_n = a_n - j b_n, \quad |c_n| = \sqrt{a_n^2 + b_n^2}, \quad \theta_n = \arctan\left(-\frac{b_n}{a_n}\right)
+\]
+
+\textbf{4. Potencia Media (Teorema de Parseval para Señales Periódicas)}:
+\[
+\bar{P} = \frac{1}{T} \int_{-T/2}^{T/2} |f(t)|^2 \, dt = \sum_{n=-\infty}^{\infty} \left|\frac{c_n}{T}\right|^2
+\]
+
+\textbf{5. Tren de Pulsos Rectangulares Periódico}:
+\[
+c_0 = V\tau, \quad c_n = V\tau \frac{\sin(\omega_n \tau / 2)}{\omega_n \tau / 2}, \quad \omega_{AB} = \frac{2\pi}{\tau} \text{ rad/s}
+\]
+\end{tcolorbox}
+
+\begin{tcolorbox}[cajaFormulario, title={Formulario General: Transformada de Fourier y Sistemas LTI}]
+\textbf{1. Par de Transformadas de Fourier}:
+\[
+F(\omega) = \int_{-\infty}^{\infty} f(t) e^{-j\omega t} \, dt, \quad f(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega) e^{j\omega t} \, d\omega
+\]
+
+\textbf{2. Propiedades de la Transformada de Fourier}:
+\begin{itemize}[leftmargin=*]
+    \item Linealidad: $\mathcal{F}\{a f_1(t) + b f_2(t)\} = a F_1(\omega) + b F_2(\omega)$
+    \item Componente de continua: $F(0) = \int_{-\infty}^{\infty} f(t) \, dt$
+    \item Escalado temporal: $\mathcal{F}\{f(at)\} = \frac{1}{|a|} F\left(\frac{\omega}{a}\right)$
+    \item Desplazamiento temporal: $\mathcal{F}\{f(t - t_0)\} = F(\omega) e^{-j \omega t_0}$
+    \item Modulación frecuencial: $\mathcal{F}\{f(t) e^{j \omega_0 t}\} = F(\omega - \omega_0)$
+    \item Modulación cosenoidal: $\mathcal{F}\{f(t) \cos(\omega_0 t)\} = \frac{F(\omega - \omega_0) + F(\omega + \omega_0)}{2}$
+    \item Derivación: $\mathcal{F}\left\{\frac{df(t)}{dt}\right\} = j \omega F(\omega)$
+    \item Integración: $\mathcal{F}\left\{\int_{-\infty}^{t} f(\tau) d\tau\right\} = \frac{F(\omega)}{j\omega}$
+\end{itemize}
+
+\textbf{3. Respuesta de Sistemas LTI}:
+\[
+G(\omega) = H(\omega) F(\omega), \quad H(\omega) = |H(\omega)| e^{j\theta(\omega)}
+\]
+
+\textbf{4. Medidas de Potencia y Atenuación en Decibelios}:
+\[
+\text{Relación de Potencias (dB)} = 10 \log_{10}\left(\frac{P_A}{P_B}\right)
+\]
+\[
+\text{Atenuación (dB)} = 10 \log_{10}\left(\frac{P_{enviada}}{P_{recibida}}\right)
+\]
+\end{tcolorbox}
