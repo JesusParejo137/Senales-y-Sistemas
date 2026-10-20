@@ -1,17 +1,55 @@
+% ==============================================================================
+% PREÁMBULO UNIFICADO
+% Base: proyecto original (tcolorbox, enlaces en color, márgenes de 2.5 cm).
+% Incorporado del proyecto nuevo: \imagen, \huecodiagrama y los entornos
+% ejercicio / resolucion / mecanizado para los exámenes resueltos.
+%
+% Uso: \input{preambulo} en el .tex principal (justo tras \documentclass),
+% o bien pegar el contenido directamente.
+% ==============================================================================
+
+% --- Fuentes, codificación e idioma -------------------------------------------
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{lmodern}
 \usepackage[spanish, es-tabla]{babel}
-\usepackage{amsmath, amsfonts, amssymb}
-\usepackage{geometry}
+
+% --- Matemáticas y utilidades -------------------------------------------------
+\usepackage{amsmath, amssymb}   % amssymb ya carga amsfonts
 \usepackage{enumitem}
+\usepackage{etoolbox}           % \ifstrempty
+
+% --- Color y cajas ------------------------------------------------------------
 \usepackage{xcolor}
 \usepackage[most]{tcolorbox}
-\usepackage{hyperref}   % mejor dejarlo al final
 
-% Configuración de márgenes
-\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+% --- Figuras (del proyecto nuevo) ---------------------------------------------
+\usepackage{graphicx}
+\usepackage{caption}            % antes de hyperref
+\graphicspath{{imagenes/}}      % si el original ya tenía otra ruta: {{imagenes/}{figuras/}}
+\captionsetup{font=small,labelfont=bf}
+\newcommand{\imagen}[4][0.8\linewidth]{%
+  \par\addvspace{0.6em}%
+  \begin{center}
+    \includegraphics[width=#1]{#2}\captionof{figure}{#3}\label{#4}
+  \end{center}\par\addvspace{0.6em}}
 
-% Si tu clase es article, [chapter] da error: usa [section] o quítalo
-\newcounter{problemacontador}[chapter]
+% --- Página -------------------------------------------------------------------
+\usepackage[margin=2.5cm]{geometry}
+
+% --- Hipervínculos (siempre al final de la lista de paquetes) -----------------
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!80!black,
+    citecolor=blue!80!black,
+    urlcolor=blue!80!black,
+    pageanchor=false
+}
+
+% ==============================================================================
+% COLORES Y ESTILOS DE CAJA (originales)
+% ==============================================================================
 
 % Paleta de colores
 \definecolor{usalBlue}{RGB}{0, 51, 102}
@@ -48,8 +86,23 @@
     }
 }
 
-% Entorno problema
-\newtcolorbox[use counter=problemacontador]{problema}[1][]{
+% ==============================================================================
+% PROBLEMAS: DOS ESTILOS CON UN MISMO NOMBRE PÚBLICO (`problema`)
+% ------------------------------------------------------------------------------
+% Los dos proyectos definían `problema` y `problemacontador`, así que:
+%   - problemacaja : el `problema` ORIGINAL (tcolorbox, "Problema 3.1: ...")
+%   - ejercicio    : el `problema` NUEVO (encabezado simple, "Ejercicio 1: ...")
+% `problema` es un alias de uno u otro según el estilo activo:
+%   \estiloApuntes -> `problema` = caja original   (activo por defecto)
+%   \estiloExamen  -> `problema` = estilo ejercicio (para el capítulo de exámenes)
+% Ambos comparten el contador `problemacontador` (se reinicia en cada capítulo).
+% ==============================================================================
+
+% Contador (reinicia en cada capítulo; con clase article usar [section])
+\newcounter{problemacontador}[chapter]
+
+% --- Estilo original: caja ----------------------------------------------------
+\newtcolorbox[use counter=problemacontador]{problemacaja}[1][]{
   enhanced jigsaw,       % como enhanced, pero con esquinas rectas en los cortes
   breakable,
   colback=boxbg,
@@ -62,4 +115,67 @@
   after skip=10pt,
   title={Problema~\thetcbcounter\ifstrempty{#1}{}{: #1}},
   lower separated=true
+}
+
+% --- Estilo exámenes: encabezado simple ---------------------------------------
+\newenvironment{ejercicio}[1][]{%
+  \par\addvspace{1.2em}%
+  % Numeración sin prefijo de capítulo ("Ejercicio 1", no "Ejercicio 5.1");
+  % el cambio es local al entorno y afecta también a \label/\ref.
+  \renewcommand{\theproblemacontador}{\arabic{problemacontador}}%
+  \noindent\refstepcounter{problemacontador}%
+  {\Large\bfseries Ejercicio \theproblemacontador
+   \ifstrempty{#1}{}{: #1}\par}\nobreak
+  \vspace{0.4em}\noindent\ignorespaces
+}{%
+  \par\addvspace{0.8em}%
+}
+
+% --- Selector de estilo -------------------------------------------------------
+\newcommand{\estiloApuntes}{\let\problema\problemacaja\let\endproblema\endproblemacaja}
+\newcommand{\estiloExamen}{\let\problema\ejercicio\let\endproblema\endejercicio}
+\estiloApuntes  % por defecto, todo el proyecto original queda igual que antes
+
+% ==============================================================================
+% ENTORNOS DE EXÁMENES (del proyecto nuevo, sin cambios)
+% ==============================================================================
+
+% --- Entorno Resolución (separado por línea horizontal sencilla) --------------
+\newenvironment{resolucion}{%
+  \par\addvspace{0.4em}%
+  \noindent\rule{\linewidth}{0.6pt}\par\nobreak
+  \vspace{0.3em}%
+  \noindent{\large\bfseries Resolución Paso a Paso:\par}\nobreak
+  \vspace{0.5em}\noindent\ignorespaces
+}{%
+  \par\addvspace{0.4em}%
+  \noindent\rule{\linewidth}{0.6pt}\par
+  \addvspace{1.2em}%
+}
+
+% --- Entorno Mecanizado (estructura metodológica fija) ------------------------
+\newenvironment{mecanizado}{%
+  \par\addvspace{0.4em}%
+  \small
+  \noindent\textbf{Estructura de resolución}\par\nobreak
+  \vspace{0.2em}%
+  \itshape\noindent\ignorespaces
+}{%
+  \par\addvspace{0.6em}%
+}
+
+% --- Hueco de diagrama con descripción para IA --------------------------------
+\newcommand{\huecodiagrama}[2]{%
+  \par\addvspace{0.6em}%
+  \begin{center}
+    \framebox[\linewidth][c]{%
+      \begin{minipage}{0.95\linewidth}
+        \vspace{0.4em}
+        \noindent\textbf{[DIAGRAMA REQUERIDO: #1]}\\[0.3em]
+        \small\noindent\textbf{Descripción técnica para el generador gráfico:} #2\par
+        \vspace{0.4em}
+      \end{minipage}%
+    }
+  \end{center}
+  \par\addvspace{0.6em}%
 }

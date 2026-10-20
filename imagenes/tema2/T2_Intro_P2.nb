@@ -1,0 +1,142 @@
+Notebook[{Cell[
+BoxData[{RowBox[{RowBox[{"ClearAll","[",RowBox[{"fs",","," ","blue",","," ","red",","," ","green",","," ","gray",","," ","tPos",","," ","tL",","," ","ticksT",","," ","tyY",","," ","label",","," ","sig",","," ","ghostLine",",","\n","  ","mapMark",","," ","panel",","," ","g1",","," ","g2",","," ","g3",","," ","fig"}],"]"}],";"}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{RowBox[{"fs"," ","="," ","20"}],";"}],"      ",RowBox[
+{"(*"," ",RowBox[{"tama\[NTilde]o"," ","de"," ","fuente"," ","\[UAcute]nico"}]," ","*)"}]}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{"blue"," ","="," ",RowBox[{"RGBColor","[",RowBox[{"0.12",","," ","0.47",","," ","0.71"}],"]"}]}],";"}],"\n",RowBox[
+{RowBox[{"red"," ","="," ",RowBox[{"RGBColor","[",RowBox[{"0.84",","," ","0.15",","," ","0.16"}],"]"}]}],";"}],"\n",RowBox[
+{RowBox[{"green"," ","="," ",RowBox[{"RGBColor","[",RowBox[{"0.13",","," ","0.55",","," ","0.13"}],"]"}]}],";"}],"\n",RowBox[
+{RowBox[{"gray"," ","="," ",RowBox[{"GrayLevel","[","0.4","]"}]}],";"}],RowBox[{"\n","\n"}],RowBox[
+{RowBox[{"(*"," ",RowBox[{RowBox[{"Texto"," ","con"," ","tama\[NTilde]o"," ","fs"}],";"," ",RowBox[
+{"pos"," ","puede"," ","ser"," ","una"," ","lista"," ","o"," ",RowBox[{"Scaled","[","...","]"}]}]}]," ","*)"}],"\n",RowBox[
+{RowBox[{RowBox[{"label","[",RowBox[{"expr_",","," ","col_",","," ","pos_",","," ",RowBox[
+{"off_List"," ",":"," ",RowBox[{"{",RowBox[{RowBox[{"-","1"}],","," ","0"}],"}"}]}]}],"]"}]," ",":="," ",RowBox[
+{"Text","[",RowBox[{RowBox[{"Style","[",RowBox[{"expr",","," ","fs",","," ","col"}],"]"}],","," ","pos",","," ","off"}],"]"}]}],";"}]}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{"tPos"," ","="," ",RowBox[{"{",RowBox[{RowBox[{"-","1"}],","," ",RowBox[
+{RowBox[{"-","1"}],"/","2"}],","," ","0",","," ",RowBox[{"1","/","2"}],","," ","1",","," ",RowBox[
+{"3","/","2"}],","," ","2"}],"}"}]}],";"}],"\n",RowBox[{RowBox[{"tL"," ","="," ",RowBox[
+{"{",RowBox[{"\"\[Minus]1\"",","," ","\"\[Minus]1/2\"",","," ","\"0\"",","," ","\"1/2\"",","," ","\"1\"",","," ","\"3/2\"",","," ","\"2\""}],"}"}]}],";"}],"\n",RowBox[
+{RowBox[{"ticksT"," ","="," ",RowBox[{"Table","[",RowBox[{RowBox[{"{",RowBox[{RowBox[
+{"tPos","[",RowBox[{"[","k","]"}],"]"}],","," ",RowBox[{"Style","[",RowBox[{RowBox[
+{"tL","[",RowBox[{"[","k","]"}],"]"}],","," ","fs"}],"]"}]}],"}"}],","," ",RowBox[
+{"{",RowBox[{"k",","," ","7"}],"}"}]}],"]"}]}],";"}],"\n",RowBox[{RowBox[{"tyY"," ","="," ",RowBox[
+{"{",RowBox[{RowBox[{"{",RowBox[{"0",","," ",RowBox[{"Style","[",RowBox[{"\"0\"",","," ","fs"}],"]"}]}],"}"}],","," ",RowBox[
+{"{",RowBox[{"1",","," ",RowBox[{"Style","[",RowBox[{"\"1\"",","," ","fs"}],"]"}]}],"}"}],","," ",RowBox[
+{"{",RowBox[{"2",","," ",RowBox[{"Style","[",RowBox[{"\"2\"",","," ","fs"}],"]"}]}],"}"}]}],"}"}]}],";"}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"Se\[NTilde]al"," ","definida"," ","por"," ","los"," ","v\[EAcute]rtices"," ","de"," ","su"," ","tramo"," ","no"," ",RowBox[
+{"nulo",":"," ",RowBox[{RowBox[{"relleno"," ","suave"}]," ","+"," ",RowBox[{"contorno"," ","grueso"}]}]}]}]," ","*)"}],"\n",RowBox[
+{RowBox[{RowBox[{"sig","[",RowBox[{"pts_List",","," ","col_"}],"]"}]," ",":="," ",RowBox[
+{"{","\n","   ",RowBox[{RowBox[{"{",RowBox[{RowBox[{"Opacity","[",RowBox[{"0.25",","," ","col"}],"]"}],","," ",RowBox[
+{"EdgeForm","[","None","]"}],","," ",RowBox[{"Polygon","[","pts","]"}]}],"}"}],",","\n","   ",RowBox[
+{"{",RowBox[{"col",","," ",RowBox[{"AbsoluteThickness","[","3","]"}],","," ",RowBox[
+{"Line","[",RowBox[{"Join","[",RowBox[{RowBox[{"{",RowBox[{"{",RowBox[{RowBox[{"-","6"}],","," ","0"}],"}"}],"}"}],","," ","pts",","," ",RowBox[
+{"{",RowBox[{"{",RowBox[{"6",","," ","0"}],"}"}],"}"}]}],"]"}],"]"}]}],"}"}]}],"}"}]}],";"}]}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"Se\[NTilde]al"," ","del"," ","paso"," ","anterior"," ","en"," ","trazo"," ","discontinuo"}]," ","*)"}],"\n",RowBox[
+{RowBox[{RowBox[{"ghostLine","[","pts_List","]"}]," ",":="," ",RowBox[{"{",RowBox[
+{"gray",","," ",RowBox[{"AbsoluteThickness","[","2","]"}],","," ",RowBox[{"Dashing","[",RowBox[
+{"{",RowBox[{"0.01",","," ","0.01"}],"}"}],"]"}],","," ",RowBox[{"Line","[","pts","]"}]}],"}"}]}],";"}]}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"Flecha"," ","entre"," ","los"," ","picos"," ",RowBox[
+{"(",RowBox[{"y"," ","="," ","2"}],")"}]," ","de"," ","la"," ","se\[NTilde]al"," ","anterior"," ",RowBox[
+{"(","x0",")"}]," ","y"," ","la"," ","nueva"," ",RowBox[{"(","x1",")"}]}]," ","*)"}],"\n",RowBox[
+{RowBox[{RowBox[{"mapMark","[",RowBox[{"x0_",","," ","x1_"}],"]"}]," ",":="," ",RowBox[
+{"{","\n","   ",RowBox[{RowBox[{"{",RowBox[{RowBox[{"GrayLevel","[","0.5","]"}],","," ",RowBox[
+{"AbsoluteThickness","[","1.5","]"}],","," ",RowBox[{"Dashing","[",RowBox[{"{",RowBox[
+{"0.01",","," ","0.01"}],"}"}],"]"}],",","\n","    ",RowBox[{"Line","[",RowBox[{"{",RowBox[
+{RowBox[{"{",RowBox[{"x0",","," ","2"}],"}"}],","," ",RowBox[{"{",RowBox[{"x0",","," ","2.3"}],"}"}]}],"}"}],"]"}],","," ",RowBox[
+{"Line","[",RowBox[{"{",RowBox[{RowBox[{"{",RowBox[{"x1",","," ","2"}],"}"}],","," ",RowBox[
+{"{",RowBox[{"x1",","," ","2.3"}],"}"}]}],"}"}],"]"}]}],"}"}],",","\n","   ",RowBox[
+{"{",RowBox[{"Black",","," ",RowBox[{"AbsoluteThickness","[","2","]"}],","," ",RowBox[
+{"Arrowheads","[","0.02","]"}],","," ",RowBox[{"Arrow","[",RowBox[{"{",RowBox[{RowBox[
+{"{",RowBox[{"x0",","," ","2.3"}],"}"}],","," ",RowBox[{"{",RowBox[{"x1",","," ","2.3"}],"}"}]}],"}"}],"]"}]}],"}"}]}],"}"}]}],";"}]}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{RowBox[{"panel","[",RowBox[{"content_",","," ","extra_List"}],"]"}]," ",":=","\n"," ",RowBox[
+{"Graphics","[",RowBox[{RowBox[{"{","content","}"}],",","\n","  ",RowBox[{"PlotRange"," ","\[Rule]"," ",RowBox[
+{"{",RowBox[{RowBox[{"{",RowBox[{RowBox[{"-","2"}],","," ","3"}],"}"}],","," ",RowBox[
+{"{",RowBox[{RowBox[{"-","0.3"}],","," ","3.4"}],"}"}]}],"}"}]}],",","\n","  ",RowBox[
+{"PlotRangePadding"," ","\[Rule]"," ","None"}],",","\n","  ",RowBox[{"Frame"," ","\[Rule]"," ","True"}],",","\n","  ",RowBox[
+{"FrameStyle"," ","\[Rule]"," ",RowBox[{"Directive","[",RowBox[{"Black",","," ",RowBox[
+{"AbsoluteThickness","[","1.5","]"}]}],"]"}]}],",","\n","  ",RowBox[{"FrameTicks"," ","\[Rule]"," ",RowBox[
+{"{",RowBox[{RowBox[{"{",RowBox[{"tyY",","," ","None"}],"}"}],","," ",RowBox[{"{",RowBox[
+{"ticksT",","," ","None"}],"}"}]}],"}"}]}],",","\n","  ",RowBox[{"GridLines"," ","\[Rule]"," ",RowBox[
+{"{",RowBox[{RowBox[{"{","0","}"}],","," ",RowBox[{"{","0","}"}]}],"}"}]}],",","\n","  ",RowBox[
+{"GridLinesStyle"," ","\[Rule]"," ",RowBox[{"Directive","[",RowBox[{RowBox[{"GrayLevel","[","0.6","]"}],","," ",RowBox[
+{"AbsoluteThickness","[","1.5","]"}]}],"]"}]}],",","\n","  ",RowBox[{"Background"," ","\[Rule]"," ","White"}],",","\n","  ",RowBox[
+{"AspectRatio"," ","\[Rule]"," ","0.3"}],",","\n","  ",RowBox[{"ImagePadding"," ","\[Rule]"," ",RowBox[
+{"{",RowBox[{RowBox[{"{",RowBox[{"60",","," ","20"}],"}"}],","," ",RowBox[{"{",RowBox[
+{"45",","," ","10"}],"}"}]}],"}"}]}],",","\n","  ",RowBox[{"Epilog"," ","\[Rule]"," ","extra"}]}],"]"}]}],";"}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{RowBox[{"Se\[NTilde]al"," ",RowBox[
+{"original",":"," ",RowBox[{"x",RowBox[{"(","t",")"}]}]}]}]," ","="," ",RowBox[{"t"," ",RowBox[
+{"en"," ","[",RowBox[{"0",","," ","2"}],"]"}]}]}]," ","*)"}],"\n",RowBox[{RowBox[
+{"g1"," ","="," ",RowBox[{"panel","[",RowBox[{RowBox[{"sig","[",RowBox[{RowBox[{"{",RowBox[
+{RowBox[{"{",RowBox[{"0",","," ","0"}],"}"}],","," ",RowBox[{"{",RowBox[{"2",","," ","2"}],"}"}],","," ",RowBox[
+{"{",RowBox[{"2",","," ","0"}],"}"}]}],"}"}],","," ","blue"}],"]"}],",","\n","   ",RowBox[
+{"{",RowBox[{RowBox[{"label","[",RowBox[{"\"x(t) = t,   0 \[LessEqual] t \[LessEqual] 2\"",","," ","blue",","," ",RowBox[
+{"Scaled","[",RowBox[{"{",RowBox[{"0.015",","," ","0.93"}],"}"}],"]"}]}],"]"}],",","\n","    ",RowBox[
+{"label","[",RowBox[{RowBox[{"Row","[",RowBox[{"{",RowBox[{RowBox[{"Subscript","[",RowBox[
+{"\"A\"",","," ","\"x\""}],"]"}],","," ","\" = 2\""}],"}"}],"]"}],","," ","Black",","," ",RowBox[
+{"Scaled","[",RowBox[{"{",RowBox[{"0.985",","," ","0.93"}],"}"}],"]"}],","," ",RowBox[
+{"{",RowBox[{"1",","," ","0"}],"}"}]}],"]"}],",","\n","    ",RowBox[{"label","[",RowBox[
+{"\"t\"",","," ","Black",","," ",RowBox[{"Scaled","[",RowBox[{"{",RowBox[{"0.99",","," ","0.12"}],"}"}],"]"}],","," ",RowBox[
+{"{",RowBox[{"1",","," ","0"}],"}"}]}],"]"}]}],"}"}]}],"]"}]}],";"}]}],RowBox[{"\n","\n"}],RowBox[
+{RowBox[{"(*"," ",RowBox[{RowBox[{RowBox[{"Paso"," ","1"}],":"," ",RowBox[{"compresi\[OAcute]n"," ","por"," ","2"," ","e"," ","inversi\[OAcute]n"}]}],","," ",RowBox[
+{RowBox[{"v1",RowBox[{"(","t",")"}]}]," ","="," ",RowBox[{"x",RowBox[{"(",RowBox[
+{RowBox[{"\[Minus]","2"}],"t"}],")"}]}]}],","," ",RowBox[{"soporte"," ","[",RowBox[
+{RowBox[{"\[Minus]","1"}],","," ","0"}],"]"}]}]," ","*)"}],"\n",RowBox[{RowBox[{"g2"," ","="," ",RowBox[
+{"panel","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{"ghostLine","[",RowBox[{"{",RowBox[
+{RowBox[{"{",RowBox[{"0",","," ","0"}],"}"}],","," ",RowBox[{"{",RowBox[{"2",","," ","2"}],"}"}],","," ",RowBox[
+{"{",RowBox[{"2",","," ","0"}],"}"}]}],"}"}],"]"}],","," ",RowBox[{"sig","[",RowBox[
+{RowBox[{"{",RowBox[{RowBox[{"{",RowBox[{RowBox[{"-","1"}],","," ","0"}],"}"}],","," ",RowBox[
+{"{",RowBox[{RowBox[{"-","1"}],","," ","2"}],"}"}],","," ",RowBox[{"{",RowBox[{"0",","," ","0"}],"}"}]}],"}"}],","," ","red"}],"]"}]}],"}"}],",","\n","   ",RowBox[
+{"{",RowBox[{RowBox[{"label","[",RowBox[{RowBox[{"Row","[",RowBox[{"{",RowBox[{RowBox[
+{"Subscript","[",RowBox[{"\"v\"",","," ","1"}],"]"}],","," ","\"(t) = x(\[Minus]2t)\""}],"}"}],"]"}],","," ","red",","," ",RowBox[
+{"Scaled","[",RowBox[{"{",RowBox[{"0.015",","," ","0.93"}],"}"}],"]"}]}],"]"}],",","\n","    ",RowBox[
+{"label","[",RowBox[{RowBox[{"Row","[",RowBox[{"{",RowBox[{"\"A = \"",","," ",RowBox[
+{"Subscript","[",RowBox[{"\"A\"",","," ","\"x\""}],"]"}],","," ","\"/2 = 1\""}],"}"}],"]"}],","," ","Black",","," ",RowBox[
+{"Scaled","[",RowBox[{"{",RowBox[{"0.985",","," ","0.93"}],"}"}],"]"}],","," ",RowBox[
+{"{",RowBox[{"1",","," ","0"}],"}"}]}],"]"}],",","\n","    ",RowBox[{"mapMark","[",RowBox[
+{"2",","," ",RowBox[{"-","1"}]}],"]"}],",","\n","    ",RowBox[{"label","[",RowBox[
+{"\"t \[RightArrow] \[Minus]t/2\"",","," ","Black",","," ",RowBox[{"{",RowBox[{"0.5",","," ","2.65"}],"}"}],","," ",RowBox[
+{"{",RowBox[{"0",","," ","0"}],"}"}]}],"]"}],",","\n","    ",RowBox[{"label","[",RowBox[
+{"\"x(t)\"",","," ","gray",","," ",RowBox[{"{",RowBox[{"2.1",","," ","1.0"}],"}"}]}],"]"}],",","\n","    ",RowBox[
+{"label","[",RowBox[{"\"t\"",","," ","Black",","," ",RowBox[{"Scaled","[",RowBox[
+{"{",RowBox[{"0.99",","," ","0.12"}],"}"}],"]"}],","," ",RowBox[{"{",RowBox[{"1",","," ","0"}],"}"}]}],"]"}]}],"}"}]}],"]"}]}],";"}]}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{RowBox[{RowBox[{"Paso"," ","2"}],":"," ",RowBox[
+{"traslaci\[OAcute]n"," ",RowBox[{"3","/","2"}]," ","a"," ","la"," ","derecha"}]}],","," ",RowBox[
+{RowBox[{"y",RowBox[{"(","t",")"}]}]," ","="," ",RowBox[{"v1",RowBox[{"(",RowBox[
+{"t"," ","\[Minus]"," ",RowBox[{"3","/","2"}]}],")"}]}]}],","," ",RowBox[{"soporte"," ","[",RowBox[
+{RowBox[{"1","/","2"}],","," ",RowBox[{"3","/","2"}]}],"]"}]}]," ","*)"}],"\n",RowBox[
+{RowBox[{"g3"," ","="," ",RowBox[{"panel","[",RowBox[{RowBox[{"{",RowBox[{RowBox[
+{"ghostLine","[",RowBox[{"{",RowBox[{RowBox[{"{",RowBox[{RowBox[{"-","1"}],","," ","0"}],"}"}],","," ",RowBox[
+{"{",RowBox[{RowBox[{"-","1"}],","," ","2"}],"}"}],","," ",RowBox[{"{",RowBox[{"0",","," ","0"}],"}"}]}],"}"}],"]"}],","," ",RowBox[
+{"sig","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{"{",RowBox[{RowBox[{"1","/","2"}],","," ","0"}],"}"}],","," ",RowBox[
+{"{",RowBox[{RowBox[{"1","/","2"}],","," ","2"}],"}"}],","," ",RowBox[{"{",RowBox[
+{RowBox[{"3","/","2"}],","," ","0"}],"}"}]}],"}"}],","," ","green"}],"]"}]}],"}"}],",","\n","   ",RowBox[
+{"{",RowBox[{RowBox[{"label","[",RowBox[{RowBox[{"Row","[",RowBox[{"{",RowBox[{"\"y(t) = \"",","," ",RowBox[
+{"Subscript","[",RowBox[{"\"v\"",","," ","1"}],"]"}],","," ","\"(t \[Minus] 3/2)\""}],"}"}],"]"}],","," ","green",","," ",RowBox[
+{"Scaled","[",RowBox[{"{",RowBox[{"0.015",","," ","0.93"}],"}"}],"]"}]}],"]"}],",","\n","    ",RowBox[
+{"label","[",RowBox[{RowBox[{"Row","[",RowBox[{"{",RowBox[{RowBox[{"Subscript","[",RowBox[
+{"\"A\"",","," ","\"y\""}],"]"}],","," ","\" = \"",","," ",RowBox[{"Subscript","[",RowBox[
+{"\"A\"",","," ","\"x\""}],"]"}],","," ","\"/|a| = 1\""}],"}"}],"]"}],",","\n","     ","Black",","," ",RowBox[
+{"Scaled","[",RowBox[{"{",RowBox[{"0.985",","," ","0.93"}],"}"}],"]"}],","," ",RowBox[
+{"{",RowBox[{"1",","," ","0"}],"}"}]}],"]"}],",","\n","    ",RowBox[{"mapMark","[",RowBox[
+{RowBox[{"-","1"}],","," ",RowBox[{"1","/","2"}]}],"]"}],",","\n","    ",RowBox[{"label","[",RowBox[
+{"\"t \[RightArrow] t + 3/2\"",","," ","Black",","," ",RowBox[{"{",RowBox[{RowBox[
+{"-","0.25"}],","," ","2.65"}],"}"}],","," ",RowBox[{"{",RowBox[{"0",","," ","0"}],"}"}]}],"]"}],",","\n","    ",RowBox[
+{"label","[",RowBox[{RowBox[{"Row","[",RowBox[{"{",RowBox[{RowBox[{"Subscript","[",RowBox[
+{"\"v\"",","," ","1"}],"]"}],","," ","\"(t)\""}],"}"}],"]"}],","," ","gray",","," ",RowBox[
+{"{",RowBox[{RowBox[{"-","1.1"}],","," ","1.0"}],"}"}],","," ",RowBox[{"{",RowBox[
+{"1",","," ","0"}],"}"}]}],"]"}],",","\n","    ",RowBox[{"label","[",RowBox[{"\"t\"",","," ","Black",","," ",RowBox[
+{"Scaled","[",RowBox[{"{",RowBox[{"0.99",","," ","0.12"}],"}"}],"]"}],","," ",RowBox[
+{"{",RowBox[{"1",","," ","0"}],"}"}]}],"]"}]}],"}"}]}],"]"}]}],";"}]}],RowBox[{"\n","\n"}],RowBox[
+{RowBox[{"fig"," ","="," ",RowBox[{"GraphicsColumn","[",RowBox[{RowBox[{"{",RowBox[
+{"g1",","," ","g2",","," ","g3"}],"}"}],","," ",RowBox[{"Spacings"," ","\[Rule]"," ","0"}],","," ",RowBox[
+{"Background"," ","\[Rule]"," ","White"}],","," ",RowBox[{"ImageSize"," ","\[Rule]"," ","800"}]}],"]"}]}],";"}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{"Export","[",RowBox[{RowBox[{"CloudObject","[","\"T2_Intro_P2_a.png\"","]"}],","," ","g1",","," ","\"PNG\"",","," ",RowBox[
+{"Background"," ","\[Rule]"," ","None"}],","," ",RowBox[{"ImageResolution"," ","\[Rule]"," ","300"}],","," ",RowBox[
+{"ImageSize"," ","\[Rule]"," ","800"}]}],"]"}],";"}],"\n",RowBox[{RowBox[{"Export","[",RowBox[
+{RowBox[{"CloudObject","[","\"T2_Intro_P2_b.png\"","]"}],","," ","g2",","," ","\"PNG\"",","," ",RowBox[
+{"Background"," ","\[Rule]"," ","None"}],","," ",RowBox[{"ImageResolution"," ","\[Rule]"," ","300"}],","," ",RowBox[
+{"ImageSize"," ","\[Rule]"," ","800"}]}],"]"}],";"}],"\n",RowBox[{RowBox[{"Export","[",RowBox[
+{RowBox[{"CloudObject","[","\"T2_Intro_P2_c.png\"","]"}],","," ","g3",","," ","\"PNG\"",","," ",RowBox[
+{"Background"," ","\[Rule]"," ","None"}],","," ",RowBox[{"ImageResolution"," ","\[Rule]"," ","300"}],","," ",RowBox[
+{"ImageSize"," ","\[Rule]"," ","800"}]}],"]"}],";"}]}],"Input",CellLabel -> "In[163]:= ",
+ExpressionUUID -> "5d88c01b-ee3e-43e9-ab3f-75c99729164b"]},StyleDefinitions -> "Default.nb",
+FrontEndVersion -> "15. for Wolfram Cloud 1.77.1 (August 27, 2026)"]

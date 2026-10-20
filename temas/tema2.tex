@@ -42,6 +42,7 @@ La \textbf{longitud de onda} ($\lambda$) es la distancia espacial que recorre un
 \end{equation}
 En el vacío, la velocidad de las ondas electromagnéticas es $c = 3 \cdot 10^8$ m/s.
 
+\newpage
 \section{Dominio del Tiempo y de la Frecuencia}
 
 \begin{tcolorbox}[cajaResumen, title={Representación Temporal vs. Frecuencial}]
@@ -68,6 +69,7 @@ En el vacío, la velocidad de las ondas electromagnéticas es $c = 3 \cdot 10^8$
     \end{itemize}
 \end{itemize}
 
+\newpage
 \section{Serie de Fourier para Señales Periódicas}
 
 Toda función $f(t)$ continua y periódica con período $T$ se descompone en una suma infinita de funciones senoidales puras denominadas armónicos.
@@ -102,6 +104,7 @@ donde $c_n = a_n - j b_n = |c_n| e^{j \theta_n}$, $|c_n| = \sqrt{a_n^2 + b_n^2}$
     \end{equation}
 \end{itemize}
 
+\newpage
 \section{Tren de Pulsos Rectangulares Periódico}
 
 Para un tren de pulsos rectangulares de amplitud $V$, anchura $\tau$ y período $T$ centrado en $t=0$:
@@ -118,6 +121,185 @@ Para un tren de pulsos rectangulares de amplitud $V$, anchura $\tau$ y período 
 \end{itemize}
 \end{tcolorbox}
 
+\newpage
+
+% ==========================================
+% EJEMPLO 1: ANÁLISIS DE UN TREN DE PULSOS
+% ==========================================
+\begin{problema}[Análisis de un tren de pulsos rectangulares en el tiempo y la frecuencia]
+Un tren periódico de pulsos rectangulares de tensión $f(t)$, centrado en el origen $t=0$, presenta una amplitud de $V = 5\text{ V}$, una anchura de pulso $\tau = 2\text{ s}$ y un período fundamental de $T = 8\text{ s}$.
+
+\begin{enumerate}[label=\alph*)]
+    \item Determine la frecuencia angular fundamental $\omega_1$ y obtenga la expresión general de los coeficientes de Fourier $c_n$.
+    \item Calcule de forma numérica el valor del nivel de continua y de los cuatro primeros armónicos ($n = 1, 2, 3, 4$) de la serie trigonométrica de Fourier.
+    \item Escriba la expresión explícita de la serie de Fourier $f(t)$ truncada hasta el tercer armónico.
+    \item Determine las frecuencias en las cuales se anula el espectro de amplitud (cortes por cero) y calcule el ancho del lóbulo principal.
+\end{enumerate}
+
+\tcblower
+
+\textbf{Apartado a) Frecuencia fundamental y coeficientes de Fourier $c_n$:}
+
+1. \textbf{Frecuencia fundamental $\omega_1$}:
+   La frecuencia angular fundamental del tren de pulsos se obtiene directamente a partir del período $T = 8\text{ s}$:
+   \[
+   \omega_1 = \frac{2\pi}{T} = \frac{2\pi}{8} = \frac{\pi}{4}\text{ rad/s} \approx 0{,}7854\text{ rad/s}
+   \]
+
+2. \textbf{Expresión analítica de $c_n$}:
+   Aplicando la fórmula general del desarrollo de un pulso rectangular centrado en el origen de amplitud $V$ y anchura $\tau$:
+   \[
+   c_n = V \tau \frac{\sin(\omega_n \tau / 2)}{\omega_n \tau / 2} = V \tau \, \text{sinc}\left(\frac{\omega_n \tau}{2}\right)
+   \]
+   Sustituyendo los valores de $V = 5\text{ V}$, $\tau = 2\text{ s}$ y $\omega_n = n \omega_1 = \frac{n\pi}{4}\text{ rad/s}$:
+   \[
+   \frac{\omega_n \tau}{2} = \frac{\left(\frac{n\pi}{4}\right) \cdot 2}{2} = \frac{n\pi}{4}
+   \]
+   \[
+   c_n = (5 \cdot 2) \frac{\sin(n\pi / 4)}{n\pi / 4} = 10 \frac{\sin(n\pi / 4)}{n\pi / 4}\text{ (V}\cdot\text{s)}
+   \]
+
+\vspace{0.3cm}
+
+\textbf{Apartado b) Cálculo numérico de los coeficientes ($n = 0, 1, 2, 3, 4$):}
+
+La relación entre los coeficientes del espectro continuo $c_n$ y las amplitudes $a_n$ de la serie trigonométrica viene dada por $a_0 = \frac{c_0}{T}$ para la continua y $a_n = \frac{2}{T} |c_n|$ para $n \ge 1$:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Componente continua ($n = 0$)}:
+      \[
+      \frac{c_0}{T} = \frac{V \tau}{T} = \frac{5 \cdot 2}{8} = \frac{10}{8} = 1{,}25\text{ V}
+      \]
+      \textit{(El nivel de continua coincide con el valor medio temporal de la señal por período)}.
+
+    \item \textbf{Primer armónico ($n = 1$)}: $\omega_1 = \frac{\pi}{4}\text{ rad/s}$.
+      \[
+      c_1 = 10 \frac{\sin(\pi/4)}{\pi/4} = 10 \frac{\sqrt{2}/2}{\pi/4} = \frac{20\sqrt{2}}{\pi} \approx 9{,}003\text{ V}\cdot\text{s}
+      \]
+      \[
+      a_1 = \frac{2}{T} c_1 = \frac{2}{8} \left( \frac{20\sqrt{2}}{\pi} \right) = \frac{5\sqrt{2}}{\pi} \approx 2{,}251\text{ V}
+      \]
+
+    \item \textbf{Segundo armónico ($n = 2$)}: $\omega_2 = \frac{\pi}{2}\text{ rad/s}$.
+      \[
+      c_2 = 10 \frac{\sin(\pi/2)}{\pi/2} = 10 \frac{1}{\pi/2} = \frac{20}{\pi} \approx 6{,}366\text{ V}\cdot\text{s}
+      \]
+      \[
+      a_2 = \frac{2}{T} c_2 = \frac{2}{8} \left( \frac{20}{\pi} \right) = \frac{5}{\pi} \approx 1{,}592\text{ V}
+      \]
+
+    \item \textbf{Tercer armónico ($n = 3$)}: $\omega_3 = \frac{3\pi}{4}\text{ rad/s}$.
+      \[
+      c_3 = 10 \frac{\sin(3\pi/4)}{3\pi/4} = 10 \frac{\sqrt{2}/2}{3\pi/4} = \frac{20\sqrt{2}}{3\pi} \approx 3{,}001\text{ V}\cdot\text{s}
+      \]
+      \[
+      a_3 = \frac{2}{T} c_3 = \frac{2}{8} \left( \frac{20\sqrt{2}}{3\pi} \right) = \frac{5\sqrt{2}}{3\pi} \approx 0{,}750\text{ V}
+      \]
+
+    \item \textbf{Cuarto armónico ($n = 4$)}: $\omega_4 = \pi\text{ rad/s}$.
+      \[
+      c_4 = 10 \frac{\sin(\pi)}{\pi} = 0 \implies a_4 = 0\text{ V}
+      \]
+      \textit{(El cuarto armónico coincide exactamente con el primer corte por cero de la envolvente y por ello se anula)}.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Apartado c) Expresión de la Serie de Fourier en el tiempo $f(t)$:}
+
+Sustituyendo los coeficientes obtenidos en la forma trigonométrica $f(t) = a_0 + \sum_{n=1}^{\infty} a_n \cos(n \omega_1 t)$:
+\[
+f(t) \approx 1{,}25 + 2{,}251 \cos\left(\frac{\pi}{4} t\right) + 1{,}592 \cos\left(\frac{\pi}{2} t\right) + 0{,}750 \cos\left(\frac{3\pi}{4} t\right)\text{ (V)}
+\]
+
+\vspace{0.3cm}
+
+\textbf{Apartado d) Cortes por cero y ancho del lóbulo principal:}
+
+1. La envolvente del espectro es de la forma $\text{sinc}(x) = \frac{\sin x}{x}$, la cual se anula cuando el argumento es un múltiplo entero no nulo de $\pi$:
+   \[
+   \frac{\omega \tau}{2} = k \pi \quad (k \in \mathbb{Z} \setminus \{0\}) \implies \omega_k = \frac{2 k \pi}{\tau}
+   \]
+
+2. Como $\tau = 2\text{ s}$, los cortes por cero ocurren en las frecuencias angulares:
+   \[
+   \omega_k = \frac{2 k \pi}{2} = k \pi\text{ rad/s} \quad (k = \pm 1, \pm 2, \pm 3, \dots)
+   \]
+   El primer cero del espectro en frecuencias positivas se produce en $\omega_{\text{cero}} = \pi\text{ rad/s}$.
+
+3. El \textbf{ancho del lóbulo principal} es la distancia entre los dos primeros cortes por cero ($-\pi$ y $+\pi$):
+   \[
+   \Delta \omega_{\text{lóbulo}} = 2 \omega_{\text{cero}} = \frac{4\pi}{\tau} = \frac{4\pi}{2} = 2\pi\text{ rad/s} \quad (\text{equivalente a } \Delta f = 1\text{ Hz})
+   \]
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_pulso_rectangular_P1_a.png}
+\end{center}
+\end{problema}
+
+\newpage
+
+% ==========================================
+% EJEMPLO 2: DUALIDAD TIEMPO-FRECUENCIA
+% ==========================================
+\begin{problema}[Dualidad tiempo-frecuencia y efecto de las variaciones de $\tau$ y $T$]
+Tomando como referencia la señal original del Ejemplo 1 ($V = 5\text{ V}$, $\tau = 2\text{ s}$, $T = 8\text{ s}$), analice cuantitativamente el impacto sobre el espectro en los dos casos siguientes:
+
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Caso A (Compresión temporal)}: Manteniendo $T = 8\text{ s}$ y $V = 5\text{ V}$, la anchura de pulso se reduce a la mitad ($\tau' = 1\text{ s}$). Determine el nuevo nivel de continua, la frecuencia del primer corte por cero del espectro y el ancho del lóbulo principal. Compare y explique la relación entre la duración del pulso y el ancho de banda.
+    \item \textbf{Caso B (Expansión del período)}: Manteniendo $\tau = 2\text{ s}$ y $V = 5\text{ V}$, el período se duplica ($T'' = 16\text{ s}$). Determine la nueva frecuencia fundamental $\omega_1''$, la separación entre armónicos adyacentes y el número de armónicos contenidos dentro del lóbulo principal. Analice el comportamiento del espectro cuando $T \to \infty$.
+\end{enumerate}
+
+\tcblower
+
+\textbf{Apartado a) Caso A: Compresión temporal ($\tau' = 1\text{ s}$, $T = 8\text{ s}$)}
+
+1. \textbf{Nuevo nivel de continua}:
+   \[
+   \frac{c_0'}{T} = \frac{V \tau'}{T} = \frac{5 \cdot 1}{8} = 0{,}625\text{ V}
+   \]
+   Al reducir la duración del pulso a la mitad, el área por período disminuye al $50\%$, por lo que el nivel medio de tensión se reduce a la mitad ($0{,}625\text{ V}$ frente a los $1{,}25\text{ V}$ originales).
+
+2. \textbf{Primer corte por cero y ancho de lóbulo}:
+   El primer cero del espectro ocurre cuando la condición $\frac{\omega \tau'}{2} = \pi$ se satisface:
+   \[
+   \omega_{\text{cero}}' = \frac{2\pi}{\tau'} = \frac{2\pi}{1} = 2\pi\text{ rad/s} \quad \left(\text{frente a } \pi\text{ rad/s del caso original}\right)
+   \]
+   El nuevo ancho del lóbulo principal se duplica:
+   \[
+   \Delta \omega_{\text{lóbulo}}' = 2 \omega_{\text{cero}}' = 4\pi\text{ rad/s}
+   \]
+
+3. \textbf{Conclusión de la dualidad tiempo-frecuencia}:
+   Al comprimir la señal en el dominio del tiempo ($\tau$ disminuye), el espectro se expande en el dominio de la frecuencia. Un pulso más estrecho requiere un ancho de banda mayor para poder ser representado sin distorsión.
+
+\vspace{0.3cm}
+
+\textbf{Apartado b) Caso B: Expansión del período ($T'' = 16\text{ s}$, $\tau = 2\text{ s}$)}
+
+1. \textbf{Nueva frecuencia fundamental y separación entre armónicos}:
+   \[
+   \omega_1'' = \frac{2\pi}{T''} = \frac{2\pi}{16} = \frac{\pi}{8}\text{ rad/s} \approx 0{,}3927\text{ rad/s}
+   \]
+   La distancia frecuencial entre dos líneas espectrales adyacentes es $\Delta \omega = \omega_1'' = \frac{\pi}{8}\text{ rad/s}$, la mitad que en el caso original ($\frac{\pi}{4}\text{ rad/s}$).
+
+2. \textbf{Estructura del lóbulo principal}:
+   Como la anchura de pulso se mantiene en $\tau = 2\text{ s}$, los cortes por cero de la envolvente no varían y permanecen en múltiplos de $\omega_{\text{cero}} = \pi\text{ rad/s}$.
+   Al estar los armónicos más juntos ($\Delta \omega = \pi/8$), el número de armónicos que entran dentro del lóbulo principal $[0, \pi]$ aumenta:
+   \begin{itemize}[leftmargin=*]
+       \item En el caso original ($T = 8\text{ s}$), había $3$ armónicos no nulos ($n = 1, 2, 3$) antes del primer cero en $n = 4$.
+       \item En este nuevo caso ($T'' = 16\text{ s}$), hay $7$ armónicos no nulos ($n = 1, 2, 3, 4, 5, 6, 7$) antes del primer cero en $n = 8$ ($\omega_8'' = 8 \cdot \frac{\pi}{8} = \pi$).
+   \end{itemize}
+
+3. \textbf{Límite cuando $T \to \infty$ (Transición a la Transformada de Fourier)}:
+   Si el período $T$ tiende a infinito ($T \to \infty$), la distancia entre armónicos $\Delta \omega = \frac{2\pi}{T}$ tiende a cero ($\Delta \omega \to 0$). Las líneas discretas del espectro se vuelven infinitamente densas, transformando el espectro discreto de la Serie de Fourier en un espectro continuo: la **Transformada de Fourier**.
+
+\begin{center}
+    \includegraphics[width=0.95\textwidth]{imagenes/tema2/T2_pulso_rectangular_P2_a.png}
+\end{center}
+\end{problema}
+
+\newpage
 \section{Integral y Transformada de Fourier (Señales No Periódicas)}
 
 Cuando el período tiende a infinito ($T \to \infty$), la separación entre armónicos tiende a cero ($\Delta\omega \to 0$) y el espectro discreto se transforma en un espectro continuo.
@@ -249,6 +431,8 @@ c_0 = V\tau, \quad c_n = V\tau \frac{\sin(\omega_n \tau / 2)}{\omega_n \tau / 2}
 \]
 \end{tcolorbox}
 
+\newpage
+
 \begin{tcolorbox}[cajaFormulario, title={Formulario General: Transformada de Fourier y Sistemas LTI}]
 \textbf{1. Par de Transformadas de Fourier}:
 \[
@@ -283,7 +467,298 @@ G(\omega) = H(\omega) F(\omega), \quad H(\omega) = |H(\omega)| e^{j\theta(\omega
 
 \newpage
 
+\section{Introducción a las Transformaciones de Señales: Traslación y Escalado}
+
+\begin{tcolorbox}[cajaResumen, title={Resumen de Transformaciones Elementales de la Variable Independiente}]
+Dada una señal continua $f(t)$, las transformaciones sobre el eje del tiempo se expresan en la forma general $g(t) = f(at - t_0) = f\left(a\left(t - \frac{t_0}{a}\right)\right)$:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Traslación o Desplazamiento Temporal} ($f(t - t_0)$):
+    \begin{itemize}
+        \item Si $t_0 > 0$, la señal se \textbf{retarda} y se desplaza hacia la derecha $t_0$ unidades.
+        \item Si $t_0 < 0$, la señal se \textbf{adelanta} y se desplaza hacia la izquierda $|t_0|$ unidades.
+    \end{itemize}
+    \item \textbf{Escalamiento Temporal} ($f(at)$ con $a > 0$):
+    \begin{itemize}
+        \item Si $a > 1$, la señal se \textbf{comprime} en el tiempo por un factor $a$.
+        \item Si $0 < a < 1$, la señal se \textbf{expande} en el tiempo por un factor $1/a$.
+        \item El área bajo la curva cambia según: $\int_{-\infty}^{\infty} f(at) \, dt = \frac{1}{|a|} \int_{-\infty}^{\infty} f(\tau) \, d\tau$.
+    \end{itemize}
+    \item \textbf{Inversión Temporal} ($f(-t)$):
+    \begin{itemize}
+        \item Refleja la señal respecto al eje vertical $t = 0$.
+    \end{itemize}
+\end{itemize}
+\end{tcolorbox}
+
+\newpage
+
+% ==========================================
+% PROBLEMA 1
+% ==========================================
+\begin{problema}[Transformaciones elementales sobre un pulso rectangular]
+Sea la señal pulso rectangular elemental $p(t)$ definida por:
+\[
+p(t) = \begin{cases} 1 & \text{si } |t| \le 1 \\ 0 & \text{si } |t| > 1 \end{cases}
+\]
+
+\begin{center}
+    \includegraphics[width=0.85\textwidth]{imagenes/tema2/T2_Intro_P1_a.png}
+\end{center}
+
+Considérense las siguientes transformaciones de la señal:
+\begin{enumerate}
+    \item $g_1(t) = p(t - 3)$
+    \item $g_2(t) = p(2t)$
+    \item $g_3(t) = p\left(\frac{t}{2}\right)$
+\end{enumerate}
+
+Para cada una de ellas:
+\begin{enumerate}[label=\alph*)]
+    \item Obtenga el intervalo explícito de tiempo $t$ en el cual la señal es no nula.
+    \item Indique el tipo de transformación (retardo, adelanto, compresión o expansión) y el valor del área bajo la curva.
+\end{enumerate}
+
+\tcblower
+
+\textbf{1. Señal $g_1(t) = p(t - 3)$ (Traslación):}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Intervalo no nulo}: La condición de definición de $p(\tau)$ es $|\tau| \le 1 \iff -1 \le \tau \le 1$. Sustituyendo $\tau = t - 3$:
+    \[
+    -1 \le t - 3 \le 1 \implies 2 \le t \le 4
+    \]
+    La señal $g_1(t)$ vale $1$ en el intervalo $t \in [2, 4]$ y $0$ en el resto.
+    \item \textbf{Tipo de transformación y área}: Se trata de un \textbf{retardo temporal} (desplazamiento de $3$ unidades hacia la derecha). El área bajo la curva permanece invariable:
+    \[
+    \text{Área}(g_1) = \int_{2}^{4} 1 \, dt = 2 = \text{Área}(p)
+    \]
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_Intro_P1_b.png}
+\end{center}
+
+\textbf{2. Señal $g_2(t) = p(2t)$ (Compresión temporal):}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Intervalo no nulo}: Sustituyendo $\tau = 2t$ en $-1 \le \tau \le 1$:
+    \[
+    -1 \le 2t \le 1 \implies -\frac{1}{2} \le t \le \frac{1}{2}
+    \]
+    La señal $g_2(t)$ es no nula en $t \in \left[-\frac{1}{2}, \frac{1}{2}\right]$.
+    \item \textbf{Tipo de transformación y área}: Corresponde a una \textbf{compresión temporal} por un factor $a = 2$. La duración de la señal se reduce a la mitad y su área disminuye proporcionalmente:
+    \[
+    \text{Área}(g_2) = \int_{-1/2}^{1/2} 1 \, dt = 1 = \frac{\text{Área}(p)}{2}
+    \]
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_Intro_P1_c.png}
+\end{center}
+
+\textbf{3. Señal $g_3(t) = p\left(\frac{t}{2}\right)$ (Expansión temporal):}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Intervalo no nulo}: Sustituyendo $\tau = \frac{t}{2}$ en $-1 \le \tau \le 1$:
+    \[
+    -1 \le \frac{t}{2} \le 1 \implies -2 \le t \le 2
+    \]
+    La señal $g_3(t)$ es no nula en $t \in [-2, 2]$.
+    \item \textbf{Tipo de transformación y área}: Corresponde a una \textbf{expansión temporal} por un factor $1/a = 2$. La duración del pulso se duplica y su área aumenta al doble:
+    \[
+    \text{Área}(g_3) = \int_{-2}^{2} 1 \, dt = 4 = 2 \cdot \text{Área}(p)
+    \]
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_Intro_P1_d.png}
+\end{center}
+\end{problema}
+
+\newpage
+
+% ==========================================
+% PROBLEMA 2
+% ==========================================
+\begin{problema}[Combinación de traslación, escalado e inversión temporal]
+Dada la señal ramplada $x(t)$ definida por:
+\[
+x(t) = \begin{cases} t & \text{si } 0 \le t \le 2 \\ 0 & \text{en otro caso} \end{cases}
+\]
+Se define la señal transformada $y(t) = x(3 - 2t)$.
+
+\begin{enumerate}[label=\alph*)]
+    \item Obtenga la expresión analítica detallada de $y(t)$ indicando sus tramos y el intervalo donde es distinta de cero.
+    \item Describa la secuencia de operaciones simples (traslación, escalado e inversión) que permiten obtener $y(t)$ a partir de $x(t)$.
+    \item Calcule el área bajo la curva de $y(t)$ y verifique la propiedad de escalado $A_y = \frac{A_x}{|a|}$.
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_Intro_P2_a.png}
+\end{center}
+
+\tcblower
+
+\textbf{Apartado a) Expresión analítica e intervalo de soporte:}
+
+1. La señal original $x(\tau)$ es distinta de cero únicamente cuando $0 \le \tau \le 2$. Sustituyendo la nueva variable $\tau = 3 - 2t$:
+\[
+0 \le 3 - 2t \le 2 \implies -3 \le -2t \le -1
+\]
+Multiplicando por $-1$ (y cambiando el sentido de las desigualdades):
+\[
+1 \le 2t \le 3 \implies \frac{1}{2} \le t \le \frac{3}{2}
+\]
+
+2. Sustituyendo el argumento $(3 - 2t)$ en la definición analítica de la rampa $x(\tau) = \tau$:
+\[
+y(t) = \begin{cases} 3 - 2t & \text{si } \frac{1}{2} \le t \le \frac{3}{2} \\ 0 & \text{en otro caso} \end{cases}
+\]
+
+\newpage
+
+\textbf{Apartado b) Secuencia de operaciones de transformación:}
+
+Para pasar de $x(t)$ a $y(t) = x(-2t + 3)$, existen dos procedimientos equivalentes:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Método 1 (Traslación primero, luego escalado e inversión)}:
+    \begin{enumerate}
+        \item Desplazamiento a la izquierda de $3$ unidades: $v_1(t) = x(t + 3)$, no nula en $[-3, -1]$.
+        \item Inversión y escalado por $a = -2$: $y(t) = v_1(-2t) = x(-2t + 3)$, no nula en $[1/2, 3/2]$.
+    \end{enumerate}
+    \item \textbf{Método 2 (Escalado e inversión primero, luego traslación) [Recomendado]}:
+    Escribimos el argumento sacando factor común el coeficiente de $t$: $y(t) = x\left(-2\left(t - \frac{3}{2}\right)\right)$.
+    \begin{enumerate}
+        \item Compresión por $2$ e inversión temporal: $v_1(t) = x(-2t)$, no nula en $[-1, 0]$.
+        \begin{center}
+            \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_Intro_P2_b.png}
+        \end{center}
+        \item Desplazamiento a la derecha de $\frac{3}{2}$ unidades: $y(t) = v_1\left(t - \frac{3}{2}\right)$, no nula en $\left[-1 + \frac{3}{2}, 0 + \frac{3}{2}\right] = \left[\frac{1}{2}, \frac{3}{2}\right]$.
+        \begin{center}
+            \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_Intro_P2_c.png}
+        \end{center}
+    \end{enumerate}
+\end{itemize}
+
+\textbf{Apartado c) Cálculo del área y verificación de la propiedad de escalado:}
+
+1. Calculamos el área de la señal original $x(t)$:
+\[
+A_x = \int_{0}^{2} t \, dt = \left[ \frac{t^2}{2} \right]_{0}^{2} = 2
+\]
+
+2. Calculamos el área de la señal transformada $y(t)$:
+\[
+A_y = \int_{1/2}^{3/2} (3 - 2t) \, dt = \left[ 3t - t^2 \right]_{1/2}^{3/2} = \left( 3 \cdot \frac{3}{2} - \frac{9}{4} \right) - \left( 3 \cdot \frac{1}{2} - \frac{1}{4} \right)
+\]
+\[
+A_y = \left( \frac{9}{2} - \frac{9}{4} \right) - \left( \frac{3}{2} - \frac{1}{4} \right) = \frac{9}{4} - \frac{5}{4} = 1
+\]
+
+3. Verificamos la propiedad teórica del área bajo un escalado con $a = -2$:
+\[
+A_y = \frac{A_x}{|a|} = \frac{2}{|-2|} = 1
+\]
+Se comprueba la coincidencia exacta.
+\end{problema}
+
+\newpage
+
+% ==========================================
+% PROBLEMA 3
+% ==========================================
+\begin{problema}[Efecto de las transformaciones sobre la periodicidad y potencia media de una señal]
+Sea $f(t)$ una señal periódica continua de período fundamental $T_0 = 4\text{ s}$ cuya potencia media por período es $P_f = E_0$. Considérense las siguientes señales modificadas:
+\begin{enumerate}
+    \item $s_1(t) = f(2t - 1)$
+    \item $s_2(t) = 3 f\left(\frac{t}{3} + 2\right)$
+\end{enumerate}
+
+Para cada una de ellas:
+\begin{enumerate}[label=\alph*)]
+    \item Determine el nuevo período fundamental ($T_1$ y $T_2$).
+    \item Demuestre analíticamente cómo afectan las transformaciones de escala y desplazamiento a la periodicidad y calcule la potencia media de $s_1(t)$ y $s_2(t)$ en función de $E_0$.
+
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_Intro_P3_a.png}
+\end{center}
+
+\tcblower
+
+\textbf{1. Análisis de $s_1(t) = f(2t - 1)$:}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Período fundamental $T_1$}:
+    Para que $s_1(t)$ sea periódica con período $T_1$, debe cumplirse que $s_1(t + T_1) = s_1(t)$ para todo $t$:
+    \[
+    f(2(t + T_1) - 1) = f(2t - 1 + 2T_1) \equiv f(2t - 1)
+    \]
+    Para que coincida con la condición de periodicidad de $f(\tau + T_0) = f(\tau)$, se requiere que el desfase añadido sea igual al período original $T_0$:
+    \[
+    2T_1 = T_0 \implies T_1 = \frac{T_0}{2} = \frac{4\text{ s}}{2} = 2\text{ s}
+    \]
+    El escalado por $a = 2$ comprime el tiempo y reduce el período a la mitad. El desplazamiento de $1$ unidad no afecta al período.
+
+    \item \textbf{Potencia media $P_{s1}$}:
+    La potencia media de $s_1(t)$ integrada sobre su período $T_1 = 2\text{ s}$ es:
+    \[
+    P_{s1} = \frac{1}{T_1} \int_{0}^{T_1} |s_1(t)|^2 \, dt = \frac{1}{2} \int_{0}^{2} |f(2t - 1)|^2 \, dt
+    \]
+    Realizando el cambio de variable $u = 2t - 1 \implies dt = \frac{du}{2}$:
+    \begin{itemize}
+        \item Cuando $t = 0 \implies u = -1$.
+        \item Cuando $t = 2 \implies u = 3$.
+    \end{itemize}
+    El intervalo de integración en $u$ tiene una longitud de $3 - (-1) = 4\text{ s} = T_0$:
+    \[
+    P_{s1} = \frac{1}{2} \int_{-1}^{3} |f(u)|^2 \frac{du}{2} = \frac{1}{4} \int_{-1}^{3} |f(u)|^2 \, du
+    \]
+    Como $f(u)$ es periódica de período $T_0 = 4$, la integral sobre cualquier intervalo de longitud $4$ vale $T_0 \cdot P_f = 4 E_0$:
+    \[
+    P_{s1} = \frac{1}{4} (4 E_0) = E_0
+    \]
+    Las transformaciones temporales puras (escalado y desplazamiento) no alteran la potencia media de una señal periódica.
+\end{itemize}
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_Intro_P3_b.png}
+\end{center}
+
+\textbf{2. Análisis de $s_2(t) = 3 f\left(\frac{t}{3} + 2\right)$:}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Período fundamental $T_2$}:
+    Aplicando la regla del escalado temporal con factor $a = \frac{1}{3}$:
+    \[
+    \frac{T_2}{3} = T_0 \implies T_2 = 3 T_0 = 3 \cdot (4\text{ s}) = 12\text{ s}
+    \]
+    El escalado por $\frac{1}{3}$ expande la señal y triplica su período.
+
+    \item \textbf{Potencia media $P_{s2}$}:
+    La potencia media de $s_2(t)$ integrada sobre su período $T_2 = 12\text{ s}$ es:
+    \[
+    P_{s2} = \frac{1}{T_2} \int_{0}^{T_2} |s_2(t)|^2 \, dt = \frac{1}{12} \int_{0}^{12} \left| 3 f\left(\frac{t}{3} + 2\right) \right|^2 \, dt
+    \]
+    \[
+    P_{s2} = \frac{9}{12} \int_{0}^{12} \left| f\left(\frac{t}{3} + 2\right) \right|^2 \, dt
+    \]
+    Haciendo el cambio $v = \frac{t}{3} + 2 \implies dt = 3 dv$:
+    \begin{itemize}
+        \item Para $t = 0 \implies v = 2$.
+        \item Para $t = 12 \implies v = 6$ (intervalo de longitud $6 - 2 = 4 = T_0$).
+    \end{itemize}
+    \[
+    P_{s2} = \frac{9}{12} \int_{2}^{6} |f(v)|^2 (3 dv) = \frac{27}{12} \int_{2}^{6} |f(v)|^2 \, dv = \frac{9}{4} (4 E_0) = 9 E_0
+    \]
+    La amplificación de amplitud por un factor de $3$ multiplica la potencia media por $3^2 = 9$, mientras que el escalado temporal no influye en la potencia.
+\end{itemize}
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_Intro_P3_c.png}
+\end{center}
+\end{problema}
+
+\newpage
+
 \section{Problemas Series de Fourier}
+\setcounter{problemacontador}{0}
 % ==========================================
 % PROBLEMA 1: Reconstrucción desde Espectros
 % ==========================================
@@ -295,6 +770,12 @@ Los datos de los coeficientes de Fourier son los siguientes:
     \item Para $\omega_1 = 5\text{ rad/s}$: $\frac{|c_1|}{T} = 0.5$ y fase $\angle c_1 = -\frac{\pi}{4}\text{ rad}$.
     \item Para $\omega_3 = 15\text{ rad/s}$: $\frac{|c_3|}{T} = 0.25$ y fase $\angle c_3 = \frac{\pi}{3}\text{ rad}$.
 \end{itemize}
+
+\begin{center}
+    \includegraphics[width=0.65\textwidth]{imagenes/tema2/T2_SerieFourier_P1_a.png}
+    \vspace{0.5cm}
+    \includegraphics[width=0.65\textwidth]{imagenes/tema2/T2_SerieFourier_P1_b.png}
+\end{center}
 
 \begin{enumerate}
     \item Obtenga la expresión de la señal $f(t)$ en el dominio del tiempo en su forma trigonométrica compacta.
@@ -333,7 +814,7 @@ Aplicando la fórmula de Euler $\cos(x) = \frac{e^{jx} + e^{-jx}}{2}$:
 Se comprueba que ambos métodos conducen al mismo resultado en el dominio del tiempo.
 
 \begin{center}
-    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_P1.png}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_SerieFourier_P1_c.png}
 \end{center}
 
 \end{problema}
@@ -346,11 +827,19 @@ Se comprueba que ambos métodos conducen al mismo resultado en el dominio del ti
 Se considera un tren de pulsos rectangulares simétrico respecto al origen $p(t)$, de amplitud $V$, anchura $\tau$ y período $T$. Sus coeficientes de Fourier en forma compleja son conocidos y valen:
 \[ c_n^{(p)} = V \tau \frac{\sin(\omega_n \tau / 2)}{\omega_n \tau / 2} \]
 
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_SerieFourier_P2_a.png}
+\end{center}
+
 A partir de $p(t)$, se construye una nueva señal periódica $f(t) = f_1(t) + f_2(t)$, definida por la superposición de:
 \begin{itemize}
     \item $f_1(t) = p(t - \tau/2)$: pulso desplazado a la derecha una cantidad $t_0 = \tau/2$.
     \item $f_2(t) = -p(t + \tau/2)$: pulso de amplitud invertida y desplazado a la izquierda una cantidad $t_0 = \tau/2$.
 \end{itemize}
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_SerieFourier_P2_b.png}
+\end{center}
 
 \begin{enumerate}
     \item Aplique el teorema de desplazamiento en el tiempo y la propiedad de linealidad para obtener la expresión de los coeficientes $c_n$ de la serie compleja de Fourier de $f(t)$.
@@ -358,8 +847,6 @@ A partir de $p(t)$, se construye una nueva señal periódica $f(t) = f_1(t) + f_
 \end{enumerate}
 
 \tcblower
-
-\textbf{Resolución:}
 
 \textbf{1. Aplicación de las propiedades de desplazamiento y linealidad:}
 
@@ -386,7 +873,7 @@ Sustituyendo este resultado en la expresión de $c_n$:
 Dado que todos los coeficientes $c_n$ son números imaginarios puros y cumplen que $c_{-n} = -c_n$, la señal temporal $f(t)$ es una función \textbf{impar} ($f(-t) = -f(t)$). En consecuencia, su desarrollo en serie trigonométrica de Fourier consta únicamente de términos en senos ($a_n = 0$).
 
 \begin{center}
-    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_P2.png}
+    \includegraphics[width=0.75\textwidth]{imagenes/tema2/T2_SerieFourier_P2_c.png}
 \end{center}
 
 \end{problema}
@@ -394,7 +881,7 @@ Dado que todos los coeficientes $c_n$ son números imaginarios puros y cumplen q
 \newpage
 
 \section{Problemas Transformada de Fourier}
-\setcounter{problemacontador}{1}
+\setcounter{problemacontador}{0}
 % ==========================================
 % PROBLEMA 1: Transformada analítica y ancho de banda
 % ==========================================
