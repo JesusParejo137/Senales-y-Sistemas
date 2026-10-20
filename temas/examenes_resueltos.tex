@@ -1258,12 +1258,10 @@ Por lo tanto, la capacidad total de transmisión del sistema de comunicaciones e
 % Examen Final 1ª Convocatoria 2021 - 2022
 % ==========================================
 \section{Curso 21-21}
-\subsection{Examen Final 1ª Convocatoria 2021 - 2022}
 \setcounter{problemacontador}{0}
 \section{Curso 21-22}
 
 \subsection{Exámen Final Problemas - Convocatoria Ordinaria (Enero 2022)}
-
 % ==============================================================================
 % EJERCICIO 1
 % ==============================================================================
@@ -1413,146 +1411,103 @@ Sea una señal periódica con período $T = 8\text{ s}$, de la cual se proporcio
 \end{resolucion}
 
 \newpage
-
 % ==========================================
 % EJERCICIO 2: RESPUESTA EN FRECUENCIA Y FILTRADO
 % ==========================================
-\begin{problema}[Filtrado y Respuesta en Frecuencia de una Señal Periódica]
+\begin{problema}[(2.5 puntos) Filtrado y Respuesta en Frecuencia de una Señal Periódica]
 Sea una \textbf{señal periódica} de período $T = 10^{-3}\text{ s}$ cuyos coeficientes del desarrollo en serie de Fourier son los siguientes: $c_0 = 4$; $c_1 = 3j$; $c_2 = -2$; $c_3 = j$. Suponer que se transmite por un sistema cuya función de transferencia (expresada con su módulo y fase) es la siguiente, donde la frecuencia se expresa en $\text{rad/s}$:
 
-\[
-|H(\omega)| = \frac{|\omega|}{2\pi} \cdot 10^{-3} \qquad \Theta(\omega) = \begin{cases} -\frac{1}{4} 10^{-3} \cdot \omega & \text{si } |\omega| \le 2\pi 10^3 \\ -\frac{1}{2} 10^{-3} \cdot \omega & \text{si } |\omega| > 2\pi 10^3 \end{cases}
-\]
+\[\vert{}H(\omega)\vert{} = \frac{\vert{}\omega\vert{}}{2\pi} \cdot 10^{-3} \qquad \Theta(\omega) = \begin{cases} -\frac{1}{4} 10^{-3} \cdot \omega & \text{si } \vert{}\omega\vert{} \le 2\pi 10^3 \\ -\frac{1}{2} 10^{-3} \cdot \omega & \text{si } \vert{}\omega\vert{} > 2\pi 10^3 \end{cases}\]
 
 \begin{enumerate}[label=\alph*)]
     \item Determinar los coeficientes de la serie de Fourier de la señal después de pasar por el sistema.
     \item Representar de forma aproximada los espectros en amplitud y fase de la señal después de pasar por el sistema.
     \item ¿El sistema ha producido distorsión de atenuación sobre esta señal? ¿Y distorsión de fase? Justificar la respuesta.
-    \item Expresar en el dominio del tiempo después de pasar por el sistema.
+    \item Expresar la señal en el dominio del tiempo después de pasar por el sistema.
 \end{enumerate}
+\end{problema}
 
-\tcblower
+\begin{mecanizado}
+\begin{enumerate}
+    \item \textbf{Cálculo de la frecuencia fundamental y coeficientes de entrada}: Obtener $\omega_1 = \frac{2\pi}{T}$ y aplicar la simetría conjugada $c_{-n} = c_n^*$ para identificar todos los coeficientes de entrada.
+    \item \textbf{Respuesta armónica del sistema LTI}: Evaluar $H(\omega_n) = \vert{}H(\omega_n)\vert{} e^{j \Theta(\omega_n)}$ en cada frecuencia armónica $\omega_n = n \omega_1$.
+    \item \textbf{Coeficientes de salida}: Calcular $d_n = c_n \cdot H(\omega_n)$ tanto en forma rectangular como polar.
+    \item \textbf{Análisis de distorsión}:
+    \begin{itemize}
+        \item Distorsión de atenuación: Verificar si $\vert{}H(\omega)\vert{}$ es no constante en las frecuencias de la señal.
+        \item Distorsión de fase: Verificar si la pendiente de $\Theta(\omega)$ varía entre armónicos (retardo de grupo no constante).
+    \end{itemize}
+    \item \textbf{Reconstrucción temporal}: Aplicar la definición de la Serie Compleja de Fourier $y(t) = \sum d_n e^{j n \omega_1 t}$ para obtener $y(t)$ en forma cosenoidal real.
+\end{enumerate}
+\end{mecanizado}
 
-\textbf{Cálculos preliminares (Frecuencia fundamental y coeficientes de entrada)}:
-\begin{itemize}[leftmargin=*]
+\begin{resolucion}
+\subsubsection*{Cálculos preliminares (Frecuencia fundamental y coeficientes de entrada)}
+
+\begin{itemize}
     \item Período fundamental: $T = 10^{-3}\text{ s} \implies \omega_1 = \frac{2\pi}{T} = \frac{2\pi}{10^{-3}} = 2\pi 10^3\text{ rad/s} = 2000\pi\text{ rad/s}$.
     \item Por tratarse de una señal real, los coeficientes complejos cumplen la simetría conjugada $c_{-n} = c_n^*$:
-      \[
-      c_0 = 4, \quad c_1 = 3j, \quad c_{-1} = -3j, \quad c_2 = -2, \quad c_{-2} = -2, \quad c_3 = j, \quad c_{-3} = -j
-      \]
+      \[c_0 = 4, \quad c_1 = 3j, \quad c_{-1} = -3j, \quad c_2 = -2, \quad c_{-2} = -2, \quad c_3 = j, \quad c_{-3} = -j\]
 \end{itemize}
 
-\vspace{0.3cm}
-
-\textbf{Apartado a) Coeficientes $d_n$ de la señal de salida}
+\subsubsection*{Apartado a) Coeficientes $d_n$ de la señal de salida}
 
 La relación entre los coeficientes de entrada $c_n$ y salida $d_n$ a través del sistema LTI viene dada por:
-\[
-d_n = c_n \cdot H(\omega_n) = c_n \cdot |H(\omega_n)| e^{j \Theta(\omega_n)} \quad \text{donde } \omega_n = n \omega_1 = n \cdot (2\pi 10^3)\text{ rad/s}
-\]
+\[d_n = c_n \cdot H(\omega_n) = c_n \cdot \vert{}H(\omega_n)\vert{} e^{j \Theta(\omega_n)} \quad \text{donde } \omega_n = n \omega_1 = n \cdot (2\pi 10^3)\text{ rad/s}\]
 
 Evaluamos la respuesta del sistema $H(\omega_n)$ para cada frecuencia armónica:
 
 1. \textbf{Para la componente continua ($n = 0 \implies \omega_0 = 0$)}:
-   \[
-   |H(0)| = 0 \implies H(0) = 0 \implies d_0 = c_0 \cdot H(0) = 4 \cdot 0 = 0
-   \]
+   \[\vert{}H(0)\vert{} = 0 \implies H(0) = 0 \implies d_0 = c_0 \cdot H(0) = 4 \cdot 0 = 0\]
 
 2. \textbf{Para el primer armónico ($n = \pm 1 \implies \omega_{\pm 1} = \pm 2\pi 10^3\text{ rad/s}$)}:
-   \begin{itemize}[leftmargin=*]
-       \item Módulo: $|H(\omega_1)| = \frac{2\pi 10^3}{2\pi} \cdot 10^{-3} = 1$.
-       \item Fase: Como $|\omega_1| \le 2\pi 10^3 \implies \Theta(\omega_1) = -\frac{1}{4} 10^{-3} \cdot (2\pi 10^3) = -\frac{\pi}{2}\text{ rad}$.
-       \item $H(\omega_1) = 1 \cdot e^{-j\pi/2} = -j \quad \implies \quad d_1 = c_1 \cdot H(\omega_1) = (3j)(-j) = 3$.
-       \item $H(\omega_{-1}) = 1 \cdot e^{+j\pi/2} = j \quad \implies \quad d_{-1} = c_{-1} \cdot H(\omega_{-1}) = (-3j)(j) = 3$.
+   \begin{itemize}
+       \item Módulo: $\vert{}H(\omega_1)\vert{} = \frac{2\pi 10^3}{2\pi} \cdot 10^{-3} = 1$.
+       \item Fase: Como $\vert{}\omega_1\vert{} \le 2\pi 10^3 \implies \Theta(\omega_1) = -\frac{1}{4} 10^{-3} \cdot (2\pi 10^3) = -\frac{\pi}{2}\text{ rad}$.
+       \item $H(\omega_1) = 1 \cdot e^{-j\pi/2} = -j \implies d_1 = c_1 \cdot H(\omega_1) = (3j)(-j) = 3$.
+       \item $H(\omega_{-1}) = 1 \cdot e^{+j\pi/2} = j \implies d_{-1} = c_{-1} \cdot H(\omega_{-1}) = (-3j)(j) = 3$.
    \end{itemize}
 
 3. \textbf{Para el segundo armónico ($n = \pm 2 \implies \omega_{\pm 2} = \pm 4\pi 10^3\text{ rad/s}$)}:
-   \begin{itemize}[leftmargin=*]
-       \item Módulo: $|H(\omega_2)| = \frac{4\pi 10^3}{2\pi} \cdot 10^{-3} = 2$.
-       \item Fase: Como $|\omega_2| > 2\pi 10^3 \implies \Theta(\omega_2) = -\frac{1}{2} 10^{-3} \cdot (4\pi 10^3) = -2\pi\text{ rad} \equiv 0\text{ rad}$.
-       \item $H(\omega_2) = 2 \cdot e^{-j 2\pi} = 2 \quad \implies \quad d_2 = c_2 \cdot H(\omega_2) = (-2)(2) = -4$.
-       \item $H(\omega_{-2}) = 2 \cdot e^{+j 2\pi} = 2 \quad \implies \quad d_{-2} = c_{-2} \cdot H(\omega_{-2}) = (-2)(2) = -4$.
+   \begin{itemize}
+       \item Módulo: $\vert{}H(\omega_2)\vert{} = \frac{4\pi 10^3}{2\pi} \cdot 10^{-3} = 2$.
+       \item Fase: Como $\vert{}\omega_2\vert{} > 2\pi 10^3 \implies \Theta(\omega_2) = -\frac{1}{2} 10^{-3} \cdot (4\pi 10^3) = -2\pi\text{ rad} \equiv 0\text{ rad}$.
+       \item $H(\omega_2) = 2 \cdot e^{-j 2\pi} = 2 \implies d_2 = c_2 \cdot H(\omega_2) = (-2)(2) = -4$.
+       \item $H(\omega_{-2}) = 2 \cdot e^{+j 2\pi} = 2 \implies d_{-2} = c_{-2} \cdot H(\omega_{-2}) = (-2)(2) = -4$.
    \end{itemize}
 
 4. \textbf{Para el tercer armónico ($n = \pm 3 \implies \omega_{\pm 3} = \pm 6\pi 10^3\text{ rad/s}$)}:
-   \begin{itemize}[leftmargin=*]
-       \item Módulo: $|H(\omega_3)| = \frac{6\pi 10^3}{2\pi} \cdot 10^{-3} = 3$.
-       \item Fase: Como $|\omega_3| > 2\pi 10^3 \implies \Theta(\omega_3) = -\frac{1}{2} 10^{-3} \cdot (6\pi 10^3) = -3\pi\text{ rad} \equiv \pi\text{ rad}$.
-       \item $H(\omega_3) = 3 \cdot e^{-j 3\pi} = -3 \quad \implies \quad d_3 = c_3 \cdot H(\omega_3) = (j)(-3) = -3j$.
-       \item $H(\omega_{-3}) = 3 \cdot e^{+j 3\pi} = -3 \quad \implies \quad d_{-3} = c_{-3} \cdot H(\omega_{-3}) = (-j)(-3) = 3j$.
+   \begin{itemize}
+       \item Módulo: $\vert{}H(\omega_3)\vert{} = \frac{6\pi 10^3}{2\pi} \cdot 10^{-3} = 3$.
+       \item Fase: Como $\vert{}\omega_3\vert{} > 2\pi 10^3 \implies \Theta(\omega_3) = -\frac{1}{2} 10^{-3} \cdot (6\pi 10^3) = -3\pi\text{ rad} \equiv \pi\text{ rad}$.
+       \item $H(\omega_3) = 3 \cdot e^{-j 3\pi} = -3 \implies d_3 = c_3 \cdot H(\omega_3) = (j)(-3) = -3j$.
+       \item $H(\omega_{-3}) = 3 \cdot e^{+j 3\pi} = -3 \implies d_{-3} = c_{-3} \cdot H(\omega_{-3}) = (-j)(-3) = 3j$.
    \end{itemize}
 
 \textbf{Resumen de los coeficientes de salida}:
-\[
-d_0 = 0, \quad d_1 = d_{-1} = 3, \quad d_2 = d_{-2} = -4, \quad d_3 = -3j, \quad d_{-3} = 3j
-\]
+\[d_0 = 0, \quad d_1 = d_{-1} = 3, \quad d_2 = d_{-2} = -4, \quad d_3 = -3j, \quad d_{-3} = 3j\]
 
-\vspace{0.3cm}
+\subsubsection*{Apartado b) Espectros discretos en amplitud y fase de la señal de salida}
 
-\textbf{Apartado b) Espectros discretos en amplitud y fase de la señal de salida}
-
-Expresando los coeficientes de salida $d_n$ en forma polar ($d_n = |d_n| e^{j \phi_n}$):
-\begin{itemize}[leftmargin=*]
-    \item \textbf{Espectro de Amplitud $|d_n|$}:
-      \[
-      |d_0| = 0, \qquad |d_1| = |d_{-1}| = 3, \qquad |d_2| = |d_{-2}| = 4, \qquad |d_3| = |d_{-3}| = 3
-      \]
-      \textit{(El espectro de amplitud es par respecto al origen)}.
+Expresando los coeficientes de salida $d_n$ en forma polar ($d_n = \vert{}d_n\vert{} e^{j \phi_n}$):
+\begin{itemize}
+    \item \textbf{Espectro de Amplitud $\vert{}d_n\vert{}$}:
+      \[\vert{}d_0\vert{} = 0, \qquad \vert{}d_1\vert{} = \vert{}d_{-1}\vert{} = 3, \qquad \vert{}d_2\vert{} = \vert{}d_{-2}\vert{} = 4, \qquad \vert{}d_3\vert{} = \vert{}d_{-3}\vert{} = 3\]
+      \textit{(El espectro de amplitud es una función par respecto al origen)}.
 
     \item \textbf{Espectro de Fase $\phi_n = \angle d_n$}:
-      \[
-      \phi_0 = 0, \qquad \phi_1 = \phi_{-1} = 0, \qquad \phi_2 = \phi_{-2} = \pi\text{ rad } (180^\circ)
-      \]
-      \[
-      \phi_3 = -\frac{\pi}{2}\text{ rad } (-90^\circ), \qquad \phi_{-3} = +\frac{\pi}{2}\text{ rad } (+90^\circ)
-      \]
-      \textit{(El espectro de fase es impar respecto al origen)}.
+      \[\phi_0 = 0, \qquad \phi_1 = \phi_{-1} = 0, \qquad \phi_2 = \phi_{-2} = \pi\text{ rad } (180^\circ)\]
+      \[\phi_3 = -\frac{\pi}{2}\text{ rad } (-90^\circ), \qquad \phi_{-3} = +\frac{\pi}{2}\text{ rad } (+90^\circ)\]
+      \textit{(El espectro de fase es una función impar respecto al origen)}.
 \end{itemize}
 
-\vspace{0.3cm}
-
-\textbf{Apartado c) Análisis de distorsión de atenuación y fase}
-
-1. \textbf{Distorsión de atenuación (amplitud)}:
-   \textbf{SÍ produce distorsión de atenuación}. Para que un sistema no introduzca distorsión de amplitud, su módulo debe ser constante ($|H(\omega)| = K$) en toda la banda de paso de la señal. En este caso, $|H(\omega)|$ crece linealmente con la frecuencia ($|H(\omega_1)| = 1$, $|H(\omega_2)| = 2$, $|H(\omega_3)| = 3$), alterando la proporción de amplitudes entre armónicos.
-
-2. \textbf{Distorsión de fase}:
-   \textbf{SÍ produce distorsión de fase}. Un sistema libre de distorsión de fase debe presentar una respuesta de fase lineal con la frecuencia ($\Theta(\omega) = -t_d \cdot \omega$), lo que implica un retardo de grupo constante $t_d$.
-   Aquí, la pendiente de la fase varía según el rango de frecuencia:
-   \begin{itemize}[leftmargin=*]
-       \item Para $|\omega| \le 2\pi 10^3\text{ rad/s}$: el retardo es $t_{d1} = \frac{1}{4} \cdot 10^{-3}\text{ s} = 0{,}25\text{ ms}$.
-       \item Para $|\omega| > 2\pi 10^3\text{ rad/s}$: el retardo es $t_{d2} = \frac{1}{2} \cdot 10^{-3}\text{ s} = 0{,}5\text{ ms}$.
-   \end{itemize}
-   Al no sufrir todos los armónicos el mismo retardo temporal, la forma de onda temporal resulta distorsionada.
-
-\vspace{0.3cm}
-
-\textbf{Apartado d) Expresión de la señal de salida en el dominio del tiempo $y(t)$}
-
-A partir de la Serie Compleja de Fourier $y(t) = \sum_{n=-3}^{3} d_n e^{j n \omega_1 t}$:
-\[
-y(t) = d_0 + \left( d_1 e^{j \omega_1 t} + d_{-1} e^{-j \omega_1 t} \right) + \left( d_2 e^{j 2\omega_1 t} + d_{-2} e^{-j 2\omega_1 t} \right) + \left( d_3 e^{j 3\omega_1 t} + d_{-3} e^{-j 3\omega_1 t} \right)
-\]
-
-Sustituyendo los coeficientes $d_n$:
-\begin{itemize}[leftmargin=*]
-    \item Para $n = \pm 1$: $3 (e^{j \omega_1 t} + e^{-j \omega_1 t}) = 6 \cos(\omega_1 t)$.
-    \item Para $n = \pm 2$: $-4 (e^{j 2\omega_1 t} + e^{-j 2\omega_1 t}) = -8 \cos(2\omega_1 t)$.
-    \item Para $n = \pm 3$: $-3j e^{j 3\omega_1 t} + 3j e^{-j 3\omega_1 t} = 3 \cdot 2 \left( \frac{e^{j 3\omega_1 t} - e^{-j 3\omega_1 t}}{2j} \right) = 6 \sin(3\omega_1 t)$.
-\end{itemize}
-
-Sumando todos los términos con $\omega_1 = 2000\pi\text{ rad/s}$:
-\[
-y(t) = 6 \cos(2000\pi t) - 8 \cos(4000\pi t) + 6 \sin(6000\pi t)\text{ (V)}
-\]
-\end{problema}
+\huecodiagrama{Espectros Discretos de Amplitud $\vert{}d_n\vert{}$ y Fase $\phi_n$ de la Salida}{Dos gráficas discretas bilaterales alineadas verticalmente frente a $\omega$ en rad/s ($0, \pm 2000\pi, \pm 4000\pi, \pm 6000\pi$). Gráfica superior (Amplitud $\vert{}d_n\vert{}$): líneas de valor $0$ en $\omega=0$; $3$ en $\pm 2000\pi$; $4$ en $\pm 4000\pi$; $3$ en $\pm 6000\pi$. Gráfica inferior (Fase $\phi_n$):
 
 \newpage
-
 % ==========================================
 % EJERCICIO 3: SISTEMA PCM, MULTIPLEXACIÓN Y CODIFICACIÓN HDB-3
 % ==========================================
-\begin{problema}[Sistema de Transmisión PCM, Multiplexación TDM y Codificación HDB-3]
+\begin{problema}[(2.5 puntos) Sistema de Transmisión PCM, Multiplexación TDM y Codificación HDB-3]
 Se desea diseñar un sistema de transmisión con modulación por codificación de pulsos (PCM) para transmitir \textbf{tres señales}, cada una con ancho de banda de $18\text{ kHz}$. Suponer que la frecuencia de muestreo elegida es de $40\text{ kHz}$, que verifica el teorema de Nyquist con cierta holgura para facilitar la transmisión de la información.
 
 \begin{enumerate}[label=\alph*)]
@@ -1572,11 +1527,22 @@ Se desea diseñar un sistema de transmisión con modulación por codificación d
 
     \item Suponer que la señal a transmitir se codifica utilizando una \textbf{codificación HDB-3} (Binario de Alta Densidad), y una porción cualquiera de bits de esta señal es la siguiente: \texttt{01101000001}. Dibujar aproximadamente esta señal en el dominio del tiempo.
 \end{enumerate}
+\end{problema}
 
-\tcblower
+\begin{mecanizado}
+\begin{enumerate}
+    \item \textbf{Cálculo del tiempo de canal en TDM}: Obtener el período de muestreo por canal $T_s = 1/f_s$ y el intervalo de tiempo asignado a cada canal dentro de la trama multiplexada $T_M = T_s / N$.
+    \item \textbf{Capacidad y tasa de símbolos cuaternarios}: Hallar la velocidad máxima de símbolos según Nyquist $R_{\text{sym,\text{máx}}} = 2W$ y el ancho de pulso mínimo $T_{p,\text{mín}} = 1 / R_{\text{sym,\text{máx}}}$.
+    \item \textbf{Obtención de niveles de cuantización $L$ y bits $n$}: Relacionar el número de símbolos cuaternarios por muestra $n/2$ con la franja $T_M$ para imponer $T_p \ge T_{p,\text{mín}}$, obteniendo el entero máximo de $n$ y $L = 2^n$.
+    \item \textbf{Filtro de reconstrucción}: Determinar el tipo de filtro (paso bajo) y su frecuencia de corte $f_c$ considerando la banda de paso $B \le f_c \le f_s - B$.
+    \item \textbf{Codificación HDB-3}: Aplicar el algoritmo HDB-3 (AMI con sustitución de 4 ceros por \texttt{000V} o \texttt{B00V} según la paridad de pulsos) para determinar la secuencia de niveles de tensión.
+\end{enumerate}
+\end{mecanizado}
 
-\textbf{Parámetros fundamentales de partida:}
-\begin{itemize}[leftmargin=*]
+\begin{resolucion}
+\subsubsection*{Parámetros fundamentales de partida}
+
+\begin{itemize}
     \item Número de canales/señales: $N = 3$.
     \item Ancho de banda de cada señal: $B = 18\text{ kHz}$.
     \item Frecuencia de muestreo por señal: $f_s = 40\text{ kHz}$.
@@ -1587,9 +1553,7 @@ Se desea diseñar un sistema de transmisión con modulación por codificación d
       \]
 \end{itemize}
 
-\vspace{0.3cm}
-
-\textbf{Apartado a.i) Características del cuantizador y del filtro final}
+\subsubsection*{Apartado a.i) Características del cuantizador y del filtro final}
 
 1. \textbf{Capacidad máxima del canal y ancho de pulso mínimo}:
    Según el criterio de Nyquist para la transmisión sin interferencia intersimbólica (ISI), la máxima velocidad de símbolos (velocidad de modulación) transmitible por un canal de ancho de banda $W = 300\text{ kHz}$ es:
@@ -1598,22 +1562,22 @@ Se desea diseñar un sistema de transmisión con modulación por codificación d
    \]
    El tiempo mínimo de duración de un símbolo o pulso cuaternario ($T_{p, \text{mín}}$) es:
    \[
-   T_{p, \text{mín}} = \frac{1}{R_{\text{sym, máx}}} = \frac{1}{600\times 10^3\text{ s}} = \frac{1}{0{,}6 \times 10^6\text{ s}} = \frac{5}{3} \, \mu\text{s} \approx 1{,}667 \, \mu\text{s}
+   T_{p, \text{mín}} = \frac{1}{R_{\text{sym, máx}}} = \frac{1}{600\times 10^3\text{ s}} = \frac{5}{3} \, \mu\text{s} \approx 1{,}667 \, \mu\text{s}
    \]
 
 2. \textbf{Número máximo de bits por muestra ($n$) y niveles de cuantización ($L$)}:
-   \begin{itemize}[leftmargin=*]
+   \begin{itemize}
        \item En codificación cuaternaria ($M = 4$ estados significativos), cada símbolo transmite $m = \log_2(4) = 2\text{ bits}$.
        \item Si cada muestra de un canal se cuantiza con $n$ bits, requerirá $N_{\text{símbolos}} = \frac{n}{2}$ símbolos cuaternarios.
        \item Estos $\frac{n}{2}$ símbolos deben enviarse en la franja temporal asignada al canal $T_M = \frac{25}{3} \, \mu\text{s}$.
        \item La duración de un pulso cuaternario es $T_p = \frac{T_M}{n/2} = \frac{25/3}{n/2} = \frac{50}{3n} \, \mu\text{s}$.
    \end{itemize}
-   Imponiendo el límite del canal $T_p \ge T_{p, \text{mín}}$:
+   Imponiendo la condición del canal $T_p \ge T_{p, \text{mín}}$:
    \[
    \frac{50}{3n} \ge \frac{5}{3} \implies 50 \ge 5n \implies n \le 10\text{ bits/muestra}
    \]
-   Por lo tanto, para transmitir con la \textbf{mayor calidad posible}:
-   \begin{itemize}[leftmargin=*]
+   Por lo tanto, para transmitir con la **mayor calidad posible**:
+   \begin{itemize}
        \item Número de bits por muestra: $n = 10\text{ bits/muestra}$.
        \item Número de niveles de cuantización: $L = 2^n = 2^{10} = 1024\text{ niveles}$.
        \item Ancho del pulso cuaternario: $T_p = \frac{50}{3 \cdot 10} = \frac{5}{3} \, \mu\text{s} \approx 1{,}667 \, \mu\text{s}$.
@@ -1621,72 +1585,47 @@ Se desea diseñar un sistema de transmisión con modulación por codificación d
 
 3. \textbf{Filtro final (filtro de reconstrucción en el receptor)}:
    En el receptor, tras la conversión D/A y el demultiplexor, cada canal pasa por un filtro paso bajo de reconstrucción para eliminar las réplicas espectrales creadas por el muestreo:
-   \begin{itemize}[leftmargin=*]
-       \item Tipo: Filtro paso bajo analógico (idealmente tipo Butterworth o Cauer).
-       \item Frecuencia de corte ($f_c$): Debe cumplir $B \le f_c \le f_s - B \implies 18\text{ kHz} \le f_c \le 22\text{ kHz}$.
-       \item Frecuencia de corte idónea: $f_c = 18\text{ kHz}$ (o típicamente $f_c = 20\text{ kHz}$ centrada en la banda de transición).
+   \begin{itemize}
+       \item \textbf{Tipo}: Filtro paso bajo analógico (idealmente tipo Butterworth o Cauer).
+       \item \textbf{Frecuencia de corte ($f_c$)}: Debe cumplir $B \le f_c \le f_s - B \implies 18\text{ kHz} \le f_c \le 22\text{ kHz}$.
+       \item \textbf{Frecuencia de corte idónea}: $f_c = 18\text{ kHz}$ (o típicamente $f_c = 20\text{ kHz}$ centrada en la banda de transición).
    \end{itemize}
 
-\vspace{0.3cm}
+\subsubsection*{Apartado a.ii) Descripción de las señales en el dominio del tiempo}
 
-\textbf{Apartado a.ii) Descripción de las señales en el dominio del tiempo}
+\huecodiagrama{Evolución Temporal de las Señales en la Trama PCM TDM Cuaternaria}{Cinco gráficas superpuestas alineadas temporalmente para un período $T_s = 25 \, \mu\text{s}$ ($T_M = 8{,}33 \, \mu\text{s}$ por canal): 
+a) Salida del multiplexor PAM TDM (3 impulsos delgados en $t=0, 8{,}33 \, \mu\text{s}, 16{,}67 \, \mu\text{s}$). 
+b) Señal cuantizada TDM ajustada a los $1024$ niveles. 
+c) Trama cuaternaria (15 pulsos cuaternarios de $T_p = 1{,}667 \, \mu\text{s}$ con niveles $\{-3V, -V, +V, +3V\}$; 5 pulsos por canal). 
+d) Señal decodificada escalonada antes de filtrar. 
+e) Señales analógicas reconstruidas tras pasar por los filtros LPF ($f_c = 18\text{ kHz}$).}
 
-Para un período de muestreo $T_s = 25 \, \mu\text{s}$:
-\begin{enumerate}[label=\alph*.]
-    \item \textbf{Señal a la salida del multiplexor (PAM TDM)}:
-    Serie de trenes de impulsos de amplitud modulada (PAM). En cada trama de duración $T_s = 25 \, \mu\text{s}$ aparecen 3 impulsos delgados centrados en los intervalos del canal:
-    \begin{itemize}[leftmargin=*]
-        \item Muestra Canal 1: instante $t_1 = 0 \, \mu\text{s}$ (duración $T_M = 8{,}33 \, \mu\text{s}$).
-        \item Muestra Canal 2: instante $t_2 = 8{,}33 \, \mu\text{s}$ (duración $T_M = 8{,}33 \, \mu\text{s}$).
-        \item Muestra Canal 3: instante $t_3 = 16{,}67 \, \mu\text{s}$ (duración $T_M = 8{,}33 \, \mu\text{s}$).
-    \end{itemize}
+\subsubsection*{Apartado b) Codificación HDB-3 de la secuencia \texttt{01101000001}}
 
-    \item \textbf{Señal cuantizada}:
-    Misma estructura temporal TDM que la anterior (duración de canal $T_M = 8{,}33 \, \mu\text{s}$), pero con las amplitudes ajustadas discretamente al valor del nivel del cuantizador más cercano de entre los $1024$ niveles posibles.
-
-    \item \textbf{Señal codificada cuaternaria}:
-    Señal digital en banda base con $4$ niveles de tensión ($\{-3V, -V, +V, +3V\}$ equivalentes a los dibits $\{00, 01, 10, 11\}$).
-    \begin{itemize}[leftmargin=*]
-        \item Cada muestra de $10\text{ bits}$ se representa mediante $5$ pulsos cuaternarios.
-        \item Duración de cada pulso cuaternario: $T_p = \frac{5}{3} \, \mu\text{s} \approx 1{,}667 \, \mu\text{s}$.
-        \item En un período $T_s = 25 \, \mu\text{s}$ se transmiten $3 \times 5 = 15$ pulsos cuaternarios consecutivos.
-    \end{itemize}
-
-    \item \textbf{Señal decodificada en el receptor}:
-    Señal PAM retenida (o tren de impulsos) recuperada tras decodificar la trama digital en el receptor. Presenta una forma escalonada con escalones de ancho $T_M = 8{,}33 \, \mu\text{s}$ para cada canal antes del demultiplexor.
-
-    \item \textbf{Señales finales obtenidas}:
-    Tres señales analógicas continuas en el tiempo $s_1(t), s_2(t), s_3(t)$, obtenidas a la salida del demultiplexor tras pasar cada una por su correspondiente filtro paso bajo con $f_c = 18\text{ kHz}$.
-\end{enumerate}
-
-\vspace{0.3cm}
-
-\textbf{Apartado b) Codificación HDB-3 de la secuencia \texttt{01101000001}}
-
-El código \textbf{HDB-3} (High Density Bipolar de orden 3) es un código pseudoternario ($+V, 0, -V$) que modifica la regla AMI (Inversión de Marca Alternada) para evitar la presencia de más de 3 ceros consecutivos ($> 3$ ceros):
+El código **HDB-3** (High Density Bipolar de orden 3) es un código pseudoternario ($+V, 0, -V$) que modifica la regla AMI (Inversión de Marca Alternada) para evitar secuencias de más de 3 ceros consecutivos:
 
 1. \textbf{Reglas del algoritmo HDB-3}:
-   \begin{itemize}[leftmargin=*]
+   \begin{itemize}
        \item El bit \texttt{0} se representa por $0\text{ V}$.
        \item El bit \texttt{1} alterna polaridad ($+V$ y $-V$) respecto al último pulso emitido (regla AMI).
        \item Cuando aparecen $4$ ceros consecutivos (\texttt{0000}), se sustituyen por la secuencia \texttt{000V} o \texttt{B00V}:
          \begin{itemize}
-             \item Se utiliza \texttt{000V} si el número de pulsos (\texttt{1}s o \texttt{B}s) emitidos desde la última violación es \textbf{IMPAR}.
-             \item Se utiliza \texttt{B00V} si el número de pulsos emitidos desde la última violación es \textbf{PAR}.
+             \item Se utiliza \texttt{000V} si el número de pulsos emitidos desde la última violación es **IMPAR**.
+             \item Se utiliza \texttt{B00V} si el número de pulsos emitidos desde la última violación es **PAR**.
          \end{itemize}
-       \item $V$ (Violación) es un pulso con la \textbf{misma polaridad} que el pulso inmediatamente anterior.
-       \item $B$ (Relleno Bipolar) es un pulso que sigue la regla AMI (\textbf{polaridad opuesta} al pulso anterior).
+       \item $V$ (Violación) es un pulso con la **misma polaridad** que el pulso inmediatamente anterior.
+       \item $B$ (Relleno Bipolar) es un pulso que sigue la regla AMI (**polaridad opuesta** al pulso anterior).
    \end{itemize}
 
 2. \textbf{Codificación paso a paso de la secuencia \texttt{0 1 1 0 1 0 0 0 0 0 1}}:
-   \begin{itemize}[leftmargin=*]
-       \item Asumimos como estado inicial que el último pulso previo fue negativo ($-V$) y que la cantidad de impulsos desde la última violación es \textbf{IMPAR} (3 impulsos).
+   \begin{itemize}
+       \item Asumiendo como estado inicial que el último pulso previo fue negativo ($-V$) y que la cantidad de impulsos desde la última violación es **IMPAR** (3 impulsos).
        \item Bit 1 (\texttt{0}): $0\text{ V}$.
        \item Bit 2 (\texttt{1}): $+V$ (alternancia AMI).
        \item Bit 3 (\texttt{1}): $-V$ (alternancia AMI).
        \item Bit 4 (\texttt{0}): $0\text{ V}$.
        \item Bit 5 (\texttt{1}): $+V$ (alternancia AMI).
-       \item Bits 6 a 9 (\texttt{0000}): Se detectan $4$ ceros consecutivos. Desde el último impulso transmitido habías emitido $3$ impulsos ($+,-,+$), número \textbf{IMPAR}. Por tanto, aplicamos el patrón \texttt{000V}:
+       \item Bits 6 a 9 (\texttt{0000}): Se detectan $4$ ceros consecutivos. Desde el último impulso transmitido se han emitido $3$ impulsos ($+,-,+$), número **IMPAR**. Por tanto, aplicamos la secuencia \texttt{000V}:
          \begin{itemize}
              \item Bit 6 (\texttt{0}): $0\text{ V}$.
              \item Bit 7 (\texttt{0}): $0\text{ V}$.
@@ -1695,7 +1634,7 @@ El código \textbf{HDB-3} (High Density Bipolar de orden 3) es un código pseudo
          \end{itemize}
        \item Bit 10 (\texttt{0}): $0\text{ V}$.
        \item Bit 11 (\texttt{1}): $-V$ (se reanuda la alternancia AMI tomando como referencia la polaridad $+V$ de la violación anterior).
-   \end{itemize}
+   \end{itemize
 
 3. \textbf{Secuencia de niveles de tensión resultantes}:
    \[
@@ -1706,15 +1645,15 @@ El código \textbf{HDB-3} (High Density Bipolar de orden 3) es un código pseudo
    \end{array}
    \]
 
-\textit{Representación gráfica temporal}: La señal se dibuja en el dominio del tiempo como un pulso cuadrado NRZ donde los niveles de tensión cambian en los instantes de bit correspondientes a la secuencia anterior $\{0, +V, -V, 0, +V, 0, 0, 0, +V, 0, -V\}$.
-\end{problema}
+\huecodiagrama{Representación Temporal de la Codificación HDB-3}{Forma de onda cuadrada NRZ para la secuencia HDB-3 resultante $\{0, +V, -V, 0, +V, 0, 0, 0, +V, 0, -V\}$ correspondiente a los bits \texttt{01101000001}, mostrando la violación de polaridad en el noveno bit.}
+\end{resolucion}
 
 \newpage
 
 % ==========================================
 % EJERCICIO 4: MODULACIÓN OOK Y DEMODULACIÓN SÍNCRONA
 % ==========================================
-\begin{problema}[Modulación OOK y Demodulación Síncrona con Desfase de Portadora]
+\begin{problema}[(2.5 puntos) Modulación OOK y Demodulación Síncrona con Desfase de Portadora]
 Se desea transmitir de forma inalámbrica (mediante radio) una \textbf{señal digital} con ancho de banda de $150\text{ MHz}$, utilizando modulación OOK, con frecuencia de la señal portadora de $1\text{ GHz}$. En el receptor se realiza demodulación síncrona con una señal portadora local de la misma frecuencia desfasada $\frac{\pi}{4}\text{ rad}$.
 
 \begin{enumerate}[label=\alph*)]
@@ -1724,70 +1663,40 @@ Se desea transmitir de forma inalámbrica (mediante radio) una \textbf{señal di
     \cos(A) \cdot \cos(B) = \frac{1}{2} (\cos(B + A) + \cos(B - A))
     \]
 \end{enumerate}
+\end{problema}
 
-\tcblower
+\begin{mecanizado}
+\begin{enumerate}
+    \item \textbf{Modelado de la modulación OOK}: Expresar la señal modulada paso banda $s(t) = m(t) \cdot c(t) = m(t) A_c \cos(\omega_c t)$ y analizar el desplazamiento espectral del ancho de banda $B = 150\text{ MHz}$ a la frecuencia de portadora $f_c = 1\text{ GHz}$.
+    \item \textbf{Estructura del demodulador coherente}: Diseñar la cadena de demodulación con mezclador (multiplicación por portadora local $c_L(t) = \cos(\omega_c t + \phi)$) y filtro paso bajo de reconstrucción (LPF) con frecuencia de corte $f_{\text{corte}} \approx B$.
+    \item \textbf{Desarrollo analítico de la mezcla}: Multiplicar $x(t) = s(t) \cdot c_L(t)$ y aplicar la identidad trigonométrica $\cos(A)\cos(B) = \frac{1}{2}[\cos(A+B) + \cos(A-B)]$ para desglosar la señal en un término en banda base y otro a alta frecuencia ($2f_c$).
+    \item \textbf{Filtrado LPF y evaluación del desfase}: Eliminar el término a $2f_c = 2\text{ GHz}$ mediante el LPF y evaluar $y(t) = \frac{A_c}{2} m(t) \cos(\phi)$ en $\phi = \frac{\pi}{4}\text{ rad}$. Verificar si el factor de ganancia es no nulo ($\cos(\pi/4) \neq 0$).
+\end{enumerate}
+\end{mecanizado}
 
-\textbf{Apartado a) Proceso de modulación y demodulación (Diagramas de bloques)}
+\begin{resolucion}
+\subsubsection*{Apartado a) Proceso de modulación y demodulación (Diagramas de bloques)}
 
 1. \textbf{Modulación OOK (On-Off Keying)}:
-   La modulación OOK es un caso particular de ASK (Keying por Desplazamiento de Amplitud) binaria en el que la señal moduladora digital $m(t) \in \{0, 1\}$ conmuta la presencia o ausencia de la portadora.
-   
-   \begin{itemize}[leftmargin=*]
+   La modulación OOK es un caso particular de ASK (Keying por Desplazamiento de Amplitud) binaria en el que la señal moduladora digital $m(t) \in \{0, 1\}$ conmuta la presencia o ausencia de la portadora $c(t) = A_c \cos(\omega_c t)$.
+
+   \begin{itemize}
        \item \textbf{Señal moduladora}: $m(t)$, señal en banda base con ancho de banda $B = 150\text{ MHz}$.
        \item \textbf{Señal portadora}: $c(t) = A_c \cos(\omega_c t)$, con $f_c = 1\text{ GHz}$ ($\omega_c = 2\pi f_c$).
-       \item \textbf{Diagrama de bloques del Modulador}:
-        \begin{center}
-        \resizebox{\linewidth}{!}{$
-            \begin{array}{ccccc}
-            m(t) \text{ (Banda Base)} & \longrightarrow & \boxed{\bigotimes \text{ (Mezclador)}} & \longrightarrow & s(t) = m(t) A_c \cos(\omega_c t) \text{ (Paso Banda)} \\
-            & & \uparrow & & \\
-            & & c(t) = A_c \cos(\omega_c t) & &
-            \end{array}
-        $}
-        \end{center}  
-       \item \textbf{Transformación de la señal}: La modulación traslada el espectro en banda base de $m(t)$ ($[0, 150\text{ MHz}]$) a la frecuencia central $f_c = 1\text{ GHz}$. La señal modulada $s(t)$ ocupa un ancho de banda de paso banda $2B = 300\text{ MHz}$ (intervalo $[850\text{ MHz}, 1150\text{ MHz}]$).
+       \item \textbf{Señal modulada}: $s(t) = m(t) c(t) = m(t) A_c \cos(\omega_c t)$.
+       \item \textbf{Transformación espectral}: La modulación traslada el espectro en banda base de $m(t)$ ($[0, 150\text{ MHz}]$) a la frecuencia central $f_c = 1\text{ GHz}$. La señal modulada $s(t)$ ocupa un ancho de banda de paso banda $2B = 300\text{ MHz}$ (rango $[850\text{ MHz}, 1150\text{ MHz}]$).
    \end{itemize}
 
+\huecodiagrama{Diagrama de Bloques del Modulador OOK}{Diagrama de bloques de modulación: la señal digital en banda base $m(t)$ y la portadora $c(t) = A_c \cos(\omega_c t)$ ingresan a un multiplicador/mezclador, obteniendo a la salida la señal paso banda $s(t) = m(t) A_c \cos(\omega_c t)$ centrada en $1\text{ GHz}$.}
+
 2. \textbf{Demodulación Síncrona (Coherente)}:
-   Consiste en multiplicar la señal recibida $s(t)$ por una portadora generada localmente $c_L(t) = \cos(\omega_c t + \phi)$ desfasada un ángulo $\phi = \frac{\pi}{4}\text{ rad}$, seguida de un filtrado paso bajo.
+   Consiste en multiplicar la señal recibida $s(t)$ por una portadora generada localmente en el receptor $c_L(t) = \cos(\omega_c t + \phi)$ con un desfase de $\phi = \frac{\pi}{4}\text{ rad}$, seguida de un filtrado paso bajo para aislar la componente en banda base.
 
-\begin{itemize}[leftmargin=*]
+\huecodiagrama{Diagrama de Bloques del Demodulador Síncrono}{Diagrama de bloques de demodulación: la señal recibida $s(t)$ se multiplica por la portadora local $c_L(t) = \cos(\omega_c t + \pi/4)$ generando $x(t)$, la cual atraviesa un Filtro Paso Bajo (LPF) con frecuencia de corte $f_c \approx 150\text{ MHz}$ para eliminar las componentes a $2\text{ GHz}$, entregando la señal recuperada $y(t)$ al decisor de umbral.}
 
-    \item \textbf{Diagrama de bloques del demodulador}:
+\subsubsection*{Apartado b) Análisis matemático y posibilidad de recuperación de la señal}
 
-    \begin{center}
-    \resizebox{\linewidth}{!}{$
-        \begin{array}{ccccccc}
-        s(t) & \longrightarrow & \boxed{\bigotimes}
-        & \xrightarrow{x(t)} &
-        \boxed{\text{LPF (Filtro Paso Bajo)}}
-        & \xrightarrow{y(t)} &
-        \boxed{\text{Umbralizador/Decisor}}
-        \longrightarrow \hat{m}(t)
-        \\[1em]
-        & & \uparrow & &
-        \text{(Corte: } f_c \approx 150\,\text{MHz)}
-        & & \\
-        & & c_L(t)=\cos(\omega_c t+\phi)
-        & & & &
-        \end{array}
-    $}
-    \end{center}
-
-    \item \textbf{Transformación de la señal}: El mezclador
-    genera dos componentes espectrales: una centrada en baja
-    frecuencia (banda base) y otra desplazada al doble de la
-    frecuencia portadora ($2f_c = 2\,\text{GHz}$). El filtro
-    paso bajo (LPF) elimina la componente de alta frecuencia,
-    aislando la señal útil $y(t)$.
-
-\end{itemize}
-
-\vspace{0.3cm}
-
-\textbf{Apartado b) Análisis matemático y posibilidad de recuperación de la señal}
-
-1. \textbf{Multiplicación en el receptor (salida del mezclador $x(t)$)}:
+1. \textbf{Señal a la salida del mezclador $x(t)$}:
    \[
    x(t) = s(t) \cdot c_L(t) = \left[ m(t) A_c \cos(\omega_c t) \right] \cdot \cos(\omega_c t + \phi)
    \]
@@ -1796,12 +1705,12 @@ Se desea transmitir de forma inalámbrica (mediante radio) una \textbf{señal di
    \]
 
 2. \textbf{Aplicación de la identidad trigonométrica}:
-   Utilizando la relación $\cos(A) \cos(B) = \frac{1}{2} [\cos(A+B) + \cos(A-B)]$ con $A = \omega_c t + \phi$ y $B = \omega_c t$:
-   \begin{itemize}[leftmargin=*]
+   Utilizando $\cos(A) \cos(B) = \frac{1}{2} [\cos(A+B) + \cos(A-B)]$ con $A = \omega_c t + \phi$ y $B = \omega_c t$:
+   \begin{itemize}
        \item $A + B = 2\omega_c t + \phi$
        \item $A - B = \phi$
-   \end{itemize}
-   Sustituyendo en la expresión:
+   \end{itemize
+   Sustituyendo en la expresión de $x(t)$:
    \[
    x(t) = \frac{A_c}{2} m(t) \left[ \cos(2\omega_c t + \phi) + \cos(\phi) \right]
    \]
@@ -1810,8 +1719,7 @@ Se desea transmitir de forma inalámbrica (mediante radio) una \textbf{señal di
    \]
 
 3. \textbf{Filtrado Paso Bajo (LPF)}:
-   El filtro paso bajo tiene una frecuencia de corte elegida en el rango $B \le f_{\text{corte}} < 2f_c - B$ (por ejemplo, $f_{\text{corte}} \approx 150\text{ MHz}$).
-   Por lo tanto, elimina por completo el término centrado en $2f_c = 2\text{ GHz}$, obteniéndose a la salida del filtro:
+   El filtro paso bajo posee una frecuencia de corte ajustada en el rango $B \le f_{\text{corte}} < 2f_c - B$ (por ejemplo, $f_{\text{corte}} \approx 150\text{ MHz}$). Por lo tanto, elimina por completo la componente centrada en $2f_c = 2\text{ GHz}$, obteniéndose a la salida del filtro:
    \[
    y(t) = \frac{A_c}{2} m(t) \cos(\phi)
    \]
@@ -1821,18 +1729,18 @@ Se desea transmitir de forma inalámbrica (mediante radio) una \textbf{señal di
    \[
    \cos\left(\frac{\pi}{4}\right) = \frac{\sqrt{2}}{2} \approx 0{,}7071
    \]
-   Sustituyendo este valor:
+   Sustituyendo este valor en la señal recuperada:
    \[
    y(t) = \frac{A_c}{2} m(t) \left(\frac{\sqrt{2}}{2}\right) = \frac{\sqrt{2} A_c}{4} m(t) \approx 0{,}3536 \, A_c \, m(t)
    \]
 
 \textbf{Conclusión}:
-\textbf{SÍ es posible recuperar adecuadamente la señal en el receptor}. 
+\textbf{SÍ es posible recuperar adecuadamente la señal en el receptor.}
 
-Puesto que $\cos(\pi/4) = \frac{\sqrt{2}}{2} \neq 0$, la señal demodulada $y(t)$ mantiene la misma forma de onda que la señal binaria original $m(t)$, sufriendo únicamente una atenuación de amplitud de un factor $\frac{\sqrt{2}}{2}$ (equivalente a una pérdida de potencia de $3\text{ dB}$). Esta atenuación parcial se compensa fácilmente ajustando el umbral del decisor o mediante una etapa de amplificación previa.
+\textbf{Justificación}: Debido a que $\cos(\pi/4) = \frac{\sqrt{2}}{2} \neq 0$, la señal demodulada $y(t)$ preserva exactamente la misma forma de onda que la señal digital original $m(t)$, sufriendo únicamente un factor de escala en amplitud ($\approx 0{,}7071$, correspondiente a una atenuación de potencia de $3\text{ dB}$). Esta atenuación se compensa de manera directa ajustando el nivel de decisión en el umbralizador o mediante una etapa de amplificación intermedia.
 
-\textit{Nota teórica}: La anulación total de la señal recuperada ($y(t) = 0$) solo ocurriría si el desfase entre portadoras fuera ortogonal ($\phi = \pm \frac{\pi}{2}\text{ rad}$), donde $\cos(\pi/2) = 0$.
-\end{problema}
+\textit{Nota}: La recuperación sería imposible únicamente en caso de ortogonalidad exacta ($\phi = \pm \frac{\pi}{2}\text{ rad}$), donde $\cos(\pi/2) = 0$ anula por completo la señal a la salida del demodulador.
+\end{resolucion}
 
 
 

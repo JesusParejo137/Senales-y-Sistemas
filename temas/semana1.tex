@@ -1,0 +1,316 @@
+\chapter{Semana 1}
+\section{Sesión 1: Pulsos Triangulares, Propiedad de la Derivada y Muestreo Espectral}
+
+% ==============================================================================
+% BLOQUE TEÓRICO INTRODUCTORIO
+% ==============================================================================
+\subsection*{1. Introducción Teórica y Fundamentos}
+
+\begin{tcolorbox}[cajaResumen, title={Conceptos Clave para la Resolución de Ejercicios}]
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Transformada del Pulso Rectangular Elemental}:
+    Un pulso rectangular $p(t)$ de amplitud $A$ y anchura $W$ centrado en $t=0$ tiene como Transformada de Fourier:
+    \[
+    P(\omega) = A \cdot W \frac{\sin(\omega W / 2)}{\omega W / 2} = A \cdot W \cdot \text{sinc}\left(\frac{\omega W}{2}\right)
+    \]
+
+    \item \textbf{Propiedad de la Derivada Temporal}:
+    Dada una función $g(t)$ cuya derivada primera es $g'(t) = \frac{dg(t)}{dt}$:
+    \[
+    \mathcal{F}\left\{ \frac{dg(t)}{dt} \right\} = j\omega \cdot G(\omega) \implies G(\omega) = \frac{1}{j\omega} \mathcal{F}\left\{ \frac{dg(t)}{dt} \right\}
+    \]
+    \textit{Utilidad}: Permite transformar señales formadas por tramos lineales (triángulos, trapecios, rampas) convirtiéndolas primero en pulsos rectangulares simples.
+
+    \item \textbf{Relación entre Integral de Fourier y Serie de Fourier (Muestreo Espectral)}:
+    Si una señal periódica $f_p(t)$ de período $T$ está formada por la repetición de una señal de período único $f(t)$ de duración finita con transformada $F(\omega)$:
+    \[
+    c_n = \frac{1}{T} F(\omega_n) \quad \text{donde } \omega_n = n \omega_1 = n \frac{2\pi}{T}
+    \]
+
+    \item \textbf{Teorema de Desplazamiento Temporal y Euler}:
+    \[
+    \mathcal{F}\{f(t \mp t_0)\} = F(\omega) e^{\mp j\omega t_0} \qquad e^{jx} + e^{-jx} = 2\cos(x) \qquad e^{jx} - e^{-jx} = 2j\sin(x)
+    \]
+\end{enumerate}
+\end{tcolorbox}
+
+\newpage
+% ==============================================================================
+% EJEMPLO RESUELTO 1 (PROFESOR)
+% ==============================================================================
+\subsection*{2. Ejemplos Resueltos en Clase (Profesor)}
+
+\begin{problema}[(Ejemplo 1) Obtención de la Transformada del Pulso Triangular Elemental]
+Demostrar analíticamente que la Transformada de Fourier de un pulso triangular $g(t)$ de amplitud $V$ y anchura total $\tau$, centrado en el origen $t=0$, viene dada por:
+\[
+G(\omega) = V \frac{\tau}{2} \left( \frac{\sin(\omega\tau/4)}{\omega\tau/4} \right)^2
+\]
+\end{problema}
+
+\begin{mecanizado}
+\begin{enumerate}
+    \item \textbf{Derivación temporal}: Calcular la pendiente por tramos de $g(t)$ para expresar $f(t) = g'(t)$ como combinación de dos pulsos rectangulares.
+    \item \textbf{Transformada de los pulsos rectangulares}: Hallar la transformada de cada pulso rectangular elemental mediante la propiedad de desplazamiento temporal.
+    \item \textbf{Despeje mediante la propiedad de la derivada}: Aplicar $G(\omega) = \frac{F_{\text{der}}(\omega)}{j\omega}$ y simplificar trigonométricamente.
+\end{enumerate}
+\end{mecanizado}
+
+\begin{resolucion}
+1. \textbf{Obtención de la derivada de la señal}:
+   El pulso triangular $g(t)$ está definido en el intervalo $[-\tau/2, \tau/2]$ con vértice $V$ en $t=0$:
+   \begin{itemize}[leftmargin=*]
+       \item Tramo creciente ($t \in [-\tau/2, 0]$): Pendiente $m_1 = \frac{V - 0}{0 - (-\tau/2)} = +\frac{2V}{\tau}$.
+       \item Tramo decreciente ($t \in [0, \tau/2]$): Pendiente $m_2 = \frac{0 - V}{\tau/2 - 0} = -\frac{2V}{\tau}$.
+   \end{itemize}
+   La derivada $f(t) = \frac{dg(t)}{dt}$ consiste en dos pulsos rectangulares de anchura $W = \tau/2$ y amplitud $A = \frac{2V}{\tau}$:
+   \begin{itemize}[leftmargin=*]
+       \item Pulso positivo centrado en $t_1 = -\tau/4$.
+       \item Pulso negativo centrado en $t_2 = +\tau/4$.
+   \end{itemize}
+
+\imagen{semana1/S1S1_1_aBUENO.png}%
+       {Pulso Triangular y su Derivada Temporal}{fig:S1S1_1_a}
+
+2. \textbf{Transformada de Fourier de la derivada $F_{\text{der}}(\omega)$}:
+   La transformada de un pulso rectangular elemental de amplitud $A = \frac{2V}{\tau}$ y anchura $W = \frac{\tau}{2}$ centrado en el origen es:
+   \[
+   P(\omega) = \left(\frac{2V}{\tau}\right) \left(\frac{\tau}{2}\right) \frac{\sin(\omega\tau/4)}{\omega\tau/4} = V \frac{\sin(\omega\tau/4)}{\omega\tau/4}
+   \]
+   Expresando la derivada como $f(t) = p(t + \tau/4) - p(t - \tau/4)$ y aplicando la propiedad de desplazamiento temporal:
+   \[
+   F_{\text{der}}(\omega) = P(\omega) e^{j\omega \frac{\tau}{4}} - P(\omega) e^{-j\omega \frac{\tau}{4}} = P(\omega) \left( e^{j\omega \frac{\tau}{4}} - e^{-j\omega \frac{\tau}{4}} \right)
+   \]
+   Aplicando la relación de Euler $e^{jx} - e^{-jx} = 2j\sin(x)$:
+   \[
+   F_{\text{der}}(\omega) = P(\omega) \cdot 2j \sin\left(\frac{\omega\tau}{4}\right) = 2j V \sin\left(\frac{\omega\tau}{4}\right) \frac{\sin(\omega\tau/4)}{\omega\tau/4}
+   \]
+
+3. \textbf{Aplicación de la propiedad de la derivada}:
+   Como $\mathcal{F}\{g'(t)\} = j\omega G(\omega) \implies G(\omega) = \frac{F_{\text{der}}(\omega)}{j\omega}$:
+   \[
+   G(\omega) = \frac{1}{j\omega} \cdot \left[ 2j V \sin\left(\frac{\omega\tau}{4}\right) \frac{\sin(\omega\tau/4)}{\omega\tau/4} \right] = \frac{2V}{\omega} \sin\left(\frac{\omega\tau}{4}\right) \frac{\sin(\omega\tau/4)}{\omega\tau/4}
+   \]
+   Multiplicando y dividiendo el primer término por $\frac{\tau}{4}$:
+   \[
+   G(\omega) = V \frac{\tau}{2} \left[ \frac{\sin(\omega\tau/4)}{\omega\tau/4} \right] \left[ \frac{\sin(\omega\tau/4)}{\omega\tau/4} \right] = V \frac{\tau}{2} \left( \frac{\sin(\omega\tau/4)}{\omega\tau/4} \right)^2
+   \]
+   Quedando demostrada formalmente la expresión.
+\end{resolucion}
+
+\newpage
+% ==============================================================================
+% EJEMPLO RESUELTO 2 (PROFESOR)
+% ==============================================================================
+\begin{problema}[(Ejemplo 2) Serie de Fourier de un Tren Periódico de Pulsos Triangulares Positivos]
+Sea una señal periódica $x(t)$ de período $T = 6\text{ s}$ compuesta en cada período por un único pulso triangular de amplitud $V = 4\text{ V}$ y duración $\tau = 2\text{ s}$, centrado en el origen $t=0$.
+
+\begin{enumerate}[label=\alph*)]
+    \item Determinar la frecuencia fundamental $\omega_1$ y la expresión general de los coeficientes $c_n$ de su Serie de Fourier.
+    \item Calcular la componente de continua $c_0$ y el primer armónico $c_1$.
+    \item Determinar el ancho de banda de la señal (primer cero del espectro).
+\end{enumerate}
+\end{problema}
+
+\begin{mecanizado}
+\begin{enumerate}
+    \item \textbf{Análisis de parámetros}: Identificar $T, \tau, V$ y calcular la frecuencia fundamental $\omega_1 = \frac{2\pi}{T}$.
+    \item \textbf{Transformada de un solo período}: Evaluar la expresión del pulso triangular básico en la frecuencia armónica.
+    \item \textbf{Muestreo de la transformada}: Aplicar la fórmula $c_n = \frac{1}{T} X(\omega_n)$ con $\omega_n = n\omega_1$.
+    \item \textbf{Ancho de banda}: Buscar la menor frecuencia positiva $\omega > 0$ tal que $X(\omega) = 0$.
+\end{enumerate}
+\end{mecanizado}
+
+\begin{resolucion}
+\textbf{Apartado a) Frecuencia fundamental y coeficientes $c_n$}
+
+1. \textbf{Parámetros fundamentales}:
+   \begin{itemize}[leftmargin=*]
+       \item Período: $T = 6\text{ s} \implies \omega_1 = \frac{2\pi}{T} = \frac{2\pi}{6} = \frac{\pi}{3}\text{ rad/s}$.
+       \item Frecuencias armónicas: $\omega_n = n \omega_1 = \frac{n\pi}{3}\text{ rad/s}$.
+       \item Parámetros del pulso: $V = 4\text{ V}$, $\tau = 2\text{ s}$.
+   \end{itemize}
+
+2. \textbf{Transformada continua del período $X(\omega)$}:
+   Utilizando el resultado del Ejemplo 1 para el pulso triangular centrado:
+   \[
+   X(\omega) = V \frac{\tau}{2} \left( \frac{\sin(\omega\tau/4)}{\omega\tau/4} \right)^2 = 4 \cdot \frac{2}{2} \left( \frac{\sin(2\omega/4)}{2\omega/4} \right)^2 = 4 \left( \frac{\sin(\omega/2)}{\omega/2} \right)^2
+   \]
+
+3. \textbf{Muestreo del espectro para obtener $c_n$}:
+   \[
+   c_n = \frac{1}{T} X(\omega_n) = \frac{1}{6} \left[ 4 \left( \frac{\sin\left(\frac{n\pi/3}{2}\right)}{\frac{n\pi/3}{2}} \right)^2 \right] = \frac{2}{3} \left( \frac{\sin(n\pi/6)}{n\pi/6} \right)^2
+   \]
+
+\textbf{Apartado b) Componente de continua $c_0$ y primer armónico $c_1$}
+
+1. \textbf{Componente de continua ($n=0$)}:
+   Tomando el límite cuando $n \to 0$ (o mediante el área media por período):
+   \[
+   c_0 = \frac{1}{T} \int_{-T/2}^{T/2} x(t) \, dt = \frac{1}{T} \left( \frac{\text{Base} \times \text{Altura}}{2} \right) = \frac{1}{6} \left( \frac{2 \times 4}{2} \right) = \frac{4}{6} = \frac{2}{3}\text{ V} \approx 0{,}667\text{ V}
+   \]
+
+2. \textbf{Primer armónico ($n=1$)}:
+   \[
+   c_1 = \frac{2}{3} \left( \frac{\sin(\pi/6)}{\pi/6} \right)^2 = \frac{2}{3} \left( \frac{1/2}{\pi/6} \right)^2 = \frac{2}{3} \left( \frac{3}{\pi} \right)^2 = \frac{6}{\pi^2}\text{ V} \approx 0{,}608\text{ V}
+   \]
+
+\textbf{Apartado c) Ancho de banda de la señal}
+
+El primer corte por cero de la envolvente $X(\omega)$ ocurre cuando el argumento del seno cardinal se hace igual a $\pi$:
+\[
+\frac{\omega \tau}{4} = \pi \implies \frac{\omega \cdot 2}{4} = \pi \implies \frac{\omega}{2} = \pi \implies \omega_{\text{BW}} = 2\pi\text{ rad/s} \quad (f_{\text{BW}} = 1\text{ Hz})
+\]
+
+\imagen{semana1/S1S1_1_b.png}%
+       {P}{fig:S1S1_1_b}
+
+\imagen{semana1/S1S1_1_c.png}%
+       {P}{fig:S1S1_1_c}
+
+\end{resolucion}
+
+\newpage
+% ==============================================================================
+% PROBLEMA PROPUESTO PARA ALUMNOS
+% ==============================================================================
+\subsection*{3. Problema Propuesto para Trabajo en Clase (Alumnos)}
+
+\begin{problema}[(Ejercicio de Práctica) Par de Pulsos Triangulares Desplazados]
+Sea una señal periódica $f(t)$ de período $T = 8\text{ s}$ compuesta en un período por dos pulsos triangulares de duración $\tau = 2\text{ s}$ y amplitudes $V = 5\text{ V}$ y $-5\text{ V}$, centrados en $t_1 = +3\text{ s}$ y $t_2 = -3\text{ s}$ respectivamente.
+
+\begin{enumerate}[label=\alph*)]
+    \item Obtenga los coeficientes de la serie de Fourier $c_n$ expresándolos en función de $n$.
+    \item Determine el ancho de banda de la señal y razone qué armónicos se anulan.
+    \item Compruebe el valor de la transformada del pulso elemental mediante la propiedad de la derivada.
+\end{enumerate}
+\end{problema}
+
+\begin{mecanizado}
+\begin{enumerate}
+    \item \textbf{Frecuencia fundamental}: Obtener $\omega_1 = \frac{2\pi}{T}$.
+    \item \textbf{Descomposición temporal}: Escribir $f(t) = f_t(t - 3) - f_t(t + 3)$.
+    \item \textbf{Desplazamiento y Euler}: Aplicar $\mathcal{F}\{f_t(t \mp 3)\} = F_t(\omega)e^{\mp j 3\omega}$ y simplificar $e^{-j3\omega} - e^{j3\omega} = -2j\sin(3\omega)$.
+    \item \textbf{Muestreo}: Evaluar $c_n = \frac{1}{T} F(n\omega_1)$.
+\end{enumerate}
+\end{mecanizado}
+
+\begin{resolucion}
+\subsubsection*{Apartado a) Coeficientes $c_n$ de la Serie de Fourier}
+
+1. \textbf{Parámetros de la señal y frecuencia fundamental}:
+   \begin{itemize}[leftmargin=*]
+       \item Período fundamental: $T = 8\text{ s}$.
+       \item Frecuencia fundamental: $\omega_1 = \frac{2\pi}{T} = \frac{2\pi}{8} = \frac{\pi}{4}\text{ rad/s}$.
+       \item Frecuencias armónicas: $\omega_n = n \omega_1 = \frac{n\pi}{4}\text{ rad/s}$.
+       \item El período de la señal consta de dos pulsos triangulares de duración $\tau = 2\text{ s}$:
+         \begin{itemize}
+             \item Pulso positivo: amplitud $V = 5\text{ V}$, centrado en $t_1 = +3\text{ s}$.
+             \item Pulso negativo: amplitud $-V = -5\text{ V}$, centrado en $t_2 = -3\text{ s}$.
+         \end{itemize}
+   \end{itemize}
+
+2. \textbf{Transformada de Fourier de un solo período $F(\omega)$}:
+   Expresamos la función temporal de un período $f(t)$ en función de un pulso triangular elemental $f_t(t)$ de altura $V=5\text{ V}$ y anchura $\tau=2\text{ s}$ centrado en el origen:
+   \[
+   f(t) = f_t(t - 3) - f_t(t + 3)
+   \]
+   Aplicando la propiedad de linealidad y el teorema de desplazamiento temporal ($\mathcal{F}\{f_t(t \mp t_0)\} = F_t(\omega) e^{\mp j\omega t_0}$):
+   \[
+   F(\omega) = F_t(\omega) e^{-j 3 \omega} - F_t(\omega) e^{+j 3 \omega} = F_t(\omega) \left( e^{-j 3 \omega} - e^{+j 3 \omega} \right)
+   \]
+   Haciendo uso de la relación de Euler ($e^{-jx} - e^{+jx} = -2j \sin(x)$):
+   \[
+   F(\omega) = -2j \sin(3\omega) F_t(\omega)
+   \]
+
+3. \textbf{Sustitución de la expresión del pulso elemental $F_t(\omega)$}:
+   Para $V = 5\text{ V}$ y $\tau = 2\text{ s}$:
+   \[
+   V \frac{\tau}{2} = 5 \cdot \frac{2}{2} = 5, \qquad \frac{\omega\tau}{4} = \frac{2\omega}{4} = \frac{\omega}{2}
+   \]
+   \[
+   F_t(\omega) = 5 \left( \frac{\sin(\omega/2)}{\omega/2} \right)^2 \implies F(\omega) = -10j \sin(3\omega) \left( \frac{\sin(\omega/2)}{\omega/2} \right)^2
+   \]
+
+4. \textbf{Muestreo espectral para obtener los coeficientes $c_n$}:
+   Los coeficientes complejos de la serie de Fourier se obtienen muestreando el espectro continuo en las frecuencias armónicas $\omega_n = \frac{n\pi}{4}$ y dividiendo entre el período $T = 8$:
+   \[
+   c_n = \frac{1}{T} F(\omega_n) = \frac{1}{8} \left[ -10j \sin\left(3 \cdot \frac{n\pi}{4}\right) \left( \frac{\sin\left(\frac{n\pi/4}{2}\right)}{\frac{n\pi/4}{2}} \right)^2 \right]
+   \]
+   \[
+   c_n = -\frac{5}{4}j \sin\left(\frac{3n\pi}{4}\right) \left( \frac{\sin(n\pi/8)}{n\pi/8} \right)^2
+   \]
+
+\textit{Nota de simetría}: Al ser la señal real e impar ($f(-t) = -f(t)$), los coeficientes $c_n$ resultan imaginarios puros e impares en $n$.
+
+\vspace{0.3cm}
+
+\subsubsection*{Apartado b) Ancho de banda y armónicos nulos}
+
+1. \textbf{Ancho de banda} (criterio del primer cruce por cero del espectro para $\omega > 0$):
+   El espectro continuo $F(\omega)$ se anula cuando alguno de sus factores se hace cero:
+   \begin{itemize}[leftmargin=*]
+       \item Factor de desplazamiento: $\sin(3\omega) = 0 \implies 3\omega = \pi \implies \omega = \frac{\pi}{3}\text{ rad/s}$.
+       \item Factor envolvente: $\sin(\omega/2) = 0 \implies \frac{\omega}{2} = \pi \implies \omega = 2\pi\text{ rad/s}$.
+   \end{itemize}
+   El primer cero ocurre en la menor frecuencia positiva:
+   \[
+   \omega_{\text{BW}} = \frac{\pi}{3}\text{ rad/s} \quad \left( f_{\text{BW}} = \frac{\omega_{\text{BW}}}{2\pi} = \frac{1}{6}\text{ Hz} \right)
+   \]
+
+2. \textbf{Armónicos que se anulan} ($c_n = 0$):
+   Analizando la expresión de $c_n$:
+   \begin{itemize}[leftmargin=*]
+       \item \textbf{Para $n = 0$}: $c_0 = 0$ debido a la simetría impar de la señal (el valor medio por período es nulo).
+       \item \textbf{Para $n = 4k$ con $k \in \mathbb{Z} \setminus \{0\}$}: Cuando $n$ es múltiplo de 4 ($n = \pm 4, \pm 8, \pm 12, \dots$):
+       \[
+       \sin\left(\frac{3(4k)\pi}{4}\right) = \sin(3k\pi) = 0 \implies c_n = 0
+       \]
+       \item Para múltiplos de 8 ($n = 8m$), el término $\sin(n\pi/8) = \sin(m\pi) = 0$ también anula de forma independiente la envolvente.
+   \end{itemize}
+   \textbf{Justificación}: Todos los armónicos múltiplos de 4 ($n = 4, 8, 12, \dots$) se anulan debido a la cancelación destructiva por desfase de $180^\circ$ entre los pulsos positivo y negativo separados en el tiempo.
+
+\vspace{0.3cm}
+
+\subsubsection*{Apartado c) Demostración del espectro del pulso triangular elemental $F_t(\omega)$}
+
+1. \textbf{Derivada del pulso triangular}:
+   Sea $g(t)$ un pulso triangular de altura $V$ y anchura $\tau$ centrado en el origen. Su derivada $f_{\text{der}}(t) = \frac{dg(t)}{dt}$ se obtiene calculando la pendiente por tramos:
+   \begin{itemize}[leftmargin=*]
+       \item Tramo creciente en $\left[-\frac{\tau}{2}, 0\right]$: pendiente $m_1 = +\frac{V}{\tau/2} = +\frac{2V}{\tau}$.
+       \item Tramo decreciente en $\left[0, \frac{\tau}{2}\right]$: pendiente $m_2 = -\frac{V}{\tau/2} = -\frac{2V}{\tau}$.
+   \end{itemize}
+   Por lo tanto, la derivada $f_{\text{der}}(t)$ consta de dos pulsos rectangulares de anchura $W = \frac{\tau}{2}$ y amplitud $A = \frac{2V}{\tau}$: uno positivo centrado en $t = -\frac{\tau}{4}$ y otro negativo centrado en $t = +\frac{\tau}{4}$.
+
+2. \textbf{Transformada de los pulsos rectangulares componentes}:
+   La Transformada de Fourier de un pulso rectangular elemental $p(t)$ de amplitud $A = \frac{2V}{\tau}$ y anchura $W = \frac{\tau}{2}$ centrado en el origen es:
+   \[
+   P(\omega) = A \cdot W \frac{\sin(\omega W / 2)}{\omega W / 2} = \left(\frac{2V}{\tau}\right) \left(\frac{\tau}{2}\right) \frac{\sin\left(\frac{\omega\tau}{4}\right)}{\frac{\omega\tau}{4}} = V \frac{\sin\left(\frac{\omega\tau}{4}\right)}{\frac{\omega\tau}{4}}
+   \]
+   Expresando la derivada como $f_{\text{der}}(t) = p\left(t + \frac{\tau}{4}\right) - p\left(t - \frac{\tau}{4}\right)$ y aplicando la propiedad de desplazamiento temporal:
+   \[
+   F_{\text{der}}(\omega) = P(\omega) e^{+j\omega \frac{\tau}{4}} - P(\omega) e^{-j\omega \frac{\tau}{4}} = P(\omega) \left( 2j \sin\left(\frac{\omega\tau}{4}\right) \right) = 2j V \sin\left(\frac{\omega\tau}{4}\right) \frac{\sin\left(\frac{\omega\tau}{4}\right)}{\frac{\omega\tau}{4}}
+   \]
+
+3. \textbf{Aplicación de la propiedad de la derivada temporal}:
+   Por la propiedad de la derivada, $\mathcal{F}\left\{\frac{dg(t)}{dt}\right\} = j\omega F_t(\omega) \implies F_t(\omega) = \frac{F_{\text{der}}(\omega)}{j\omega}$:
+   \[
+   F_t(\omega) = \frac{1}{j\omega} \cdot \left[ 2j V \sin\left(\frac{\omega\tau}{4}\right) \frac{\sin\left(\frac{\omega\tau}{4}\right)}{\frac{\omega\tau}{4}} \right] = \frac{2V}{\omega} \sin\left(\frac{\omega\tau}{4}\right) \frac{\sin\left(\frac{\omega\tau}{4}\right)}{\frac{\omega\tau}{4}}
+   \]
+   Multiplicando y dividiendo el primer término por $\frac{\tau}{4}$:
+   \[
+   F_t(\omega) = V \frac{\tau}{2} \left[ \frac{\sin\left(\frac{\omega\tau}{4}\right)}{\frac{\omega\tau}{4}} \right] \left[ \frac{\sin\left(\frac{\omega\tau}{4}\right)}{\frac{\omega\tau}{4}} \right] = V \frac{\tau}{2} \left( \frac{\sin\left(\frac{\omega\tau}{4}\right)}{\frac{\omega\tau}{4}} \right)^2
+   \]
+   Sustituyendo $V = 5\text{ V}$ y $\tau = 2\text{ s}$, queda demostrada la expresión utilizada:
+   \[
+   F_t(\omega) = 5 \left( \frac{\sin(\omega/2)}{\omega/2} \right)^2
+   \]
+
+\imagen{semana1/S1S1_3_a.png}%
+       {.}{fig:S1S1_3_a}
+\imagen{semana1/S1S1_3_b.png}%
+{.}{fig:S1S1_3_b}
+\imagen{semana1/S1S1_3_c.png}%
+{.}{fig:S1S1_3_c}
+
+\end{resolucion}

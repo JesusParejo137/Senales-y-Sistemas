@@ -1,0 +1,406 @@
+\chapter{Semana 2: Propiedades de Fourier, Respuesta Frecuencial y Filtrado LTI}
+
+% ==============================================================================
+% SESIÓN 2
+% ==============================================================================
+\section{Sesión 2: Propiedades Avanzadas de la Transformada y Sistemas LTI}
+
+\subsection{Teoría: Propiedades de la Transformada y Respuesta Armónica LTI}
+
+\begin{tcolorbox}[cajaResumen, title={Fundamentos Teóricos: Sesión 2}]
+En esta sesión profundizamos en el uso de las propiedades de la Transformada de Fourier para el análisis de señales compuestas y su respuesta al atravesar sistemas Lineales e Invariantes en el Tiempo (LTI).
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Propiedad de Desplazamiento Temporal}:
+    \[
+    \mathcal{F}\{f(t \mp t_0)\} = F(\omega) e^{\mp j\omega t_0}
+    \]
+    \textit{Efecto}: Un desplazamiento en el tiempo no altera el espectro de amplitud ($|F(\omega)|$), pero introduce un desfase lineal $-\omega t_0$ en el espectro de fase.
+
+    \item \textbf{Propiedad de Derivación Temporal}:
+    \[
+    \mathcal{F}\left\{\frac{d^k f(t)}{dt^k}\right\} = (j\omega)^k F(\omega) \implies F(\omega) = \frac{\mathcal{F}\left\{f^{(k)}(t)\right\}}{(j\omega)^k}
+    \]
+    \textit{Efecto}: Permite calcular transformadas de señales discontinuas o formadas por tramos lineales (triángulos, trapecios, rampas) derivando sucesivamente hasta obtener pulsos rectangulares o impulsos ($\delta$).
+
+    \item \textbf{Respuesta de Sistemas LTI a Señales Periódicas}:
+    Si una señal periódica $x(t) = \sum_{n=-\infty}^{\infty} c_n e^{j n \omega_1 t}$ entra a un sistema LTI con respuesta en frecuencia $H(\omega) = |H(\omega)| e^{j \Theta(\omega)}$, la señal de salida $y(t)$ es periódica con el mismo período y viene dada por:
+    \[
+    y(t) = \sum_{n=-\infty}^{\infty} d_n e^{j n \omega_1 t} \quad \text{donde } d_n = c_n \cdot H(n\omega_1) = c_n \cdot |H(n\omega_1)| e^{j \Theta(n\omega_1)}
+    \]
+\end{enumerate}
+\end{tcolorbox}
+
+\newpage
+
+\subsection{Ejemplo Guiado: Obtención de Coeficientes y Respuesta del Sistema}
+
+\begin{problema}[(Ejemplo del Profesor) Análisis de un Pulso Trapezoidal y Entrada a Sistema LTI]
+Considérese una señal periódica $x(t)$ de período $T = 10\text{ ms}$ ($\omega_1 = 200\pi\text{ rad/s}$) cuya forma de onda en un período es un pulso trapezoidal simétrico de altura $V = 5\text{ V}$, definido por:
+\[
+x(t) = \begin{cases}
+5 & \text{si } |t| \le 1\text{ ms} \\
+5 \left(1 - \frac{|t|-1}{2}\right) & \text{si } 1\text{ ms} < |t| \le 3\text{ ms} \\
+0 & \text{si } 3\text{ ms} < |t| \le 5\text{ ms}
+\end{cases}
+\]
+
+\begin{enumerate}[label=\alph*)]
+    \item Determinar la Transformada de Fourier $X_1(\omega)$ de un único período utilizando la propiedad de la derivada temporal.
+    \item Obtener la expresión general de los coeficientes $c_n$ de la Serie de Fourier de $x(t)$.
+    \item Si $x(t)$ se introduce a un sistema LTI ideal con respuesta $H(\omega) = 2 e^{-j 0{,}002 \omega}$ para $|\omega| \le 500\pi\text{ rad/s}$ y $H(\omega) = 0$ fuera de esa banda, determinar los coeficientes $d_n$ de la salida $y(t)$.
+\end{enumerate}
+\end{problema}
+
+\begin{mecanizado}
+\begin{enumerate}
+    \item \textbf{Derivada del trapecio}: Obtener $x'_1(t)$ identificando las pendientes y $x''_1(t)$ en términos de impulsos o rectángulos.
+    \item \textbf{Transformada por derivada}: Aplicar $\mathcal{F}\{x'_1(t)\} = j\omega X_1(\omega)$ y despejar $X_1(\omega)$.
+    \item \textbf{Muestreo para $c_n$}: Calcular $c_n = \frac{1}{T} X_1(n\omega_1)$.
+    \item \textbf{Filtrado LTI}: Multiplicar $d_n = c_n \cdot H(n\omega_1)$ e identificar los armónicos que caen dentro de la banda de paso.
+\end{enumerate}
+\end{mecanizado}
+
+\begin{resolucion}
+\subsubsection*{Apartado a) Transformada $X_1(\omega)$ del período mediante la derivada}
+
+1. \textbf{Primera derivada $x'_1(t)$}:
+   La pendiente de $x_1(t)$ vale $m_1 = +\frac{5}{2\text{ ms}} = 2500\text{ V/s}$ en $[-3\text{ ms}, -1\text{ ms}]$, cero en $[-1\text{ ms}, 1\text{ ms}]$, y $m_2 = -2500\text{ V/s}$ en $[1\text{ ms}, 3\text{ ms}]$.
+   
+   Consiste en dos pulsos rectangulares de anchura $\tau = 2\text{ ms}$ y altura $A = 2500\text{ V/s}$: uno positivo centrado en $t = -2\text{ ms}$ y uno negativo centrado en $t = +2\text{ ms}$.
+
+2. \textbf{Transformada de $x'_1(t)$}:
+   La transformada de un pulso rectangular elemental de amplitud $A$ y anchura $\tau$ centrado en el origen es $P(\omega) = A \tau \frac{\sin(\omega\tau/2)}{\omega\tau/2}$.
+   Con $A\tau = 2500 \cdot 2\times 10^{-3} = 5\text{ V}$:
+   \[
+   \mathcal{F}\{x'_1(t)\} = P(\omega) e^{+j 2\times 10^{-3}\omega} - P(\omega) e^{-j 2\times 10^{-3}\omega} = 2j P(\omega) \sin(2\times 10^{-3}\omega)
+   \]
+   \[
+   \mathcal{F}\{x'_1(t)\} = 10j \left( \frac{\sin(10^{-3}\omega)}{10^{-3}\omega} \right) \sin(2\times 10^{-3}\omega)
+   \]
+
+3. \textbf{Despeje de $X_1(\omega)$}:
+   Como $\mathcal{F}\{x'_1(t)\} = j\omega X_1(\omega)$:
+   \[
+   X_1(\omega) = \frac{\mathcal{F}\{x'_1(t)\}}{j\omega} = \frac{10}{\omega} \left( \frac{\sin(10^{-3}\omega)}{10^{-3}\omega} \right) \sin(2\times 10^{-3}\omega)
+   \]
+   Multiplicando y dividiendo por $2\times 10^{-3}$:
+   \[
+   X_1(\omega) = 20\times 10^{-3} \left( \frac{\sin(10^{-3}\omega)}{10^{-3}\omega} \right) \left( \frac{\sin(2\times 10^{-3}\omega)}{2\times 10^{-3}\omega} \right) \text{ (V}\cdot\text{s)}
+   \]
+
+\subsubsection*{Apartado b) Coeficientes de Fourier $c_n$}
+
+Muestreando $X_1(\omega)$ en las frecuencias armónicas $\omega_n = n \omega_1 = n (200\pi)\text{ rad/s}$ con $T = 10\text{ ms} = 10^{-2}\text{ s}$:
+\[
+c_n = \frac{1}{T} X_1(n\omega_1) = \frac{20\times 10^{-3}}{10^{-2}} \left( \frac{\sin(0{,}2 n \pi)}{0{,}2 n \pi} \right) \left( \frac{\sin(0{,}4 n \pi)}{0{,}4 n \pi} \right)
+\]
+\[
+c_n = 2 \left( \frac{\sin(0{,}2 n \pi)}{0{,}2 n \pi} \right) \left( \frac{\sin(0{,}4 n \pi)}{0{,}4 n \pi} \right) \text{ (V)}
+\]
+Para $n = 0$ (continua): $c_0 = \lim_{n\to 0} c_n = 2\text{ V}$ (coincide con el área media del trapecio).
+
+\subsubsection*{Apartado c) Filtrado y coeficientes de salida $d_n$}
+
+1. La banda de paso del sistema es $|\omega| \le 500\pi\text{ rad/s}$.
+   Evaluando las frecuencias armónicas $\omega_n = n (200\pi)$:
+   \begin{itemize}
+       \item $n = 0 \implies \omega_0 = 0 \le 500\pi$ (Pasa).
+       \item $n = \pm 1 \implies \omega_1 = 200\pi \le 500\pi$ (Pasa).
+       \item $n = \pm 2 \implies \omega_2 = 400\pi \le 500\pi$ (Pasa).
+       \item $n = \pm 3 \implies \omega_3 = 600\pi > 500\pi$ (Eliminado, $H(\omega_3) = 0$).
+   \end{itemize}
+
+2. Para los armónicos que pasan ($n = 0, \pm 1, \pm 2$), el sistema introduce una ganancia de $|H(\omega_n)| = 2$ y una fase $\Theta(\omega_n) = -0{,}002 \omega_n = -0{,}4 n \pi\text{ rad}$:
+   \[
+   d_n = c_n \cdot H(n\omega_1) = 2 c_n e^{-j 0{,}4 n \pi} \quad \text{para } |n| \le 2; \qquad d_n = 0 \quad \text{para } |n| \ge 3
+   \]
+\end{resolucion}
+
+\newpage
+
+\subsection{Problema de Clase: Análisis de Señales Compuestas y Propiedades}
+
+\begin{problema}[(2.5 puntos) Transformada por Propiedades y Extensión Periódica]
+Sea la señal temporal $f(t)$ compuesta por un pulso rectangular positivo de amplitud $V = 4\text{ V}$ y anchura $\tau = 2\text{ s}$ centrado en $t = -2\text{ s}$, y un pulso rectangular negativo de amplitud $V = -4\text{ V}$ y anchura $\tau = 2\text{ s}$ centrado en $t = +2\text{ s}$.
+
+\begin{enumerate}[label=\alph*)]
+    \item Determinar la expresión de la Transformada de Fourier $F(\omega)$ utilizando la transformada del pulso rectangular elemental y las propiedades de linealidad y desplazamiento temporal.
+    \item Evaluar el valor de $F(0)$ y justificar el resultado a partir de las propiedades de simetría de $f(t)$.
+    \item Si $f(t)$ se repite periódicamente con período $T = 8\text{ s}$, obtener los coeficientes $c_n$ de la serie de Fourier y determinar los tres primeros armónicos no nulos.
+\end{enumerate}
+\end{problema}
+
+\begin{mecanizado}
+\begin{enumerate}
+    \item \textbf{Descomposición de $f(t)$}: Expresar $f(t) = p_1(t+2) - p_2(t-2)$ usando el pulso elemental $p(t)$.
+    \item \textbf{Transformada $F(\omega)$}: Aplicar el teorema de desplazamiento temporal y simplificar la combinación de exponenciales con la fórmula de Euler.
+    \item \textbf{Simetrías}: Analizar si la función es impar para justificar $F(0) = 0$ y el carácter imaginario puro.
+    \item \textbf{Muestreo en $\omega_n$}: Muestrear $F(\omega)$ en $\omega_n = n \frac{2\pi}{8} = \frac{n\pi}{4}$ para hallar $c_n$.
+\end{enumerate}
+\end{mecanizado}
+
+\begin{resolucion}
+\subsubsection*{Apartado a) Obtención de $F(\omega)$ por propiedades}
+
+1. \textbf{Pulso rectangular elemental}:
+   Un pulso $p(t)$ de altura $V = 4$ y anchura $\tau = 2$ centrado en el origen tiene por transformada:
+   \[
+   P(\omega) = 4 \cdot 2 \frac{\sin(\omega)}{ \omega} = 8 \frac{\sin(\omega)}{\omega}
+   \]
+
+2. \textbf{Aplicación de la propiedad de desplazamiento}:
+   La señal $f(t) = p(t+2) - p(t-2)$ tiene por transformada:
+   \[
+   F(\omega) = P(\omega) e^{+j 2\omega} - P(\omega) e^{-j 2\omega} = P(\omega) \left( e^{j 2\omega} - e^{-j 2\omega} \right)
+   \]
+   Aplicando la identidad de Euler $e^{j 2\omega} - e^{-j 2\omega} = 2j \sin(2\omega)$:
+   \[
+   F(\omega) = 2j P(\omega) \sin(2\omega) = 16j \frac{\sin(\omega)}{\omega} \sin(2\omega)
+   \]
+
+\subsubsection*{Apartado b) Evaluación en $\omega = 0$ y simetría}
+
+1. \textbf{Evaluación en continua}:
+   \[
+   F(0) = \lim_{\omega \to 0} F(\omega) = 16j \cdot (1) \cdot \sin(0) = 0\text{ V}\cdot\text{s}
+   \]
+
+2. \textbf{Justificación por simetría}:
+   La señal $f(t)$ es real e impar ($f(-t) = -f(t)$). El área total bajo la curva es nula ($A_{\text{total}} = 4\cdot 2 + (-4)\cdot 2 = 0$). Como la componente continua equivale al área total, $F(0) = 0$. Además, por ser real e impar, $F(\omega)$ resulta ser una función imaginaria pura e impar.
+
+\subsubsection*{Apartado c) Extensión periódica ($T = 8\text{ s}$)}
+
+1. \textbf{Frecuencia fundamental}: $\omega_1 = \frac{2\pi}{8} = \frac{\pi}{4}\text{ rad/s} \implies \omega_n = \frac{n\pi}{4}\text{ rad/s}$.
+
+2. \textbf{Coeficientes $c_n$}:
+   \[
+   c_n = \frac{1}{T} F(\omega_n) = \frac{1}{8} \left[ 16j \frac{\sin(n\pi/4)}{n\pi/4} \sin\left(2 \cdot \frac{n\pi}{4}\right) \right] = 2j \frac{\sin(n\pi/4)}{n\pi/4} \sin\left(\frac{n\pi}{2}\right)
+   \]
+
+3. \textbf{Primeros armónicos no nulos}:
+   \begin{itemize}
+       \item $n = 0 \implies c_0 = 0$.
+       \item $n = 1 \implies c_1 = 2j \left(\frac{\sin(\pi/4)}{\pi/4}\right) \sin(\pi/2) = 2j \left(\frac{\sqrt{2}/2}{\pi/4}\right) (1) = j \frac{4\sqrt{2}}{\pi} \approx 1{,}80j$.
+       \item $n = 2 \implies c_2 = 2j \left(\frac{\sin(\pi/2)}{\pi/2}\right) \sin(\pi) = 0$ (se anula por el factor $\sin(n\pi/2)$).
+       \item $n = 3 \implies c_3 = 2j \left(\frac{\sin(3\pi/4)}{3\pi/4}\right) \sin(3\pi/2) = 2j \left(\frac{\sqrt{2}/2}{3\pi/4}\right) (-1) = -j \frac{4\sqrt{2}}{3\pi} \approx -0{,}60j$.
+       \item $n = 4 \implies c_4 = 0$.
+       \item $n = 5 \implies c_5 = 2j \left(\frac{\sin(5\pi/4)}{5\pi/4}\right) \sin(5\pi/2) = 2j \left(\frac{-\sqrt{2}/2}{5\pi/4}\right) (1) = -j \frac{4\sqrt{2}}{5\pi} \approx -0{,}36j$.
+   \end{itemize}
+\end{resolucion}
+
+\newpage
+
+% ==============================================================================
+% SESIÓN 3
+% ==============================================================================
+\section{Sesión 3: Respuesta en Frecuencia, Filtrado y Distorsión}
+
+\subsection{Teoría: Concepto de Distorsión y Criterios de Ancho de Banda}
+
+\begin{tcolorbox}[cajaResumen, title={Fundamentos Teóricos: Sesión 3}]
+Cuando una señal atraviesa un sistema LTI, sufre modificaciones en su contenido espectral. Para caracterizar el comportamiento del sistema se analizan los siguientes conceptos:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Transmisión Sin Distorsión (Sistema Ideal)}:
+    Un sistema no introduce distorsión si la salida es una réplica exacta de la entrada, escalada y retardada: $y(t) = K \cdot x(t - t_d)$. Esto exige:
+    \begin{itemize}
+        \item \textbf{Módulo constante}: $|H(\omega)| = K$ (libre de distorsión de atenuación).
+        \item \textbf{Fase lineal}: $\Theta(\omega) = -t_d \cdot \omega$ (libre de distorsión de fase, retardo de grupo constante $\tau_g = -\frac{d\Theta}{d\omega} = t_d$).
+    \end{itemize}
+
+    \item \textbf{Tipos de Distorsión}:
+    \begin{itemize}
+        \item \textbf{Distorsión de Atenuación (Amplitud)}: Ocurre cuando $|H(\omega)|$ no es constante en la banda de la señal, alterando las proporciones relativas de las amplitudes de los armónicos.
+        \item \textbf{Distorsión de Fase (Retardo)}: Ocurre cuando $\Theta(\omega)$ no es lineal con la frecuencia, provocando que distintos armónicos sufran retrasos temporales diferentes.
+    \end{itemize}
+
+    \item \textbf{Criterios de Ancho de Banda de Sistemas}:
+    \begin{itemize}
+        \item \textbf{Criterio a $-3\text{ dB}$}: Frecuencia $\omega_c$ donde $|H(\omega_c)| = \frac{|H(0)|}{\sqrt{2}} \approx 0{,}707 |H(0)|$ (la potencia cae a la mitad).
+        \item \textbf{Criterio del Primer Cero}: Primera frecuencia positiva donde $|H(\omega)| = 0$.
+    \end{itemize}
+\end{enumerate}
+\end{tcolorbox}
+
+\newpage
+
+\subsection{Ejemplo Guiado: Filtrado de una Señal Periódica e Identificación de Distorsión}
+
+\begin{problema}[(Ejemplo del Profesor) Filtrado RC Paso Bajo y Análisis de Distorsión]
+Una señal periódica $x(t) = 2 + 4\cos(1000\pi t) + 2\cos(3000\pi t)$ se aplica a un filtro paso bajo RC serie cuya función de transferencia es:
+\[
+H(\omega) = \frac{1}{1 + j \frac{\omega}{\omega_c}} \quad \text{con frecuencia de corte a }-3\text{ dB } \omega_c = 1000\pi\text{ rad/s}
+\]
+
+\begin{enumerate}[label=\alph*)]
+    \item Determinar la expresión en módulo $|H(\omega)|$ y fase $\Theta(\omega)$ de la función de transferencia.
+    \item Calcular los coeficientes $d_n$ de la señal de salida $y(t)$ para cada armónico presente.
+    \item Justificar razonadamente si el filtro ha producido distorsión de atenuación y/o distorsión de fase sobre la señal $x(t)$.
+    \item Expresar la señal de salida $y(t)$ en el dominio del tiempo en forma cosenoidal real.
+\end{enumerate}
+\end{problema}
+
+\begin{mecanizado}
+\begin{enumerate}
+    \item \textbf{Módulo y Fase de $H(\omega)$}: Convertir la expresión compleja a polar $|H(\omega)| = \frac{1}{\sqrt{1 + (\omega/\omega_c)^2}}$ y $\Theta(\omega) = -\arctan(\omega/\omega_c)$.
+    \item \textbf{Evaluación en los armónicos}: Calcular $H(\omega_n)$ para $\omega_0 = 0$, $\omega_1 = 1000\pi$, $\omega_3 = 3000\pi$.
+    \item \textbf{Coeficientes de salida $d_n$}: Aplicar $d_n = c_n \cdot H(\omega_n)$.
+    \item \textbf{Análisis de distorsión}: Evaluar si $|H(\omega_n)|$ varía entre armónicos y si la pendiente de la fase cambia.
+\end{enumerate}
+\end{mecanizado}
+
+\begin{resolucion}
+\subsubsection*{Apartado a) Módulo y fase de la función de transferencia}
+
+Para $H(\omega) = \frac{1}{1 + j (\omega / 1000\pi)}$:
+\[
+|H(\omega)| = \frac{1}{\sqrt{1 + \left(\frac{\omega}{1000\pi}\right)^2}}, \qquad \Theta(\omega) = -\arctan\left(\frac{\omega}{1000\pi}\right)
+\]
+
+\subsubsection*{Apartado b) Respuesta a los armónicos de entrada}
+
+Los armónicos de la señal $x(t)$ son $\omega_0 = 0$, $\omega_1 = 1000\pi\text{ rad/s}$ y $\omega_3 = 3000\pi\text{ rad/s}$:
+
+1. \textbf{Componente continua ($n = 0, \omega_0 = 0$)}:
+   $c_0 = 2$.
+   \[
+   |H(0)| = 1, \quad \Theta(0) = 0 \implies H(0) = 1 \implies d_0 = 2 \cdot 1 = 2
+   \]
+
+2. \textbf{Primer armónico ($n = \pm 1, \omega_1 = 1000\pi$)}:
+   $c_1 = c_{-1} = 2$.
+   \[
+   |H(1000\pi)| = \frac{1}{\sqrt{1 + 1^2}} = \frac{1}{\sqrt{2}} \approx 0{,}7071
+   \]
+   \[
+   \Theta(1000\pi) = -\arctan(1) = -\frac{\pi}{4}\text{ rad } (-45^\circ)
+   \]
+   \[
+   d_1 = 2 \cdot \frac{1}{\sqrt{2}} e^{-j\pi/4} = \sqrt{2} e^{-j\pi/4} \implies |d_1| = \sqrt{2} \approx 1{,}4142
+   \]
+
+3. \textbf{Tercer armónico ($n = \pm 3, \omega_3 = 3000\pi$)}:
+   $c_3 = c_{-3} = 1$.
+   \[
+   |H(3000\pi)| = \frac{1}{\sqrt{1 + 3^2}} = \frac{1}{\sqrt{10}} \approx 0{,}3162
+   \]
+   \[
+   \Theta(3000\pi) = -\arctan(3) \approx -1{,}2490\text{ rad } (-71{,}56^\circ)
+   \]
+   \[
+   d_3 = 1 \cdot \frac{1}{\sqrt{10}} e^{-j 1{,}2490} \implies |d_3| = \frac{1}{\sqrt{10}} \approx 0{,}3162
+   \]
+
+\subsubsection*{Apartado c) Análisis de distorsión}
+
+1. \textbf{Distorsión de atenuación}: \textbf{SÍ existe.} El módulo no es constante ($|H(0)| = 1$, $|H(1000\pi)| = 0{,}7071$, $|H(3000\pi)| = 0{,}3162$), atenuando los armónicos superiores más que a la continua.
+2. \textbf{Distorsión de fase}: \textbf{SÍ existe.} La fase $\Theta(\omega) = -\arctan(\omega/\omega_c)$ no es una función lineal de $\omega$. Por tanto, el retardo de grupo no es constante para todas las frecuencias.
+
+\subsubsection*{Apartado d) Expresión temporal de la salida $y(t)$}
+
+Recomponiendo en forma cosenoidal real $y(t) = d_0 + 2 |d_1| \cos(1000\pi t + \theta_1) + 2 |d_3| \cos(3000\pi t + \theta_3)$:
+\[
+y(t) = 2 + 2\sqrt{2} \cos\left(1000\pi t - \frac{\pi}{4}\right) + \frac{2}{\sqrt{10}} \cos\left(3000\pi t - 1{,}249\right)\text{ (V)}
+\]
+\end{resolucion}
+
+\newpage
+
+\subsection{Problema de Clase: Examen de Filtrado, Distorsión y Señal de Salida}
+
+\begin{problema}[(2.5 puntos) Respuesta en Frecuencia y Filtrado LTI]
+Sea una señal periódica $x(t) = 4 + 6\cos(2000\pi t) - 4\sin(4000\pi t)$ transmitida a través de un sistema LTI cuya función de transferencia viene definida por módulo y fase según:
+\[
+|H(\omega)| = 2 - \frac{|\omega|}{4000\pi} \qquad \Theta(\omega) = -2\times 10^{-4} \cdot \omega \quad \text{(en rad)}
+\]
+para el rango de frecuencias $|\omega| \le 6000\pi\text{ rad/s}$.
+
+\begin{enumerate}[label=\alph*)]
+    \item Obtener los coeficientes complejos $c_n$ de la serie de Fourier de la señal de entrada $x(t)$.
+    \item Determinar los coeficientes complejos $d_n$ de la señal a la salida del sistema $y(t)$.
+    \item Indicar razonadamente si el sistema ha introducido distorsión de atenuación y/o distorsión de fase sobre la señal $x(t)$. Calcular el retardo temporal $t_d$ sufrido por la señal.
+    \item Expresar la señal de salida $y(t)$ en el dominio del tiempo en forma real trigonométrica.
+\end{enumerate}
+\end{problema}
+
+\begin{mecanizado}
+\begin{enumerate}
+    \item \textbf{Coeficientes de entrada $c_n$}: Identificar $\omega_1 = 2000\pi$ y expresar los senos/cosenos en forma exponencial compleja ($c_n$).
+    \item \textbf{Respuesta del sistema $H(\omega_n)$}: Evaluar $|H(\omega_n)|$ y $\Theta(\omega_n)$ para $\omega_0 = 0$, $\omega_1 = 2000\pi$ y $\omega_2 = 4000\pi$.
+    \item \textbf{Coeficientes de salida $d_n$}: Calcular $d_n = c_n \cdot H(\omega_n)$.
+    \item \textbf{Análisis de distorsión y retardo}: Verificar si $|H(\omega)|$ varía con la frecuencia y comprobar la linealidad de la fase $\Theta(\omega) = -t_d \omega$.
+    \item \textbf{Reconstrucción temporal}: Agrupar $d_n$ en términos cosenoidales reales para escribir $y(t)$.
+\end{enumerate}
+\end{mecanizado}
+
+\begin{resolucion}
+\subsubsection*{Apartado a) Coeficientes $c_n$ de la señal de entrada $x(t)$}
+
+La frecuencia fundamental es $\omega_1 = 2000\pi\text{ rad/s}$.
+Expresando $x(t)$ mediante términos exponenciales complejos usando Euler:
+\begin{itemize}
+    \item Continua ($n = 0$): $c_0 = 4$.
+    \item Primer armónico ($n = \pm 1, \omega_1 = 2000\pi$): $6\cos(2000\pi t) \implies c_1 = c_{-1} = 3$.
+    \item Segundo armónico ($n = \pm 2, \omega_2 = 4000\pi$): $-4\sin(4000\pi t) = -4 \left(\frac{e^{j4000\pi t} - e^{-j4000\pi t}}{2j}\right) = 2j e^{j4000\pi t} - 2j e^{-j4000\pi t}$.
+      Por lo tanto: $c_2 = 2j = 2 e^{j\pi/2}$ y $c_{-2} = -2j = 2 e^{-j\pi/2}$.
+\end{itemize}
+
+\subsubsection*{Apartado b) Coeficientes de salida $d_n$}
+
+Evaluamos $H(\omega_n) = |H(\omega_n)| e^{j \Theta(\omega_n)}$ en cada frecuencia armónica:
+
+1. \textbf{Para $n = 0$ ($\omega_0 = 0$)}:
+   $|H(0)| = 2 - 0 = 2$, $\Theta(0) = 0 \implies H(0) = 2$.
+   \[
+   d_0 = c_0 \cdot H(0) = 4 \cdot 2 = 8
+   \]
+
+2. \textbf{Para $n = \pm 1$ ($\omega_1 = 2000\pi$)}:
+   $|H(2000\pi)| = 2 - \frac{2000\pi}{4000\pi} = 1{,}5$.
+   $\Theta(2000\pi) = -2\times 10^{-4} (2000\pi) = -0{,}4\pi\text{ rad}$.
+   \[
+   H(2000\pi) = 1{,}5 e^{-j 0{,}4\pi} \implies d_1 = c_1 \cdot H(2000\pi) = 3 \cdot 1{,}5 e^{-j 0{,}4\pi} = 4{,}5 e^{-j 0{,}4\pi}
+   \]
+   \[
+   d_{-1} = 4{,}5 e^{+j 0{,}4\pi}
+   \]
+
+3. \textbf{Para $n = \pm 2$ ($\omega_2 = 4000\pi$)}:
+   $|H(4000\pi)| = 2 - \frac{4000\pi}{4000\pi} = 1$.
+   $\Theta(4000\pi) = -2\times 10^{-4} (4000\pi) = -0{,}8\pi\text{ rad}$.
+   \[
+   H(4000\pi) = 1 e^{-j 0{,}8\pi} \implies d_2 = c_2 \cdot H(4000\pi) = (2 e^{j\pi/2}) (1 e^{-j 0{,}8\pi}) = 2 e^{-j 0{,}3\pi}
+   \]
+   \[
+   d_{-2} = 2 e^{+j 0{,}3\pi}
+   \]
+
+\huecodiagrama{Espectro Discreto de Amplitud de Entrada $|c_n|$ y Salida $|d_n|$}{Dos gráficas discretas superpuestas: Entrada $|c_n|$ con líneas de valor 4 en $\omega=0$, 3 en $\pm 2000\pi$, y 2 en $\pm 4000\pi$. Salida $|d_n|$ con líneas de valor 8 en $\omega=0$, 4.5 en $\pm 2000\pi$, y 2 en $\pm 4000\pi$, mostrando la modificación de envolvente por la distorsión de atenuación.}
+
+\subsubsection*{Apartado c) Análisis de distorsión y retardo temporal}
+
+1. \textbf{Distorsión de atenuación}: \textbf{SÍ se produce.} El módulo $|H(\omega)|$ varía linealmente con la frecuencia ($|H(0)| = 2$, $|H(2000\pi)| = 1{,}5$, $|H(4000\pi)| = 1$), alterando las proporciones de amplitud entre los armónicos.
+
+2. \textbf{Distorsión de fase}: \textbf{NO se produce.} La fase $\Theta(\omega) = -2\times 10^{-4} \cdot \omega$ es estrictamente lineal con la frecuencia.
+
+3. \textbf{Retardo temporal ($t_d$)}:
+   Comparando con la condición de fase lineal $\Theta(\omega) = -t_d \cdot \omega$:
+   \[
+   t_d = 2\times 10^{-4}\text{ s} = 0{,}2\text{ ms}
+   \]
+   Todas las componentes frecuenciales experimentan un retardo constante de $0{,}2\text{ ms}$.
+
+\subsubsection*{Apartado d) Expresión temporal de la señal de salida $y(t)$}
+
+A partir de la serie trigonométrica $y(t) = d_0 + 2 |d_1| \cos(2000\pi t + \phi_1) + 2 |d_2| \cos(4000\pi t + \phi_2)$:
+\begin{itemize}
+    \item Para $n=1$: Módulo $|d_1| = 4{,}5$, fase $\phi_1 = -0{,}4\pi\text{ rad}$. Término: $9 \cos(2000\pi t - 0{,}4\pi)$.
+    \item Para $n=2$: Módulo $|d_2| = 2$, fase $\phi_2 = -0{,}3\pi\text{ rad}$. Término: $4 \cos(4000\pi t - 0{,}3\pi)$.
+\end{itemize}
+
+Sumando todos los términos:
+\[
+y(t) = 8 + 9 \cos(2000\pi t - 0{,}4\pi) + 4 \cos(4000\pi t - 0{,}3\pi)\text{ (V)}
+\]
+\end{resolucion}
